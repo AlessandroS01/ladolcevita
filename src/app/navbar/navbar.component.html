@@ -1,0 +1,42 @@
+<!--
+<nav>
+
+  <div class="logo">
+    <img src="assets/logo/dolcevita_logo.jpg" alt="Logo">
+  </div>
+
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/about">About</a></li>
+    <li><a routerLink="/services">Services</a></li>
+    <li><a routerLink="/contact">Contact</a></li>
+  </ul>
+
+
+
+</nav>
+-->
+
+<nav [ngClass]="{'sticky-nav': isMenuOpen}">
+
+  <div class="logo">
+    <a routerLink="/">
+      <img src="assets/logo/dolcevita_logo.jpg" alt="Logo">
+    </a>
+  </div>
+
+  <input type="checkbox" id="clickMenu">
+  <label class="menu-btn" for="clickMenu">
+    <fa-icon *ngIf="!isMenuOpen" [icon]="menuIcon" (click)="toggleMenu()"></fa-icon>
+    <fa-icon *ngIf="isMenuOpen" [icon]="closeIcon" (click)="toggleMenu()"></fa-icon>
+  </label>
+
+  <ul id="menu">
+    <li><a routerLink="/" (click)="toggleMenu()">Home</a></li>
+    <li><a routerLink="/about" (click)="toggleMenu()">About</a></li>
+    <li><a routerLink="/services" (click)="toggleMenu()">{{ 'services' | translate}}</a></li>
+    <li><a routerLink="/contact" (click)="toggleMenu()">{{ 'contacts' | translate}}</a></li>
+  </ul>
+
+</nav>
+

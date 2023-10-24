@@ -1,0 +1,32 @@
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.content {
+  margin-top: 0;
+}
+
+@media (max-width: 780px) {
+
+  .footer {
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .header {
+    position: relative;
+    z-index: 100;
+  }
+
+
+  .content {
+    margin-top: 0;
+  }
+
+}

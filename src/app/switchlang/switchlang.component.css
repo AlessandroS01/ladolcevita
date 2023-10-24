@@ -1,0 +1,36 @@
+.container {
+  padding: 10px 20px;
+  background-color: #91110E;
+}
+
+.container div {
+  display: block;
+  box-sizing: border-box;
+}
+
+.container ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.lang {
+  cursor: pointer;
+}
+
+.slash {
+  cursor: default;
+}
+
+.container ul li {
+  font-weight: 600;
+  margin: 0 3px;
+  color: white;
+}
+
+.container ul .active {
+  border-bottom: solid 2px white;
+}

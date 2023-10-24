@@ -27,7 +27,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -91,8 +93,18 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "dolcevita:build:production"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "cb81164b-44ee-4b6a-ac40-548eefb8dbed"
   }
 }
