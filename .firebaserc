@@ -1,14 +1,5 @@
 {
-  "targets": {
-    "la-dolce-vita-e9b94": {
-      "hosting": {
-        "dolcevita": [
-          "ladolcevitaculture"
-        ]
-      }
-    }
-  },
   "projects": {
-    "default": "la-dolce-vita-e9b94"
+    "default": "la-dolce-vita-society"
   }
 }

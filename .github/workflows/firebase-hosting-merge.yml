@@ -15,6 +15,6 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LA_DOLCE_VITA_E9B94 }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LA_DOLCE_VITA_SOCIETY }}'
           channelId: live
-          projectId: la-dolce-vita-e9b94
+          projectId: la-dolce-vita-society
