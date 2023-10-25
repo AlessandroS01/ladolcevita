@@ -18,22 +18,28 @@ export class NavbarComponent implements OnInit{
   isMenuOpen: boolean = false;
 
   toggleMenu() {
-    if (window.screen.width <= 779) {
 
-      this.isMenuOpen = !this.isMenuOpen;
+    const iconMenu = document.getElementById('clickMenu');
 
-      const menu = document.getElementById('menu');
+    if (iconMenu) {
+      const iconDisplay = iconMenu.style.display;
 
-      if (menu) {
-        const computedStyle = window.getComputedStyle(menu);
-        const leftValue = computedStyle.getPropertyValue('left');
+      if (iconDisplay !== 'none') {
+        this.isMenuOpen = !this.isMenuOpen;
 
-        if (leftValue == '0px') {
-          menu.style.left = '-100%';
-        }
+        const menu = document.getElementById('menu');
 
-        if (leftValue != '0px') {
-          menu.style.left = '0%';
+        if (menu) {
+          const computedStyle = window.getComputedStyle(menu);
+          const leftValue = computedStyle.getPropertyValue('left');
+
+          if (leftValue == '0px') {
+            menu.style.left = '-100%';
+          }
+
+          if (leftValue != '0px') {
+            menu.style.left = '0%';
+          }
         }
       }
     }
@@ -42,4 +48,5 @@ export class NavbarComponent implements OnInit{
   ngOnInit(): void {
 
   }
+
 }
