@@ -1,12 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+}
 
 body {
   font-family: 'Playfair Display', "Times New Roman";
-  min-height: 100vh;
+
+  background-color: rgba(211, 211, 211, 0.3);
+
   display: flex;
   flex-direction: column;
 
-  background-color: rgba(211, 211, 211, 0.3);
+  height: 100%;
+}
+
+app-root {
+  height: 100%;
 }
 
 * {
