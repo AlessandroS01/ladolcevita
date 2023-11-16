@@ -1,0 +1,78 @@
+.container-lang {
+  right: 0;
+  top: 0;
+
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.change-lang {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+/* BUTTON */
+.change-lang button{
+  right: 0;
+  top: 0;
+
+  border: none;
+  background-color: white;
+}
+
+/* LANGUAGE PARAGRAPH */
+p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+
+  font-weight: bold;
+  font-size: 15px;
+  padding: 5px 10px;
+  border-radius: 10px;
+
+  transition: all ease-in 0.1s;
+}
+
+
+p img {
+  width: 20px;
+  margin-right: 8px;
+}
+
+p:hover {
+  background-color: rgba(145, 17, 14, 0.2);
+}
+
+
+/* MENU CHANGE LANG */
+
+.change-lang-menu {
+  margin: 15px 0 0;
+  padding: 5px;
+
+  border: solid 2px #91110E;
+  border-radius: 8px;
+
+  /*
+  background-color: rgba(145, 17, 14, 0.2);
+   */
+
+  background-color: white;
+  /*
+  position: absolute;
+  top: 80px;
+   */
+}
+
+.change-lang-menu li {
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.change-lang-menu li p {
+  color: black;
+}

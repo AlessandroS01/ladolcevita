@@ -1,6 +1,9 @@
 {
-  "services": "서비스",
-  "contacts": "연락처",
-  "footer-description": "이탈리아문화연구회",
-  "login": "로그인"
+  "home": "홈",
+  "events": "이벤트",
+  "articles": "논문",
+  "about": "소개",
+  "login": "로그인",
+  "sign-up": "가입하기",
+  "footer-description": "이탈리아문화연구회"
 }

@@ -1,0 +1,33 @@
+<div class="container-lang">
+
+  <div class="change-lang">
+    <button type="button" class="button-change-lang" (click)="toggleDiv()">
+      <p>
+        <img class="" [srcset]="flagLangSelected">
+        {{ langSelected }}
+      </p>
+    </button>
+
+    <ul class="change-lang-menu" [hidden]="isDivHidden">
+      <li (click)="switchLang('en')">
+        <p>
+          <img class="" src="assets/img/languages/united-kingdom.png">
+          English
+        </p>
+      </li>
+      <li (click)="switchLang('it')">
+        <p>
+          <img class="" src="assets/img/languages/italian.png">
+          Italiano
+        </p>
+      </li>
+      <li (click)="switchLang('ko')">
+        <p>
+          <img class="" src="assets/img/languages/south-korea.png">
+          한국어
+        </p>
+      </li>
+    </ul>
+  </div>
+
+</div>

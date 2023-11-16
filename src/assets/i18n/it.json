@@ -1,6 +1,9 @@
 {
-  "services": "Servizi",
-  "contacts": "Contattaci",
-  "footer-description": "Società di Studi Italiani",
-  "login": "Login"
+  "home": "Home",
+  "events": "Eventi",
+  "articles": "Articoli",
+  "about": "Chi siamo",
+  "login": "Login",
+  "sign-up": "Registrati",
+  "footer-description": "Società di Studi Italiani"
 }

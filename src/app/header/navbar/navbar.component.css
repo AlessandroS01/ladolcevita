@@ -1,0 +1,166 @@
+/* GENERAL */
+.navbar{
+  background-color: white;
+  padding: 60px 0;
+  border-bottom: solid 2px rgba(145, 17, 14, 0.5);
+  position: fixed;
+  width: 100%;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  transition: all ease-out 0.25s;
+}
+
+.navbar.navbar-scroll{
+  padding: 20px 0;
+  border-bottom: solid 3px rgba(145, 17, 14, 0.5);
+}
+
+
+/* FIRST ROW */
+.navbar .first-row  {
+  width: 90%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+
+
+  justify-content: flex-end;
+}
+
+.navbar.navbar-scroll .first-row {
+  display: none;
+}
+
+
+/* SECOND ROW */
+.navbar .second-row {
+  width: 100%;
+
+  margin-top: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* SECOND ROW -> LOGO */
+.second-row .logo{
+  display: flex;
+}
+.second-row .logo a{
+  display: flex;
+  justify-content: center;
+}
+.second-row .logo img {
+  width: 80%;
+}
+
+/* SECOND ROW -> MENU */
+.container-menu-login {
+  display: flex;
+  flex-direction: row;
+
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.second-row .menu {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+
+.second-row .menu li {
+  margin: 10px 20px;
+}
+
+.second-row .menu li a{
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+
+  display: inline-block;
+  position: relative;
+}
+
+.second-row .menu li a:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -10px;
+  left: 0;
+  background-color: #91110E;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.second-row .menu li a:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+
+
+@media screen and (max-width: 1100px) {
+
+  /* SECOND ROW*/
+  .navbar .second-row {
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  /* SECOND ROW -> MENU */
+  .second-row .menu {
+    margin-top: 20px;
+  }
+
+}
+
+@media screen and (max-width: 690px) {
+
+  .navbar.navbar-scroll{
+    padding: 10px 0;
+    border-bottom: solid 3px rgba(145, 17, 14, 0.5);
+  }
+
+  /* SECOND ROW -> LOGO */
+  .second-row .logo img {
+    width: 70%;
+  }
+
+  /* SECOND ROW -> MENU */
+  .container-menu-login {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+
+  .second-row .menu li a {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+
+  /* SECOND ROW -> MENU */
+  .second-row .menu li{
+    margin: 10px 10px;
+  }
+  .second-row .menu li a {
+    font-size: 16px;
+  }
+}

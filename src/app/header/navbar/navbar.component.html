@@ -1,0 +1,34 @@
+<nav id="main-navbar" class="navbar">
+
+  <div class="first-row">
+    <div></div>
+    <switchlang></switchlang>
+  </div>
+
+  <div class="second-row">
+    <div class="logo">
+      <a routerLink="/">
+        <img src="assets/logo/dolcevita_logo.jpg" alt="Logo">
+      </a>
+    </div>
+
+    <!--
+    <input type="checkbox" id="clickMenu">
+    <label class="menu-btn" for="clickMenu">
+      <fa-icon ></fa-icon>
+      <fa-icon ></fa-icon>
+    </label>
+    -->
+    <div class="container-menu-login">
+      <ul id="menu" class="menu">
+        <li><a routerLink="/" >{{ "home" | translate }}</a></li>
+        <li><a routerLink="/events" >{{ "events" | translate }}</a></li>
+        <li><a routerLink="/articles" >{{ "articles" | translate }}</a></li>
+        <li><a routerLink="/about" >{{ "about" | translate }}</a></li>
+      </ul>
+
+      <login></login>
+    </div>
+  </div>
+
+</nav>

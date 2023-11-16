@@ -1,0 +1,43 @@
+/* CONTAINER */
+.login-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* LINK */
+.login-container a {
+  margin: 10px 20px;
+  text-decoration: none;
+
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+
+  display: inline-block;
+  position: relative;
+}
+
+.login-container a:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -10px;
+  left: 0;
+  background-color: #91110E;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.login-container a:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+@media screen and (max-width: 690px) {
+
+  .login-container a {
+    font-size: 16px;
+  }
+}

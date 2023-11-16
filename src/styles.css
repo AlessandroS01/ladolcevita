@@ -5,6 +5,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  background-color: rgba(211, 211, 211, 0.3);
 }
 
 * {

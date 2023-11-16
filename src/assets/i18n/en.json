@@ -1,6 +1,9 @@
 {
-  "services": "Services",
-  "contacts": "Contact Us",
-  "footer-description": "Italian Studies Society",
-  "login": "Login"
+  "home": "Home",
+  "events": "Events",
+  "articles": "Articles",
+  "about": "About",
+  "login": "Login",
+  "sign-up": "Sign up",
+  "footer-description": "Italian Studies Society"
 }

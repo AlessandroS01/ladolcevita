@@ -1,3 +1,18 @@
+
+
+.page-container {
+  margin-top: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*
+.container {
+  background: url("../assets/img/italia.jpg") no-repeat center center;
+  background-size: cover;
+}
+
 .page-container {
   min-height: 100vh;
   display: flex;
@@ -30,3 +45,5 @@
   }
 
 }
+
+ */
