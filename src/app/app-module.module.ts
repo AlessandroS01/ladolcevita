@@ -14,26 +14,51 @@ import {HomeModule} from "./home/home.module";
 import {FooterModule} from "./footer/footer.module";
 
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from '../environments/environment';
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {AngularFireAuthModule} from "@angular/fire/compat/auth";
+import { LoginPopupComponent } from './popups/login-popup/login-popup.component';
+import { SignupPopupComponent } from './popups/signup-popup/signup-popup.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {PopupsModule} from "./popups/popups.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent
+    FooterComponent,
+    LoginPopupComponent,
+    SignupPopupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,
+    ReactiveFormsModule,
+
+    MatDialogModule,
+
     HeaderModule,
     HomeModule,
     FooterModule,
+    PopupsModule,
+
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: httpTranslateLoader,
         deps: [HttpClient]
       }
-    })
+    }),
+    FormsModule
   ],
   providers: [],
   exports: [

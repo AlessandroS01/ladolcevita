@@ -6,6 +6,8 @@ import {RouterLink} from "@angular/router";
 import {TranslateModule} from "@ngx-translate/core";
 import {SwitchLangComponent} from "./switchlang/switch-lang.component";
 import { LoginComponent } from './login/login.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -19,11 +21,13 @@ import { LoginComponent } from './login/login.component';
         NavbarComponent,
         SwitchLangComponent
     ],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    RouterLink,
-    TranslateModule,
-  ]
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        RouterLink,
+        TranslateModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+    ]
 })
 export class HeaderModule { }

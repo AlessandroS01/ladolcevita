@@ -5,9 +5,12 @@
 }
 
 /* LINK */
-.login-container a {
+.login-container button {
   margin: 10px 20px;
   text-decoration: none;
+
+  background-color: transparent;
+  border: none;
 
   color: black;
   font-weight: bold;
@@ -17,7 +20,7 @@
   position: relative;
 }
 
-.login-container a:after {
+.login-container button:after {
   content: '';
   position: absolute;
   width: 100%;
@@ -30,14 +33,14 @@
   transition: transform 0.25s ease-out;
 }
 
-.login-container a:hover:after {
+.login-container button:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
 @media screen and (max-width: 690px) {
 
-  .login-container a {
+  .login-container button {
     font-size: 16px;
   }
 }

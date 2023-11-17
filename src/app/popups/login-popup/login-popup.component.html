@@ -1,0 +1,115 @@
+<div class="login-popup-container">
+
+  <div class="close-button-container">
+    <button
+      (click)="closePopup()"
+    >
+      <i class="fa fa-close"></i>
+    </button>
+  </div>
+
+  <div class="title-login-container">
+    <h4>Log in</h4>
+  </div>
+
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="$event.preventDefault(); submitForm();"
+  >
+
+    <div class="form-group">
+
+      <label>Email</label>
+
+      <div class="form-element-container">
+
+        <div class="icon-container">
+          <i class="fa fa-envelope"></i>
+        </div>
+
+        <input
+          type="text"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+        />
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="loginForm.get('email')?.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Email is required
+      </div>
+
+      <div
+        *ngIf="loginForm.get('email')?.hasError('pattern')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Email is invalid
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label>Password</label>
+
+      <div class="form-element-container">
+
+        <div class="icon-container">
+          <i class="fa fa-key"></i>
+        </div>
+
+        <input
+          [type]="passwordVisibility ? 'text' : 'password'"
+          formControlName="password"
+          class="form-control"
+          placeholder="Password"
+        />
+
+        <div class="password-icon-container">
+          <i *ngIf="!passwordVisibility" class="fa fa-eye" (click)="togglePasswordVisibility()"></i>
+          <i *ngIf="passwordVisibility" class="fa fa-eye-slash" (click)="togglePasswordVisibility()"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="loginForm.get('password')?.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Password is required
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <button
+        class="submit-form"
+        type="submit"
+      >
+        Login
+      </button>
+    </div>
+
+  </form>
+
+  <hr>
+
+  <p
+    class="register"
+  >
+    Don't you have an account? <a (click)="closePopup('register')">Register here</a>
+  </p>
+
+
+</div>

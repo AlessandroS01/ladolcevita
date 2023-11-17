@@ -1,10 +1,10 @@
 export const environment = {
-  firebase: {
-    projectId: 'la-dolce-vita-e9b94',
-    appId: '1:685454933615:web:4a19ff01ae5503e34c579a',
-    storageBucket: 'la-dolce-vita-e9b94.appspot.com',
-    apiKey: 'AIzaSyCO4ZoGNx2maNxZQDWfb3XRE0Lx6Of6BoY',
-    authDomain: 'la-dolce-vita-e9b94.firebaseapp.com',
-    messagingSenderId: '685454933615',
-  },
+  firebaseConfig: {
+    apiKey: "AIzaSyDjxB4ysz0a2-e_5QofWvrGX1aQ2BI-PqY",
+    authDomain: "la-dolce-vita-society.firebaseapp.com",
+    projectId: "la-dolce-vita-society",
+    storageBucket: "la-dolce-vita-society.appspot.com",
+    messagingSenderId: "850325972847",
+    appId: "1:850325972847:web:62c56313a1aa86f0f26a9a"
+  }
 };

@@ -1,10 +1,27 @@
 <div class="login-container">
-  <a routerLink="/">
+
+  <!-- LOGIN BUTTON-->
+  <button
+      (click)="openLogin()"
+      *ngIf="isAuthenticated"
+  >
     <i class="fa fa-user-circle" aria-hidden="true"></i>
     {{ "login" | translate}}
-  </a>
-  <a routerLink="/">
+  </button>
+  <!-- SIGNUP BUTTON-->
+  <button
+          *ngIf="isAuthenticated"
+  >
     <i class="fa fa-user-plus" aria-hidden="true"></i>
     {{ "sign-up" | translate}}
-  </a>
+  </button>
+
+  <!-- LOGOUT BUTTON-->
+  <button *ngIf="!isAuthenticated" (click)="logout()" routerLink="/">
+    <i class="fa fa-sign-out" aria-hidden="true"></i>
+    {{ "logout" | translate}}
+  </button>
+
+
 </div>
+
