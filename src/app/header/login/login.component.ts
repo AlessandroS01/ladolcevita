@@ -40,7 +40,9 @@ export class LoginComponent implements OnInit{
     });
 
     popup.afterClosed().subscribe( message => {
-      console.log(message)
+      if (message == 'login') {
+        this.openLogin()
+      }
     });
   }
 

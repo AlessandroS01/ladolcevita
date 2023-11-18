@@ -1,0 +1,125 @@
+/* CONTAINER POPUP */
+.signup-popup-container {
+  padding: 20px;
+}
+
+/* CLOSE BUTTON */
+.signup-popup-container .close-button-container {
+  width: 100%;
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+.signup-popup-container .close-button-container button {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 100%;
+  border: transparent;
+
+  background-color: white;
+
+  box-shadow: rgba(0, 0, 0, 0.15) 0 0 10px;
+}
+
+/* TITLE */
+.signup-popup-container .title-signup-container {
+  width: 100%;
+  display: flex;
+
+  justify-content: center;
+}
+
+.signup-popup-container h4 {
+  font-weight: bold;
+}
+
+/* FORM LABEL & INPUT */
+.form-group {
+  margin-top: 20px;
+}
+
+/* FORM LABELS */
+.form-group label{
+  text-transform: uppercase;
+
+  font-weight: bold;
+  font-size: 13px;
+
+  margin-bottom: 5px;
+}
+
+/* FORM ELEMENTS CONTAINERS */
+.form-element-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border: solid 2px rgba(145, 17, 14, 0.5);
+}
+
+.form-element-container .icon-container {
+  padding: 0 20px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  border-right: solid 2px rgba(145, 17, 14, 0.5);
+}
+
+.icon-container i {
+  font-size: 18px;
+}
+
+/* FORM PASSWORD ICONS */
+.password-icon-container{
+  padding: 0 20px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+}
+
+.password-icon-container i {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* FORM INPUTS */
+.form-element-container input {
+  height: 50px;
+  border: none;
+  box-shadow: none;
+}
+
+/* FORM SUBMIT */
+.submit-form{
+  margin-top: 20px;
+
+  width: 100%;
+  padding: 10px 0;
+  border: solid 2px rgba(145, 17, 14, 0.5);
+  border-radius: 8px;
+
+  background-color: rgba(211, 211, 211, 0.6);
+
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* FORM ERRORS */
+.invalid-input div{
+  color: darkred;
+}
+
+
+/* LOGIN */
+.login a {
+  cursor: pointer;
+
+  color: #039be5;
+}

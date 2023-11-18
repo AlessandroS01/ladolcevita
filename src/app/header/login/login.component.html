@@ -10,7 +10,8 @@
   </button>
   <!-- SIGNUP BUTTON-->
   <button
-          *ngIf="isAuthenticated"
+      (click)="openSignUp()"
+      *ngIf="isAuthenticated"
   >
     <i class="fa fa-user-plus" aria-hidden="true"></i>
     {{ "sign-up" | translate}}

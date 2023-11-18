@@ -29,8 +29,8 @@ export class LoginPopupComponent implements OnInit{
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
-    private ref: MatDialogRef<LoginPopupComponent>,
-    private formBuilder: FormBuilder) {
+    private ref: MatDialogRef<LoginPopupComponent>
+  ) {
 
   }
 
@@ -46,10 +46,6 @@ export class LoginPopupComponent implements OnInit{
     this.submitted = true;
 
     console.log(this.loginForm.valid);
-  }
-
-  saveData() {
-
   }
 
   togglePasswordVisibility() {

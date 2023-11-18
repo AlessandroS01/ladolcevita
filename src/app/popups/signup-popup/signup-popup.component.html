@@ -1,1 +1,231 @@
-<p>signup-popup works!</p>
+<div class="signup-popup-container">
+
+  <div class="close-button-container">
+    <button
+      (click)="closePopup()"
+    >
+      <i class="fa fa-close"></i>
+    </button>
+  </div>
+
+  <div class="title-signup-container">
+    <h4>Sign up</h4>
+  </div>
+
+
+
+  <form
+    [formGroup]="signupForm"
+    (ngSubmit)="$event.preventDefault(); submitForm();"
+  >
+
+    <!-- NAME -->
+    <div class="form-group">
+
+      <label>Name</label>
+
+      <div class="form-element-container">
+
+        <div class="icon-container">
+          <i class="fa fa-user"></i>
+        </div>
+
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          placeholder="Enter your first name"
+        />
+      </div>
+
+    </div>
+    <div
+      *ngIf="submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="signupForm.get('name')?.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> First name is required
+      </div>
+    </div>
+
+    <!-- SURNAME -->
+    <div class="form-group">
+
+      <label>Last name</label>
+
+      <div class="form-element-container">
+
+        <div class="icon-container">
+          <i class="fa fa-user"></i>
+        </div>
+
+        <input
+          type="text"
+          formControlName="surname"
+          class="form-control"
+          placeholder="Enter your last name"
+        />
+      </div>
+
+    </div>
+    <div
+      *ngIf="submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="signupForm.get('surname')?.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Last name is required
+      </div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group">
+
+      <label>Email</label>
+
+      <div class="form-element-container">
+
+        <div class="icon-container">
+          <i class="fa fa-envelope"></i>
+        </div>
+
+        <input
+          type="text"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+        />
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="signupForm.get('email')?.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Email is required
+      </div>
+
+      <div
+        *ngIf="signupForm.get('email')?.hasError('pattern')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Email is invalid
+      </div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="form-group">
+
+      <label>Password</label>
+
+      <div class="form-element-container">
+
+        <div class="icon-container">
+          <i class="fa fa-key"></i>
+        </div>
+
+        <input
+          [type]="passwordVisibility ? 'text' : 'password'"
+          formControlName="password"
+          class="form-control"
+          placeholder="Password"
+        />
+
+        <div class="password-icon-container">
+          <i *ngIf="passwordVisibility" class="fa fa-eye" (click)="togglePasswordVisibility('password')"></i>
+          <i *ngIf="!passwordVisibility" class="fa fa-eye-slash" (click)="togglePasswordVisibility('password')"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="submitted || signupForm.get('password')?.dirty"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="signupForm.get('password')?.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Password is required
+      </div>
+      <div
+        *ngIf="signupForm.get('password')?.hasError('minlength')"
+      >
+        <i class="fa fa-exclamation-circle"></i> The minimum password length is 8 characters
+      </div>
+
+    </div>
+
+    <!-- PASSWORD CONFIRMATION -->
+    <div class="form-group">
+
+      <label>Confirm password</label>
+
+      <div class="form-element-container">
+
+        <div class="icon-container">
+          <i class="fa fa-key"></i>
+        </div>
+
+        <input
+          [type]="confirmPassVisibility ? 'text' : 'password'"
+          formControlName="confirmPassword"
+          class="form-control"
+          placeholder="Password"
+        />
+
+        <div class="password-icon-container">
+          <i *ngIf="confirmPassVisibility" class="fa fa-eye" (click)="togglePasswordVisibility('confirmPass')"></i>
+          <i *ngIf="!confirmPassVisibility" class="fa fa-eye-slash" (click)="togglePasswordVisibility('confirmPass')"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="submitted || signupForm.get('confirmPassword')?.dirty"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="signupForm.get('confirmPassword')?.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Password confirmation is required
+      </div>
+      <div
+        *ngIf="signupForm.get('confirmPassword')?.hasError('confirmedValidator')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Passwords do not match
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <button
+        class="submit-form"
+        type="submit"
+      >
+        Sign up
+      </button>
+    </div>
+
+  </form>
+
+  <hr>
+
+  <p
+    class="login"
+  >
+    Do you have an account? <a (click)="closePopup('login')">Login here</a>
+  </p>
+
+
+</div>
+
