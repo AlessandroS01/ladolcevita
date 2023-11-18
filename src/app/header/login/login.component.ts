@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {AuthService} from "../../services/auth/auth.service";
-import {AuthDialogService} from "../../services/auth/auth-dialog.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoginPopupComponent} from "../../popups/login-popup/login-popup.component";
 import {SignupPopupComponent} from "../../popups/signup-popup/signup-popup.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'login',
@@ -13,7 +12,11 @@ import {SignupPopupComponent} from "../../popups/signup-popup/signup-popup.compo
 })
 export class LoginComponent implements OnInit{
 
-  constructor(private authService: AuthService, private dialog: MatDialog) {
+  constructor(
+    private authService: AuthService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {
   }
 
   isAuthenticated(): boolean {
@@ -29,6 +32,9 @@ export class LoginComponent implements OnInit{
     popup.afterClosed().subscribe( message => {
       if (message == 'register') {
         this.openSignUp()
+      }
+      if (message == 'login successful') {
+        return;
       }
     });
   }

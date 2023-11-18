@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../../services/auth/auth.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-login-popup',
@@ -25,30 +27,60 @@ export class LoginPopupComponent implements OnInit{
   });
   submitted: boolean = false;
 
-  inputData: any;
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
-    private ref: MatDialogRef<LoginPopupComponent>
+    private ref: MatDialogRef<LoginPopupComponent>,
+    private authService: AuthService,
   ) {
-
   }
 
   ngOnInit(): void {
-    this.inputData = this.data;
   }
 
   closePopup(message= '' ) {
     this.ref.close(message);
   }
 
-  submitForm() {
+  async submitForm() {
+    const errorElement = document.getElementById('error');
+
+    if (errorElement) {
+      errorElement.textContent = '';
+    }
+
     this.submitted = true;
 
-    console.log(this.loginForm.valid);
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const auth=
+      await this.authService
+        .login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value);
+
+    if (typeof auth == "string") {
+
+      const errorElement = document.getElementById('error');
+
+      if (errorElement) {
+        switch (auth) {
+          case 'auth/invalid-login-credentials':
+            errorElement.textContent = 'Email and/or password incorrect';
+            break;
+          default:
+            errorElement.textContent = 'An unknown error occurred';
+            break;
+        }
+      }
+
+    } else {
+      this.closePopup('login successful');
+    }
   }
 
   togglePasswordVisibility() {
     this.passwordVisibility = !this.passwordVisibility;
   }
+
+
 }

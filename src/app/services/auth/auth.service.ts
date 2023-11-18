@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import firebase from "firebase/compat";
+import FirebaseError = firebase.FirebaseError;
 
 
 @Injectable({
@@ -12,14 +14,13 @@ export class AuthService {
       return this.auth && this.auth.currentUser !== null;
   }
 
-  login(email: string, password: string) {
-    this.auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-          // Sign up successful
-        })
-        .catch((error) => {
-          console.log(error)
-        });
+  async login(email: string, password: string): Promise<boolean | string> {
+    try {
+      await this.auth.signInWithEmailAndPassword(email, password);
+      return true; // Successful login
+    } catch (error) {
+      return (error as FirebaseError).code;
+    }
   }
 
   signUp(email: string, password: string) {
