@@ -14,7 +14,7 @@
 
 
 
-  <form
+  <form class="signup-form-container"
     [formGroup]="signupForm"
     (ngSubmit)="$event.preventDefault(); submitForm();"
   >
@@ -218,6 +218,10 @@
     </div>
 
   </form>
+
+  <div class="error-signup-container">
+    <p id="error"></p>
+  </div>
 
   <hr>
 

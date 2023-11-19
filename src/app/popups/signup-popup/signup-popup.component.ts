@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-signup-popup',
@@ -36,7 +37,8 @@ export class SignupPopupComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
-    private ref: MatDialogRef<SignupPopupComponent>
+    private ref: MatDialogRef<SignupPopupComponent>,
+    private authService: AuthService,
   ) {
 
   }
@@ -69,10 +71,41 @@ export class SignupPopupComponent {
     this.ref.close(message);
   }
 
-  submitForm() {
+  async submitForm() {
+    const errorElement = document.getElementById('error');
+
+    if (errorElement) {
+      errorElement.textContent = '';
+    }
+
     this.submitted = true;
 
-    console.log(this.signupForm.valid);
+    if (this.signupForm.invalid) {
+      return;
+    }
+
+    const auth =
+      await this.authService
+        .signUp(this.signupForm.get('email')?.value, this.signupForm.get('password')?.value);
+
+    if (typeof auth == "string") {
+
+      const errorElement = document.getElementById('error');
+
+      if (errorElement) {
+        errorElement.textContent = auth;
+        switch (auth) {
+          case 'auth/email-already-in-use':
+            errorElement.textContent = 'Email already used';
+            break;
+          default:
+            errorElement.textContent = 'An unknown error occurred';
+            break;
+        }
+      }
+    } else {
+      this.closePopup('signup successful');
+    }
   }
 
   togglePasswordVisibility(pass = '') {

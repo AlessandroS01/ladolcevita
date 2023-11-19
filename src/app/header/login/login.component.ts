@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit{
 
   openSignUp() {
     const popup = this.dialog.open(SignupPopupComponent, {
-      height: '85%',
+      height: '80%',
       enterAnimationDuration: '0.2s',
       exitAnimationDuration: '0.2s'
     });
@@ -49,6 +49,10 @@ export class LoginComponent implements OnInit{
     popup.afterClosed().subscribe( message => {
       if (message == 'login') {
         this.openLogin()
+      }
+      if (message == 'signup successful') {
+        window.alert("A");
+        return;
       }
     });
   }

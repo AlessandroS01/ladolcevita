@@ -41,12 +41,13 @@ export class LoginPopupComponent implements OnInit{
     this.ref.close(message);
   }
 
-  async submitForm() {
-    const errorElement = document.getElementById('error');
+  togglePasswordVisibility() {
+    this.passwordVisibility = !this.passwordVisibility;
+  }
 
-    if (errorElement) {
-      errorElement.textContent = '';
-    }
+  async submitForm() {
+    this.setErrorMessage('');
+    this.setRecoverMessage('');
 
     this.submitted = true;
 
@@ -60,17 +61,13 @@ export class LoginPopupComponent implements OnInit{
 
     if (typeof auth == "string") {
 
-      const errorElement = document.getElementById('error');
-
-      if (errorElement) {
-        switch (auth) {
-          case 'auth/invalid-login-credentials':
-            errorElement.textContent = 'Email and/or password incorrect';
-            break;
-          default:
-            errorElement.textContent = 'An unknown error occurred';
-            break;
-        }
+      switch (auth) {
+        case 'auth/invalid-login-credentials':
+          this.setErrorMessage('Email and/or password incorrect');
+          break;
+        default:
+          this.setErrorMessage('An unknown error occurred');
+          break;
       }
 
     } else {
@@ -78,9 +75,44 @@ export class LoginPopupComponent implements OnInit{
     }
   }
 
-  togglePasswordVisibility() {
-    this.passwordVisibility = !this.passwordVisibility;
+
+
+
+  async recoverPassword() {
+    this.setErrorMessage('');
+    this.setRecoverMessage('');
+
+
+    if (this.loginForm.get('email')?.invalid) {
+      this.setErrorMessage('Invalid email');
+
+      return;
+    }
+
+    const email = this.loginForm.get('email')?.value;
+
+    const recover =
+      await this.authService.recoverPassword(email);
+
+    if (typeof recover == "string") {
+      this.setErrorMessage('Invalid email');
+
+      return;
+    }
+
+    this.setRecoverMessage('Password reset email sent, check your inbox');
   }
 
-
+  setRecoverMessage(message: string){
+    const recoverElement = document.getElementById('recover');
+    if (recoverElement) {
+      recoverElement.textContent = message;
+    }
+  }
+  setErrorMessage(message: string){
+    const errorElement = document.getElementById('error');
+    if (errorElement) {
+      errorElement.textContent = message;
+    }
+  }
 }

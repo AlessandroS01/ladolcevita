@@ -23,14 +23,31 @@ export class AuthService {
     }
   }
 
-  signUp(email: string, password: string) {
-    this.auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          // Sign up successful
-        })
-        .catch((error) => {
-          console.log(error)
-        });
+  async signUp(email: string, password: string) {
+    try {
+      await this.auth.createUserWithEmailAndPassword(email, password);
+      return true; // Successful login
+    } catch (error) {
+      return (error as FirebaseError).code;
+    }
+  }
+
+  async recoverPassword(email: string): Promise<boolean | string> {
+    return this.auth.sendPasswordResetEmail(email)
+      .then((result) => {
+        return true;
+      })
+      .catch((error) => {
+        return (error as FirebaseError).code;
+      });
+    /*
+    try {
+      await this.auth.sendPasswordResetEmail(email);
+      return true; // Successful login
+    } catch (error) {
+      return (error as FirebaseError).code;
+    }
+     */
   }
 
   logout() {

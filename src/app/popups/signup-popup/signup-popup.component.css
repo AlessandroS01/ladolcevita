@@ -1,6 +1,7 @@
 /* CONTAINER POPUP */
 .signup-popup-container {
   padding: 20px;
+
 }
 
 /* CLOSE BUTTON */
@@ -113,6 +114,17 @@
 
 /* FORM ERRORS */
 .invalid-input div{
+  color: darkred;
+}
+
+.error-signup-container {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  margin-top: 10px;
+}
+#error {
   color: darkred;
 }
 
