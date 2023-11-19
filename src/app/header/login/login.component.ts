@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit{
 
   openSignUp() {
     const popup = this.dialog.open(SignupPopupComponent, {
+      height: '85%',
       enterAnimationDuration: '0.2s',
       exitAnimationDuration: '0.2s'
     });
