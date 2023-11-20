@@ -6,5 +6,8 @@
   "login": "Login",
   "sign-up": "Registrati",
   "logout": "Logout",
+
+  "user-menu-ticket": "Biglietti degli eventi",
+
   "footer-description": "Società di Studi Italiani"
 }

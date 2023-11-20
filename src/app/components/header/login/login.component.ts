@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit{
         }
     )
   );
+  isUserMenuVisible: boolean = false;
 
   constructor(
       private authService: AuthService,
@@ -71,7 +72,12 @@ export class LoginComponent implements OnInit{
   }
 
   logout() {
+    this.toggleDiv();
     this.authService.logout();
+  }
+
+  toggleDiv() {
+    this.isUserMenuVisible = !this.isUserMenuVisible;
   }
 
 }

@@ -6,5 +6,8 @@
   "login": "로그인",
   "sign-up": "가입하기",
   "logout": "로그아웃",
+
+  "user-menu-ticket": "개인 행사 티켓",
+
   "footer-description": "이탈리아문화연구회"
 }

@@ -6,5 +6,8 @@
   "login": "Login",
   "sign-up": "Sign up",
   "logout": "Logout",
+
+  "user-menu-ticket": "Personal events tickets",
+
   "footer-description": "Italian Studies Society"
 }

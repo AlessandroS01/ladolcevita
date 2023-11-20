@@ -1,9 +1,11 @@
-<div class="login-container">
+<div
+  *ngIf="(isLogged | async) === null"
+  class="login-container"
+>
 
-  <!-- LOGIN BUTTON *ngIf="userService.uid | async as uid"-->
+  <!-- LOGIN BUTTON -->
   <button
       (click)="openLogin()"
-      *ngIf="(isLogged | async) === null"
   >
     <i class="fa fa-user-circle" aria-hidden="true"></i>
     {{ "login" | translate}}
@@ -11,20 +13,51 @@
   <!-- SIGNUP BUTTON-->
   <button
       (click)="openSignUp()"
-      *ngIf="(isLogged | async) === null"
   >
     <i class="fa fa-user-plus" aria-hidden="true"></i>
     {{ "sign-up" | translate}}
   </button>
 
-  <!-- LOGOUT BUTTON *ngIf="userService.uid | async as uid" -->
-  <button
-    (click)="logout()"
-    *ngIf="(isLogged | async) !== null"
-  >
-    <i class="fa fa-sign-out" aria-hidden="true"></i>
-    {{ "logout" | translate}}
-  </button>
+</div>
+
+<div
+  *ngIf="(isLogged | async) !== null"
+  class="login-container"
+>
+
+  <!-- LOGOUT BUTTON -->
+  <div class="logout-container">
+    <button
+      (click)="toggleDiv()"
+    >
+      <i class="fa fa-user" aria-hidden="true"></i>
+      Alessandro Seghini
+    </button>
+
+
+    <div
+      id="user-menu"
+      class="user-menu"
+      *ngIf="isUserMenuVisible"
+    >
+
+      <p class="email-user">seghini53@gmail.com</p>
+      <hr>
+
+      <p
+         class="user-menu-link"
+         (click)="toggleDiv()"
+      >{{ "user-menu-ticket" | translate}}</p>
+
+      <p
+         class="user-menu-link"
+         (click)="logout()"
+      >
+        <i class="fa fa-sign-out" aria-hidden="true">
+        </i>{{ "logout" | translate}}</p>
+    </div>
+
+  </div>
 
 </div>
 

@@ -38,6 +38,60 @@
   transform-origin: bottom left;
 }
 
+/* USER LOGGED */
+.logout-container {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.user-menu {
+  margin-top: 60px;
+  padding: 10px;
+
+  position: absolute;
+
+  background-color: white;
+  border: solid 2px rgba(145, 17, 14, 0.5);
+
+  transition: all ease-out 0.25s;
+}
+
+.user-menu.menu-scrolled {
+  border: solid 3px rgba(145, 17, 14, 0.5);
+}
+
+.user-menu .email-user {
+  font-size: 14px;
+  color: black;
+
+  cursor: auto;
+}
+
+.user-menu p {
+  display: flex;
+  align-items: center;
+  margin: 15px 10px;
+
+  cursor: pointer;
+  justify-content: center;
+
+  transition: all ease-in-out 0.2s;
+}
+.user-menu .user-menu-link:hover {
+
+  background-color: rgba(145, 17, 14, 0.4);
+
+  color: black;
+  font-weight: bold;
+}
+
+.user-menu-link i {
+  margin-right: 5px;
+}
+
+
 @media screen and (max-width: 690px) {
 
   .login-container button {
