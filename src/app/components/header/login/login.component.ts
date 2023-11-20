@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {AuthService} from "../../services/auth/auth.service";
+import {AuthService} from "../../../shared/services/auth/auth.service";
 import {LoginPopupComponent} from "../../popups/login-popup/login-popup.component";
 import {SignupPopupComponent} from "../../popups/signup-popup/signup-popup.component";
+import {map, Observable, Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {UserService} from "../../../shared/services/user/user.service";
+import {authState} from "@angular/fire/auth";
 
 @Component({
   selector: 'login',
@@ -12,16 +15,29 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit{
 
+  isLogged = this.authService.getAuthState().pipe(
+    map(authState => {
+          if (authState?.uid != null) {
+            return authState.uid;
+          } else {
+            return null;
+          }
+        }
+    )
+  );
+
   constructor(
-    private authService: AuthService,
-    private dialog: MatDialog,
-    private router: Router
+      private authService: AuthService,
+      private dialog: MatDialog,
   ) {
+    this.authService.getAuthState().subscribe((user) => {
+      console.log(user?.uid)
+    })
   }
 
-  isAuthenticated(): boolean {
-    return this.authService.isAuthenticated;
+  ngOnInit(): void {
   }
+
 
   openLogin() {
     const popup = this.dialog.open(LoginPopupComponent, {
@@ -34,7 +50,6 @@ export class LoginComponent implements OnInit{
         this.openSignUp()
       }
       if (message == 'login successful') {
-        return;
       }
     });
   }
@@ -51,8 +66,6 @@ export class LoginComponent implements OnInit{
         this.openLogin()
       }
       if (message == 'signup successful') {
-        window.alert("A");
-        return;
       }
     });
   }
@@ -61,6 +74,4 @@ export class LoginComponent implements OnInit{
     this.authService.logout();
   }
 
-  ngOnInit(): void {
-  }
 }

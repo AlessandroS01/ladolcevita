@@ -18,7 +18,9 @@ import {MatButtonModule} from "@angular/material/button";
         LoginComponent
     ],
     exports: [
+        CommonModule,
         NavbarComponent,
+        LoginComponent,
         SwitchLangComponent
     ],
     imports: [

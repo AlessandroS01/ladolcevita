@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {AuthService} from "../../services/auth/auth.service";
+import {AuthService} from "../../../shared/services/auth/auth.service";
 
 @Component({
   selector: 'app-signup-popup',
@@ -33,18 +33,11 @@ export class SignupPopupComponent {
   });
   submitted: boolean = false;
 
-  inputData: any;
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
     private ref: MatDialogRef<SignupPopupComponent>,
     private authService: AuthService,
   ) {
-
-  }
-
-  ngOnInit(): void {
-    this.inputData = this.data;
   }
 
   matchValidator(controlName: string, matchingControlName: string): ValidatorFn {
@@ -72,11 +65,7 @@ export class SignupPopupComponent {
   }
 
   async submitForm() {
-    const errorElement = document.getElementById('error');
-
-    if (errorElement) {
-      errorElement.textContent = '';
-    }
+    this.setErrorMessage('');
 
     this.submitted = true;
 
@@ -90,18 +79,14 @@ export class SignupPopupComponent {
 
     if (typeof auth == "string") {
 
-      const errorElement = document.getElementById('error');
 
-      if (errorElement) {
-        errorElement.textContent = auth;
-        switch (auth) {
-          case 'auth/email-already-in-use':
-            errorElement.textContent = 'Email already used';
-            break;
-          default:
-            errorElement.textContent = 'An unknown error occurred';
-            break;
-        }
+      switch (auth) {
+        case 'auth/email-already-in-use':
+          this.setErrorMessage('Email already in use');
+          break;
+        default:
+          this.setErrorMessage('An unknown error occurred');
+          break;
       }
     } else {
       this.closePopup('signup successful');
@@ -116,5 +101,12 @@ export class SignupPopupComponent {
       this.confirmPassVisibility = !this.confirmPassVisibility;
     }
 
+  }
+
+  setErrorMessage(message: string){
+    const errorElement = document.getElementById('error');
+    if (errorElement) {
+      errorElement.textContent = message;
+    }
   }
 }

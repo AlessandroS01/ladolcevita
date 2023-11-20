@@ -4,14 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FooterComponent } from './footer/footer.component';
 
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
-import {HeaderModule} from "./header/header.module";
-import {HomeModule} from "./home/home.module";
-import {FooterModule} from "./footer/footer.module";
+
+
+import {MatDialogModule} from "@angular/material/dialog";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 import { AngularFireModule } from '@angular/fire/compat';
@@ -19,18 +19,20 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
-import { LoginPopupComponent } from './popups/login-popup/login-popup.component';
-import { SignupPopupComponent } from './popups/signup-popup/signup-popup.component';
-import {MatDialogModule} from "@angular/material/dialog";
-import {PopupsModule} from "./popups/popups.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NotFoundComponent} from "./components/not-found/not-found.component";
+import {HeaderModule} from "./components/header/header.module";
+import {HomeModule} from "./components/home/home.module";
+import {FooterModule} from "./components/footer/footer.module";
+import {PopupsModule} from "./components/popups/popups.module";
+
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
-    LoginPopupComponent,
-    SignupPopupComponent
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
