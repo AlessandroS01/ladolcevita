@@ -27,9 +27,11 @@ export class LoginComponent implements OnInit{
   );
   isUserMenuVisible: boolean = false;
 
+
   constructor(
       private authService: AuthService,
       private dialog: MatDialog,
+      private userService: UserService
   ) {
     this.authService.getAuthState().subscribe((user) => {
       console.log(user?.uid)

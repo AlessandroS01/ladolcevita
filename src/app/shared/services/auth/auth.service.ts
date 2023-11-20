@@ -39,13 +39,14 @@ export class AuthService{
   }
 
   async signUp(email: string, password: string) {
+
     return this.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        return true;
+        return result.user?.uid
       })
       .catch((error) => {
         console.error('Login failed', error.code);
-        return (error as FirebaseError).code;
+        return (error as FirebaseError).code as string;
       });
   }
 

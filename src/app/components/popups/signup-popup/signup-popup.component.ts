@@ -2,6 +2,9 @@ import {Component, Inject} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {AuthService} from "../../../shared/services/auth/auth.service";
+import {UserService} from "../../../shared/services/user/user.service";
+import {user} from "@angular/fire/auth";
+import {User} from "../../../shared/models/user/user.model";
 
 @Component({
   selector: 'app-signup-popup',
@@ -11,6 +14,8 @@ import {AuthService} from "../../../shared/services/auth/auth.service";
 export class SignupPopupComponent {
   passwordVisibility: boolean = false;
   confirmPassVisibility: boolean = false;
+
+  user: User = new User();
 
   signupForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -37,6 +42,7 @@ export class SignupPopupComponent {
     @Inject(MAT_DIALOG_DATA) public data:any,
     private ref: MatDialogRef<SignupPopupComponent>,
     private authService: AuthService,
+    private userService: UserService
   ) {
   }
 
@@ -73,12 +79,12 @@ export class SignupPopupComponent {
       return;
     }
 
-    const auth =
-      await this.authService
-        .signUp(this.signupForm.get('email')?.value, this.signupForm.get('password')?.value);
+    const auth = await this.authService.signUp(
+        this.signupForm.get('email')?.value,
+        this.signupForm.get('password')?.value
+    );
 
-    if (typeof auth == "string") {
-
+    if (auth?.substring(0, 4) == 'auth') {
 
       switch (auth) {
         case 'auth/email-already-in-use':
@@ -89,8 +95,12 @@ export class SignupPopupComponent {
           break;
       }
     } else {
+
+      this.userService.create(this.user, auth as string);
+
       this.closePopup('signup successful');
     }
+
   }
 
   togglePasswordVisibility(pass = '') {
