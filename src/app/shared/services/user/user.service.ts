@@ -3,6 +3,7 @@ import firebase from "firebase/compat";
 import Firestore = firebase.firestore.Firestore;
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {User} from "../../models/user/user.model";
+import {map} from "rxjs";
 
 
 @Injectable({
@@ -23,12 +24,15 @@ export class UserService {
   }
 
   getUser(uid: string) {
+
     return this.usersRef.doc(uid).get();
   }
 
-  create(user: User, uid: string): any {
-    console.log(user);
-    console.log({...user});
+  create(user: User, uid: string, admin: boolean): any {
+    user.isAdmin = admin;
+
+    console.log("User created " + user);
+
     return this.usersRef.doc(uid).set({ ...user });
   }
 

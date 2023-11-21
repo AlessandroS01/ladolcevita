@@ -96,7 +96,7 @@ export class SignupPopupComponent {
       }
     } else {
 
-      this.userService.create(this.user, auth as string);
+      this.userService.create(this.user, auth as string, false);
 
       this.closePopup('signup successful');
     }

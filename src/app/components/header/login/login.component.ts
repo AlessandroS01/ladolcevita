@@ -3,10 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import {AuthService} from "../../../shared/services/auth/auth.service";
 import {LoginPopupComponent} from "../../popups/login-popup/login-popup.component";
 import {SignupPopupComponent} from "../../popups/signup-popup/signup-popup.component";
-import {map, Observable, Subscription} from "rxjs";
+import {map, Observable, of, Subscription, switchMap} from "rxjs";
 import {Router} from "@angular/router";
 import {UserService} from "../../../shared/services/user/user.service";
 import {authState} from "@angular/fire/auth";
+import {User} from "../../../shared/models/user/user.model";
 
 @Component({
   selector: 'login',
@@ -15,27 +16,46 @@ import {authState} from "@angular/fire/auth";
 })
 export class LoginComponent implements OnInit{
 
-  isLogged = this.authService.getAuthState().pipe(
-    map(authState => {
-          if (authState?.uid != null) {
-            return authState.uid;
-          } else {
-            return null;
-          }
-        }
-    )
-  );
-  isUserMenuVisible: boolean = false;
+  isLogged: Observable<string | null>;
+  user: Observable<User | null>;
 
+  isUserMenuVisible: boolean = false;
 
   constructor(
       private authService: AuthService,
       private dialog: MatDialog,
       private userService: UserService
   ) {
-    this.authService.getAuthState().subscribe((user) => {
-      console.log(user?.uid)
-    })
+    this.isLogged = this.authService.getAuthState().pipe(
+      map(authState => authState?.uid ?? null)
+    );
+
+    this.user = this.authService.getAuthState().pipe(
+      map(user => user?.uid),
+      switchMap(uid => {
+        if (uid) {
+          return this.userService.getUser(uid).pipe(
+            map(snapshot => {
+              if (snapshot.data() !== null) {
+                const userObj = new User();
+                const data = snapshot.data();
+
+                userObj.name = data?.name;
+                userObj.surname = data?.surname;
+                userObj.email = data?.email;
+                userObj.isAdmin = data?.isAdmin;
+
+                return userObj;
+              } else {
+                return null;
+              }
+            })
+          );
+        } else {
+          return of(null); // Return an Observable emitting null
+        }
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -80,6 +100,15 @@ export class LoginComponent implements OnInit{
 
   toggleDiv() {
     this.isUserMenuVisible = !this.isUserMenuVisible;
+  }
+
+  upperCamelCase(input: string | undefined): string {
+    if (!input) {
+      return ''; // Handle the case when input is undefined or null
+    }
+
+    const lowerCaseString = input.toLowerCase();
+    return lowerCaseString.charAt(0).toUpperCase() + lowerCaseString.slice(1);
   }
 
 }

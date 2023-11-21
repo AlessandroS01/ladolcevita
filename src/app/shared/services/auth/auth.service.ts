@@ -72,5 +72,4 @@ export class AuthService{
           return (error as FirebaseError).code;
         });
   }
-
 }

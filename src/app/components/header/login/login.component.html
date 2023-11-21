@@ -21,7 +21,7 @@
 </div>
 
 <div
-  *ngIf="(isLogged | async) !== null"
+  *ngIf="(isLogged | async) !== null && (user | async) as userData"
   class="login-container"
 >
 
@@ -31,8 +31,7 @@
       (click)="toggleDiv()"
     >
       <i class="fa fa-user" aria-hidden="true"></i>
-      Name
-      <!--{{ userService.getUser(loggedUserUid) }}-->
+      {{ upperCamelCase(userData.name) }} {{ upperCamelCase(userData.surname) }}
     </button>
 
 
@@ -42,8 +41,14 @@
       *ngIf="isUserMenuVisible"
     >
 
-      <p class="email-user">seghini53@gmail.com</p>
+      <p class="email-user"> {{userData.email}} </p>
       <hr>
+
+      <p
+        class="user-menu-link"
+        (click)="toggleDiv()"
+        *ngIf="userData.isAdmin"
+      >{{ "manage-site" | translate}}</p>
 
       <p
          class="user-menu-link"
