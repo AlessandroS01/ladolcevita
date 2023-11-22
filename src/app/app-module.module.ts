@@ -24,6 +24,18 @@ import {HeaderModule} from "./components/header/header.module";
 import {HomeModule} from "./components/home/home.module";
 import {FooterModule} from "./components/footer/footer.module";
 import {PopupsModule} from "./components/popups/popups.module";
+import { AboutComponent } from './components/about/about.component';
+import { AboutSlideshowComponent } from './components/about/about-slideshow/about-slideshow.component';
+import {CarouselModule} from "ngx-bootstrap/carousel";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {
+  CarouselCaptionComponent,
+  CarouselComponent, CarouselControlComponent,
+  CarouselIndicatorsComponent,
+  CarouselInnerComponent,
+  CarouselItemComponent
+} from "@coreui/angular";
+import {NgOptimizedImage} from "@angular/common";
 
 
 
@@ -32,7 +44,9 @@ import {PopupsModule} from "./components/popups/popups.module";
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AboutComponent,
+    AboutSlideshowComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +56,8 @@ import {PopupsModule} from "./components/popups/popups.module";
     ReactiveFormsModule,
 
     MatDialogModule,
+    BrowserAnimationsModule,
+    CarouselModule,
 
     HeaderModule,
     HomeModule,
@@ -60,7 +76,14 @@ import {PopupsModule} from "./components/popups/popups.module";
         deps: [HttpClient]
       }
     }),
-    FormsModule
+    FormsModule,
+    CarouselIndicatorsComponent,
+    CarouselComponent,
+    CarouselInnerComponent,
+    CarouselItemComponent,
+    CarouselCaptionComponent,
+    CarouselControlComponent,
+    NgOptimizedImage
   ],
   providers: [],
   exports: [

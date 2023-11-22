@@ -1,0 +1,39 @@
+<div
+  *ngIf="title != ''"
+  class="about-container">
+
+  <!--
+  <div class="title-image-container">
+    <img [src]="titleImageURL">
+  </div>
+  -->
+  <div class="title-container">
+    <h2> {{title}} </h2>
+
+
+    <p>{{titleDescription}}</p>
+  </div>
+
+  <!--
+  <about-slideshow></about-slideshow>
+  -->
+
+  <div
+    class="subtitle-container"
+    *ngFor="let subtitle of subtitles"
+  >
+    <h4>{{subtitle.value}}</h4>
+    <p>{{subtitle.description}}</p>
+  </div>
+
+
+  <div class="members-container">
+    <h4>MEMBERS</h4>
+  </div>
+</div>
+
+<!--
+<div [innerHTML]="'about.content-page.content' | translate">
+
+</div>
+-->

@@ -1,0 +1,26 @@
+<c-carousel *ngIf="slides.length > 0" >
+
+  <c-carousel-inner>
+    <c-carousel-item *ngFor="let slide of slides">
+      <img
+        class="d-block w-100"
+        loading="eager"
+        src="{{slide.src}}"
+      />
+    </c-carousel-item>
+  </c-carousel-inner>
+  <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+  <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
+</c-carousel>
+
+<!--
+<div class="goal">
+  <img
+    src="assets/img/first-slide.jpg"
+    alt="">
+  <p>Reach the public through cross-sectional research between humanistic and scientific knowledge fields</p>
+</div>
+
+<p>promote mutual exchange between foreign residents and Koreans based on the symbiosis of language and culture</p>
+<p>bring Koreans closer to learning Italian, breaking down language barriers and learning Italian as much as possible</p>
+-->

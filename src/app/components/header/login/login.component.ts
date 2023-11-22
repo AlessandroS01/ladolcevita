@@ -5,7 +5,7 @@ import {LoginPopupComponent} from "../../popups/login-popup/login-popup.componen
 import {SignupPopupComponent} from "../../popups/signup-popup/signup-popup.component";
 import {map, Observable, of, Subscription, switchMap} from "rxjs";
 import {Router} from "@angular/router";
-import {UserService} from "../../../shared/services/user/user.service";
+import {UserService} from "../../../shared/services/model/user/user.service";
 import {authState} from "@angular/fire/auth";
 import {User} from "../../../shared/models/user/user.model";
 

@@ -2,13 +2,25 @@
   "home": "Home",
   "events": "Eventi",
   "articles": "Articoli",
-  "about": "Chi siamo",
+  "about": {
+    "nav-title": "Chi siamo",
+    "content-page": {
+      "title": "Chi siamo",
+      "title-description": "“La Dolce Vita” è un'associazione accademica italiana fondata in Corea, dedicata allo studio e alla diffusione della cultura italiana in tutto il mondo. Studenti provenienti da vari campi come linguistica, musica, letteratura e arte si uniscono per offrire uno sguardo su varie discussioni e informazioni legate a questo campo attraverso argomenti sociali e culturali relativi a vari periodi storici.",
+      "subtitle-goal": "Il nostro scopo",
+      "goal-description": "L'obiettivo della nostra associazione è permettere agli studenti di entrare in contatti con la cultura italiana e di condurre ricerche sull'Italia attraverso 3 tappe fondamentali",
+      "content": "<p>This is a <strong>sample</strong> text with HTML tags.</p>"
+    }
+  },
+
   "login": "Login",
   "sign-up": "Registrati",
   "logout": "Logout",
 
   "user-menu-ticket": "Biglietti degli eventi",
   "manage-site": "Gestione del sito",
+
+  "about-page": "<p>Hello</p><p>Hello</p><p>Hello</p><p>HelloITA</p>",
 
   "footer-description": "Società di Studi Italiani"
 }

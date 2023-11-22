@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {AuthService} from "../../../shared/services/auth/auth.service";
-import {UserService} from "../../../shared/services/user/user.service";
+import {UserService} from "../../../shared/services/model/user/user.service";
 import {user} from "@angular/fire/auth";
 import {User} from "../../../shared/models/user/user.model";
 

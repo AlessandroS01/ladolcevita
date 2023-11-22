@@ -1,14 +1,28 @@
 {
+
   "home": "Home",
   "events": "Events",
   "articles": "Articles",
-  "about": "About",
+  "about": {
+    "nav-title": "About",
+    "content-page": {
+      "title": "About Us",
+      "title-description": "“La Dolce Vita” is an Italian academic association founded in Korea, dedicated to the study and dissemination of Italian culture around the world. Scholars from various fields such as linguistics, music, literature, and art come together to provide a glimpse into various discussions and information related to this field through social and cultural topics related to various historical periods.",
+      "subtitle-goal": "Our goal",
+      "goal-description": "The goal of our association is to allow students to experience Italian cultural knowledge and research about Italy through 3 milestones",
+      "content": "<p>This is a <strong>sample</strong> text with HTML tags.</p>"
+    }
+  },
+
   "login": "Login",
   "sign-up": "Sign up",
   "logout": "Logout",
 
   "user-menu-ticket": "Personal events tickets",
   "manage-site": "Manage site",
+
+
+
 
   "footer-description": "Italian Studies Society"
 }

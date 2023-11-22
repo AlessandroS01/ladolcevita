@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
+import {LanguageService} from "../../../shared/services/language/language.service";
 
 @Component({
   selector: 'switchlang',
@@ -20,7 +21,10 @@ export class SwitchLangComponent implements OnInit{
     }
   }
 
-  constructor(public translate: TranslateService) {
+  constructor(
+    public translate: TranslateService,
+    private languageService: LanguageService
+  ) {
     translate.addLangs(['en', 'it', 'ko']);
     translate.setDefaultLang('en');
   }
@@ -31,14 +35,17 @@ export class SwitchLangComponent implements OnInit{
     if (lang == "en") {
       this.langSelected = "English"
       this.flagLangSelected = "assets/img/languages/united-kingdom.png";
+      this.languageService.setLanguage("en");
     }
     if (lang == "it") {
       this.langSelected = "Italiano"
       this.flagLangSelected = "assets/img/languages/italian.png";
+      this.languageService.setLanguage("it");
     }
     if (lang == "ko") {
       this.langSelected = "한국어"
       this.flagLangSelected = "assets/img/languages/south-korea.png";
+      this.languageService.setLanguage("ko");
     }
 
     this.isDivHidden = true;
