@@ -4,7 +4,7 @@
 
   align-items: center;
 
-  padding: 0 20%;
+  padding: 0 10%;
   width: 100%;
 }
 
@@ -43,9 +43,116 @@
 
 /* MEMBERS */
 .members-container {
+  width: 100%;
   margin-top: 50px;
 }
 
+.members-container .member-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.member-title-container h2 {
+  font-weight: bold;
+}
+
+/* MEMBER CARD */
+.member-card {
+  width: 300px; /* Remove for full width */
+  margin:30px auto;
+  box-shadow: 0 0 25px rgba(145, 17, 14, 0.2);
+  background-color: rgba(211, 211, 211, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 6px;
+  border: solid 1px rgba(145, 17, 14, 0.2);
+}
+
+/* MEMBER CARD -> HEADER */
+.member-card-header {
+  width: 270px;
+  height: 300px;
+  margin: 10px;
+  background-color: white;
+}
+.member-card-header img {
+  height: 100%;
+  width: 100%;
+}
+
+
+/* MEMBER CARD -> BODY */
+.card-member-body {
+  width: 100%;
+  text-align:center;
+  padding-top: 10px;
+  border-top: solid 1px rgba(145, 17, 14, 0.2);
+  border-bottom: solid 1px rgba(145, 17, 14, 0.2);
+  background-color: white;
+}
+
+.member-name {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 auto;
+}
+
+.member-email {
+  font-size: 14px;
+  font-weight: 300;
+  margin-top: 5px;
+  color: #919191;
+}
+
+.member-role {
+  font-size: 14px;
+  color: #7B7B7B;
+  font-weight: 300;
+  margin: 10px auto;
+  line-height: 20px;
+}
+
+/* MEMBER CARD -> FOOTER */
+.card-member-footer {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.member-college-info {
+  text-align: center;
+}
+
+.member-college-info .member-university {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #95989A;
+}
+
+.member-college-info .member-faculty {
+  display: block;
+  font-weight: 700;
+  font-size:18px;
+  margin-top: 5px;
+}
+
+/* DISPLAYING CARDS */
+.grid-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.grid-item {
+  width: 100%;
+}
 
 @media screen and (max-width: 1100px){
   /* TITLE AND DESCRIPTION */
@@ -69,6 +176,30 @@
   }
 
 
+  /* MEMBERS */
+  .member-title-container h2 {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  /* DISPLAYING CARDS */
+  .grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 }
 
+@media screen and (max-width: 800px){
+  /* DISPLAYING CARDS */
+  .grid-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+}
 

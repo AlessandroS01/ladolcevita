@@ -27,8 +27,43 @@
   </div>
 
 
-  <div class="members-container">
-    <h4>MEMBERS</h4>
+  <div
+    class="members-container"
+    *ngIf="(memberPhotos | async) !== null && (members | async) !== null"
+  >
+    <div class="member-title-container">
+      <h2>Members</h2>
+    </div>
+
+    <div *ngIf="(members | async) as members">
+      <div *ngIf="(memberPhotos | async) as photos">
+        <div class="grid-container">
+          <div *ngFor="let member of members; let i = index;" class="grid-item">
+            <div class="member-card">
+              <div class="member-card-header">
+                <!-- Use safe navigation operator (?) to avoid errors when photos[i] is undefined -->
+                <img [src]="photos[i]">
+              </div>
+
+              <!-- Other member details -->
+              <div class="card-member-body">
+                <h2 class="member-name">{{member.name}} {{member.surname}}</h2>
+                <h4 class="member-email">{{member.email}}</h4>
+                <div class="member-role">{{member.role}}</div>
+              </div>
+
+              <div class="card-member-footer">
+                <div class="member-college-info">
+                  <span class="member-university">{{member.university}}</span>
+                  <span class="member-faculty">{{member.faculty}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 

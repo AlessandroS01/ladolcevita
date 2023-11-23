@@ -1,7 +1,10 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LanguageService} from "../../shared/services/language/language.service";
 import {AboutService} from "../../shared/services/page-info/about/about.service";
 import {AboutPageData} from "../../shared/interfaces/about_page/about-page-data";
+import {MemberService} from "../../shared/services/model/member/member.service";
+import {Member} from "../../shared/models/member/member";
+import {forkJoin, map, Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-about',
@@ -19,10 +22,47 @@ export class AboutComponent implements OnInit {
     description: string
   }[] = [];
 
+  members: Observable<Member[] | null>;
+  memberPhotos: Observable<string[] | null> = of(null);
+
   constructor(
     private languageService: LanguageService,
-    private aboutService: AboutService
+    private aboutService: AboutService,
+    private memberService: MemberService
   ) {
+    this.members = this.memberService.getAll().pipe(
+      map(snapshot => (snapshot ? snapshot : null))
+    );
+
+    this.members.subscribe(members => {
+      if (members !== null) {
+        const photoObservables: Observable<string | null>[] = [];
+        members.forEach((member: Member) => {
+          const photoPath = member.photo;
+
+          if (typeof photoPath === 'string') {
+            photoObservables.push(
+              this.memberService.getMemberPhoto(photoPath).pipe(
+                map(photo => (typeof photo === 'string' ? photo : null))
+              )
+            );
+          }
+        });
+
+        // Wait for all photo observables to complete using forkJoin
+        if (photoObservables.length > 0) {
+          this.memberPhotos = forkJoin(photoObservables).pipe(
+            map(photos =>
+              photos.filter(photo => photo !== null) as string[]
+            ) // Filter out null values
+          );
+        } else {
+          this.memberPhotos = of(null);
+        }
+      } else {
+        this.memberPhotos = of(null);
+      }
+    });
   }
 
   ngOnInit(): void {

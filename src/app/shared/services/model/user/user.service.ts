@@ -24,14 +24,11 @@ export class UserService {
   }
 
   getUser(uid: string) {
-
     return this.usersRef.doc(uid).get();
   }
 
   create(user: User, uid: string, admin: boolean): any {
     user.isAdmin = admin;
-
-    console.log("User created " + user);
 
     return this.usersRef.doc(uid).set({ ...user });
   }
@@ -43,6 +40,5 @@ export class UserService {
   delete(id: string): Promise<void> {
     return this.usersRef.doc(id).delete();
   }
-
 
 }
