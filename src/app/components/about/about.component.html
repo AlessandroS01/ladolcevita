@@ -32,7 +32,7 @@
     *ngIf="(memberPhotos | async) !== null && (members | async) !== null"
   >
     <div class="member-title-container">
-      <h2>Members</h2>
+      <h2>{{ 'about.member-title' | translate}}</h2>
     </div>
 
     <div *ngIf="(members | async) as members">

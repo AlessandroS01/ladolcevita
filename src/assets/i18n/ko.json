@@ -4,13 +4,7 @@
   "articles": "논문",
   "about": {
     "nav-title": "소개",
-    "content-page": {
-      "title": "소개",
-      "title-description": "\"La Dolce Vita\"( 라돌체 비타)는 한국에서 설립된 이탈리아 학술 협회로, 전세계에 이탈리아 문화를 연구하고    보급하는 데 전념하고 있습니다. 언어학, 음악, 문학 및 예술 등 다양한 분야의 학자들이 함께 모여서 다양한 역사적 시기에 관계된 사회 문화적  주제를 통하여 이 분야에 얽힌 다양한 토론과 정보를 엿볼 수 있도록 합니다.",
-      "subtitle-goal": "우리의 목적",
-      "goal-description": "우리 협회의 목표는 학생들이 3가지의 중요한 단계를 통해 이탈리아 문화적 지식을 체험하고 이탈리아에 관한 연구를 할 수 있도록 하는 것입니다",
-      "content": "<p>This is a <strong>sample</strong> text with HTML tags.</p>"
-    }
+    "member-title": "학회원 정보"
   },
 
   "login": "로그인",
