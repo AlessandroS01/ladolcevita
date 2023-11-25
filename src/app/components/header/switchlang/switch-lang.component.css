@@ -9,19 +9,12 @@
 
 .change-lang {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   align-items: center;
 }
 
-/* BUTTON */
-.change-lang button{
-  right: 0;
-  top: 0;
 
-  border: none;
-  background-color: white;
-}
 
 /* LANGUAGE PARAGRAPH */
 p {
@@ -29,10 +22,13 @@ p {
   display: flex;
   align-items: center;
 
-  font-weight: bold;
   font-size: 15px;
+  font-weight: lighter;
   padding: 5px 10px;
   border-radius: 10px;
+  color: darkgray;
+
+  cursor: pointer;
 
   transition: all ease-in 0.1s;
 }
@@ -47,9 +43,24 @@ p:hover {
   background-color: rgba(145, 17, 14, 0.2);
 }
 
+p.active {
+  font-weight: bold;
+  color: black;
+}
+
+/* BUTTON */
+/*
+.change-lang button{
+  right: 0;
+  top: 0;
+
+  border: none;
+  background-color: white;
+}
+ */
 
 /* MENU CHANGE LANG */
-
+/*
 .change-lang-menu {
   margin: 15px 0 0;
   padding: 5px;
@@ -57,15 +68,8 @@ p:hover {
   border: solid 2px #91110E;
   border-radius: 8px;
 
-  /*
-  background-color: rgba(145, 17, 14, 0.2);
-   */
 
   background-color: white;
-  /*
-  position: absolute;
-  top: 80px;
-   */
 }
 
 .change-lang-menu li {
@@ -76,3 +80,5 @@ p:hover {
 .change-lang-menu li p {
   color: black;
 }
+*/
+

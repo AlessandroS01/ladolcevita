@@ -1,6 +1,36 @@
 <div class="container-lang">
 
   <div class="change-lang">
+
+    <p
+      (click)="switchLang('en')"
+      id="english-language"
+    >
+      <img class="" src="assets/img/languages/united-kingdom.png">
+      En
+    </p>
+    <span>|</span>
+    <p
+      (click)="switchLang('ko')"
+      id="korean-language"
+    >
+      <img class="" src="assets/img/languages/south-korea.png">
+      Ko
+    </p>
+    <span>|</span>
+    <p
+      (click)="switchLang('it')"
+      id="italian-language"
+    >
+      <img class="" src="assets/img/languages/italian.png">
+      It
+    </p>
+
+  </div>
+
+</div>
+
+    <!--
     <button type="button" class="button-change-lang" (click)="toggleDiv()">
       <p>
         <img class="" [srcset]="flagLangSelected">
@@ -28,6 +58,5 @@
         </p>
       </li>
     </ul>
-  </div>
+    -->
 
-</div>
