@@ -66,23 +66,54 @@ export class AboutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.languageService.language.subscribe((language: string) => {
-      this.clearPageInfo();
-      if (language != null) {
-        this.aboutService.getAboutPageInfo(language).subscribe(snapshot => {
-          const data = snapshot.data() as AboutPageData;
+    this.aboutService.getAboutPageInfo().subscribe(snapshot => {
+      const allData = snapshot.data() as AboutPageData;
 
-          if (data !== undefined && data !== null) {
+      console.log(allData);
 
-            this.title = data.title;
-            this.titleDescription = data.title_description;
+      this.languageService.language.subscribe((language: string) => {
+        this.clearPageInfo();
+        if (language != null) {
+          switch (language) {
+            case 'en': {
+              const data = allData.en;
+              this.title = data.title;
+              this.titleDescription = data.title_description;
 
-            this.subtitles = data.subtitles;
+              this.subtitles = data.subtitles;
+              break;
+            }
+            case 'it': {
+              const data = allData.it;
+              this.title = data.title;
+              this.titleDescription = data.title_description;
 
+              this.subtitles = data.subtitles;
+              break;
+            }
+            case 'ko': {
+              const data = allData.ko;
+              this.title = data.title;
+              this.titleDescription = data.title_description;
+
+              this.subtitles = data.subtitles;
+              break;
+            }
           }
-        });
+        }
+      });
+      /*
+      if (data !== undefined && data !== null) {
+
+        this.title = data.title;
+        this.titleDescription = data.title_description;
+
+        this.subtitles = data.subtitles;
+
       }
+       */
     });
+
 
     /*
     this.aboutService.getFilesFromFolder("cover").subscribe(downloadUrls => {

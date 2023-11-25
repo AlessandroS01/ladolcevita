@@ -1,4 +1,4 @@
-export interface AboutPageData{
+export interface AboutPageLangData {
   title: string,
   title_description: string,
   subtitles: {
@@ -6,3 +6,11 @@ export interface AboutPageData{
     value: string;
   }[],
 }
+
+export interface AboutPageData {
+  en: AboutPageLangData,
+  it: AboutPageLangData,
+  ko: AboutPageLangData,
+}
+
+

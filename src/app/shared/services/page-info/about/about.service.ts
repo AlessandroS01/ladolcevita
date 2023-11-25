@@ -15,8 +15,8 @@ export class AboutService {
     private storage: AngularFireStorage
   ) { }
 
-  getAboutPageInfo(language: string) {
-    return this.db.collection(this.dbPath).doc(language).get();
+  getAboutPageInfo() {
+    return this.db.collection(this.dbPath).doc('page').get();
   }
 
   getDownloadURL(filePath: string): Observable<string> {

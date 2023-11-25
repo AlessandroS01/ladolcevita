@@ -97,4 +97,9 @@
   .login-container button {
     font-size: 16px;
   }
+
+  /* USER LOGGED */
+  .user-menu {
+    margin-top: 45px;
+  }
 }
