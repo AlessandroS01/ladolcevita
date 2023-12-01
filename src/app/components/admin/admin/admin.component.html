@@ -1,0 +1,59 @@
+
+<h2 style="font-weight: bold">Welcome back {{user.name}} {{user.surname}}</h2>
+
+
+
+<div class="event-participation-container">
+  <div class="sub-container top">
+    <h6>Users participation to events</h6>
+    <select #select (change)="onSelectChange(select.value)">
+      <option [value]=1>Future</option>
+      <option [value]=2>Past</option>
+      <option [value]=3>All</option>
+    </select>
+  </div>
+
+  <div
+    *ngIf="(completeParticipation | async) != null"
+    class="sub-container bottom">
+    <h6 style="text-align: center" *ngIf="participationFulfilled.length == 0">No users with a participation</h6>
+
+    <table
+      class="participation-table-container"
+      *ngIf="(participationFulfilled.length > 0)"
+    >
+      <tr>
+        <th style="border-top-left-radius: 10px;">Date</th>
+        <th>Event</th>
+        <th>Address</th>
+        <th style="border-top-right-radius: 10px;">Participant</th>
+      </tr>
+      <tr
+        *ngFor="let participation of participationFulfilled | paginate: {
+                                                            itemsPerPage: pageSize,
+                                                            currentPage: page,
+                                                            totalItems: participationFulfilled.length
+                                                            }"
+      >
+          <td
+            style="width: 25%;"
+          >{{participation.event?.date_time?.toDate() | date:"EEE, MMM d, y 'at' h:mma"}}
+          </td>
+          <td style="width: 25%;">{{participation.event?.en?.title}}</td>
+          <td style="width: 25%;">{{participation.event?.address}}</td>
+          <td style="width: 25%;">{{participation.user?.name}} {{participation.user?.surname}}</td>
+
+      </tr>
+    </table>
+
+    <div *ngIf="participationFulfilled.length > 0" class="pagination-container">
+      <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        [responsive]="true"
+        (pageChange)="handlePageChange($event)"
+      ></pagination-controls>
+    </div>
+
+  </div>
+</div>

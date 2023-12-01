@@ -1,0 +1,21 @@
+
+
+.carousel-container {
+  width: 100%;
+}
+
+.carousel {
+  display: flex;
+
+  justify-content: center;
+  width: 80%;
+}
+
+.carousel-container c-carousel {
+  z-index: -1;
+}
+
+.carousel-container img {
+  max-width: 100%;
+  height: auto;
+}

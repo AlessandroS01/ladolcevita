@@ -5,11 +5,26 @@
   margin-bottom: 150px;
 }
 
+.container-admin-page {
+  padding: 100px;
+}
+
+
+
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
 app-footer {
   position: sticky;
   top: 100%;
+  bottom: 0;
 }
+
+
 
 
 

@@ -6,6 +6,8 @@
     "nav-title": "소개",
     "member-title": "학회원 정보"
   },
+  "unauthorized-access": "에러 401: 무단 액세스",
+  "page-not-found": "에러 404: 페이지를 찾을 수 없음",
 
   "login": "로그인",
   "sign-up": "가입하기",

@@ -2,6 +2,9 @@ import {Injectable, OnInit} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import firebase from "firebase/compat";
 import FirebaseError = firebase.FirebaseError;
+import {UserService} from "../model/user/user.service";
+import {User} from "../../models/user/user.model";
+import {map, Observable, of, switchMap} from "rxjs";
 
 
 @Injectable({
@@ -9,7 +12,8 @@ import FirebaseError = firebase.FirebaseError;
 })
 export class AuthService{
   constructor(
-    public auth: AngularFireAuth
+    public auth: AngularFireAuth,
+    private userService: UserService
   ) {
     this.auth.authState.subscribe(user => {
       if (user) {
@@ -24,6 +28,27 @@ export class AuthService{
 
   getAuthState() {
     return this.auth.authState;
+  }
+
+  getLoggedUser(): Observable<User | null> {
+    return this.getAuthState().pipe(
+      map(user => user?.uid),
+      switchMap(uid => {
+        if (uid) {
+          return this.userService.getUserById(uid).pipe(
+            map(snapshot => {
+              if (snapshot.data() !== null) {
+                return snapshot.data() as User;
+              } else {
+                return null;
+              }
+            })
+          );
+        } else {
+          return of(null); // Return an Observable emitting null
+        }
+      })
+    );
   }
 
 

@@ -102,26 +102,7 @@ export class AboutComponent implements OnInit {
           }
         }
       });
-      /*
-      if (data !== undefined && data !== null) {
-
-        this.title = data.title;
-        this.titleDescription = data.title_description;
-
-        this.subtitles = data.subtitles;
-
-      }
-       */
     });
-
-
-    /*
-    this.aboutService.getFilesFromFolder("cover").subscribe(downloadUrls => {
-      this.coverImageURL = downloadUrls.filter(url =>
-        url.includes('.jpg') || url.includes('.png')
-      ).at(0);
-    });
-     */
   }
 
   clearPageInfo() {

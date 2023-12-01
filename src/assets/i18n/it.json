@@ -6,6 +6,8 @@
     "nav-title": "Chi siamo",
     "member-title": "Informazioni dei membri"
   },
+  "unauthorized-access": "Errore 401: Accesso Non Autorizzato",
+  "page-not-found": "Error 404: Pagina Non Trovata",
 
   "login": "Login",
   "sign-up": "Registrati",

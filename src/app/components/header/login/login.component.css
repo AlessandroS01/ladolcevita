@@ -69,6 +69,10 @@
   cursor: auto;
 }
 
+.user-menu a {
+  color: black;
+}
+
 .user-menu p {
   display: flex;
   align-items: center;

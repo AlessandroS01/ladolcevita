@@ -44,11 +44,12 @@
       <p class="email-user"> {{userData.email}} </p>
       <hr>
 
-      <p
-        class="user-menu-link"
-        (click)="toggleDiv()"
-        *ngIf="userData.isAdmin"
-      >{{ "manage-site" | translate}}</p>
+      <a [routerLink]="['admin']" [state]="userData">
+        <p
+          class="user-menu-link"
+          *ngIf="userData.isAdmin"
+        >{{ "manage-site" | translate}}</p>
+      </a>
 
       <p
          class="user-menu-link"

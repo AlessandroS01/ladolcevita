@@ -30,32 +30,7 @@ export class LoginComponent implements OnInit{
       map(authState => authState?.uid ?? null)
     );
 
-    this.user = this.authService.getAuthState().pipe(
-      map(user => user?.uid),
-      switchMap(uid => {
-        if (uid) {
-          return this.userService.getUser(uid).pipe(
-            map(snapshot => {
-              if (snapshot.data() !== null) {
-                const userObj = new User();
-                const data = snapshot.data();
-
-                userObj.name = data?.name;
-                userObj.surname = data?.surname;
-                userObj.email = data?.email;
-                userObj.isAdmin = data?.isAdmin;
-
-                return userObj;
-              } else {
-                return null;
-              }
-            })
-          );
-        } else {
-          return of(null); // Return an Observable emitting null
-        }
-      })
-    );
+    this.user = this.authService.getLoggedUser();
   }
 
   ngOnInit(): void {

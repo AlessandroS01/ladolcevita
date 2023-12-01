@@ -19,13 +19,11 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
-import {NotFoundComponent} from "./components/not-found/not-found.component";
+import {NotFoundComponent} from "./components/error-pages/not-found/not-found.component";
 import {HeaderModule} from "./components/header/header.module";
 import {HomeModule} from "./components/home/home.module";
 import {FooterModule} from "./components/footer/footer.module";
 import {PopupsModule} from "./components/popups/popups.module";
-import { AboutComponent } from './components/about/about.component';
-import { AboutSlideshowComponent } from './components/about/about-slideshow/about-slideshow.component';
 import {CarouselModule} from "ngx-bootstrap/carousel";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
@@ -36,6 +34,11 @@ import {
   CarouselItemComponent
 } from "@coreui/angular";
 import {NgOptimizedImage} from "@angular/common";
+import {AboutModule} from "./components/about/about.module";
+import { UnauthorizedComponent } from './components/error-pages/unauthorized/unauthorized.component';
+import {AdminHeaderModule} from "./components/admin/admin-header/admin-header.module";
+import {AdminComponent} from "./components/admin/admin/admin.component";
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 
@@ -45,8 +48,8 @@ import {NgOptimizedImage} from "@angular/common";
   declarations: [
     AppComponent,
     NotFoundComponent,
-    AboutComponent,
-    AboutSlideshowComponent
+    UnauthorizedComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +61,11 @@ import {NgOptimizedImage} from "@angular/common";
     MatDialogModule,
     BrowserAnimationsModule,
     CarouselModule,
+    NgxPaginationModule,
 
     HeaderModule,
     HomeModule,
+    AboutModule,
     FooterModule,
     PopupsModule,
 
@@ -83,7 +88,8 @@ import {NgOptimizedImage} from "@angular/common";
     CarouselItemComponent,
     CarouselCaptionComponent,
     CarouselControlComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    AdminHeaderModule
   ],
   providers: [],
   exports: [

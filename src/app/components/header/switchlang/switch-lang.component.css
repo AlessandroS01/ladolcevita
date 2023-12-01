@@ -48,6 +48,10 @@ p.active {
   color: black;
 }
 
+span {
+  font-weight: bold;
+}
+
 /* BUTTON */
 /*
 .change-lang button{

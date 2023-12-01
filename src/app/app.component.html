@@ -1,4 +1,8 @@
-<app-navbar></app-navbar>
+<div
+  class="content"
+  *ngIf="hideNavbarAndFooter"
+>
+  <app-navbar></app-navbar>
 
   <!--
   <div class="header">
@@ -9,11 +13,25 @@
  -->
 
   <!-- <a href="#" (click)="$event.preventDefault(); goToContact()">Contact Us</a> -->
-<div class="page-container">
-  <router-outlet></router-outlet>
+  <div class="page-container">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-footer></app-footer>
 </div>
 
-<app-footer></app-footer>
+<div
+  class="content"
+  *ngIf="!hideNavbarAndFooter"
+>
+  <app-admin-header *ngIf="!hideNavbarAndFooter"></app-admin-header>
+
+  <div class="container-admin-page">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
 
 
 
