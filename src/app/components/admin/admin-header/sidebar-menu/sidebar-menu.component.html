@@ -23,6 +23,15 @@
     class="admin-vertical-header"
   >
 
+    <!-- ADMIN MAIN PAGE -->
+    <div
+      class="admin-main-container"
+      (click)="changeTextMenu('Menu')"
+      routerLink="admin"
+    >
+      <h6 class="menu-entry-name" >Main</h6>
+    </div>
+
     <hr>
 
     <div class="menu-entries">
@@ -49,16 +58,20 @@
         </div>
         <p
           (click)="changeTextMenu('Events')"
+          routerLink="admin/events/view"
         >View</p>
         <p
           (click)="changeTextMenu('Events')"
+          routerLink="admin/events/create"
         >Create</p>
+        <!--
         <p
           (click)="changeTextMenu('Events')"
         >Modify</p>
         <p
           (click)="changeTextMenu('Events')"
         >Delete</p>
+        -->
       </div>
 
 

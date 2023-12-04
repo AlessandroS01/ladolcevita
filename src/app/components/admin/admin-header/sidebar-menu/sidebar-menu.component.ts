@@ -56,5 +56,6 @@ export class SidebarMenuComponent {
 
   changeTextMenu(newTitle: string) {
     this.menuText = newTitle;
+    this.moveVerticalMenu();
   }
 }

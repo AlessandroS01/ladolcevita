@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.hideNavbarAndFooter = event.url !== '/admin';
+      this.hideNavbarAndFooter = !event.url.startsWith('/admin');
     });
   }
 }

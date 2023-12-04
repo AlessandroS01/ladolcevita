@@ -41,7 +41,11 @@
           </td>
           <td style="width: 25%;">{{participation.event?.en?.title}}</td>
           <td style="width: 25%;">{{participation.event?.address}}</td>
-          <td style="width: 25%;">{{participation.user?.name}} {{participation.user?.surname}}</td>
+          <td style="width: 25%;">
+            {{participation.user?.name}} {{participation.user?.surname}}
+            <br>
+            <a href="mailto:{{participation.user?.email}}" style="cursor: pointer; margin: 0;">{{participation.user?.email}}</a>
+          </td>
 
       </tr>
     </table>

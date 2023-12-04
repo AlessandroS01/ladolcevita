@@ -91,7 +91,7 @@
   border-color: black;
   height: 3px;
   width: 30%;
-  margin: 20px 0;
+  margin: 10px 0;
   border-radius: 100px;
 }
 
@@ -128,8 +128,17 @@
   border-radius: 15px;
   cursor: pointer;
 }
-.entry-container:hover {
+.entry-container:hover,
+.admin-main-container:hover {
   background-color: rgba(145, 17, 14, 0.1);
+}
+.admin-main-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 0 0;
+  padding: 15px 10px;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 /* SUB-MENU */

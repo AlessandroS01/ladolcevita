@@ -39,6 +39,7 @@ import { UnauthorizedComponent } from './components/error-pages/unauthorized/una
 import {AdminHeaderModule} from "./components/admin/admin-header/admin-header.module";
 import {AdminComponent} from "./components/admin/admin/admin.component";
 import {NgxPaginationModule} from "ngx-pagination";
+import {AdminEventModule} from "./components/admin/admin-event/admin-event.module";
 
 
 
@@ -68,6 +69,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     AboutModule,
     FooterModule,
     PopupsModule,
+    AdminEventModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
