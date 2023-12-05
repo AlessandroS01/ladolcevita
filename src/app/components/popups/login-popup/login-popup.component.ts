@@ -28,7 +28,6 @@ export class LoginPopupComponent implements OnInit{
   submitted: boolean = false;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data:any,
     private ref: MatDialogRef<LoginPopupComponent>,
     private authService: AuthService,
   ) {

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {NavigationEnd, Router} from "@angular/router";
+import {filter} from "rxjs";
 
 @Component({
   selector: 'app-admin-header',
@@ -11,8 +13,30 @@ export class SidebarMenuComponent {
 
   menuText = 'Menu';
 
-  constructor() {
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      if (event.url.startsWith('/admin/events')) {
+        this.menuText = "Events";
+      }
+      else if (event.url.startsWith('/admin/articles')) {
+        this.menuText = "Articles";
+      }
+      else if (event.url.startsWith('/admin/announcements')) {
+        this.menuText = "Announcements";
+      }
+      else if (event.url.startsWith('/admin/members')) {
+        this.menuText = "Members";
+      }
+      else if (event.url.startsWith('/admin/pages')) {
+        this.menuText = "Pages";
+      }
+      else {
+        this.menuText = "Menu";
+      }
 
+    });
   }
 
   toggleDropdownMenu(id: string) {

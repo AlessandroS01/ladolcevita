@@ -15,4 +15,11 @@ export class Event {
 export class EventDetails {
   title?: string;
   description?: string;
+  subparagraphs?: Subparagraph[];
+}
+
+
+export class Subparagraph {
+  photo?: string;
+  description?: string;
 }

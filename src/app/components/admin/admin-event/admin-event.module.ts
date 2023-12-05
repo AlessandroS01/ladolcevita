@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventsViewComponent } from './view/events-view.component';
 import { EventsCreateComponent } from './create/events-create.component';
-import {provideQuillConfig, QuillModule} from "ngx-quill";
+import {AngularEditorModule} from "@kolkov/angular-editor";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -14,14 +15,12 @@ import {provideQuillConfig, QuillModule} from "ngx-quill";
   ],
   imports: [
     CommonModule,
-    QuillModule.forRoot()
+    AngularEditorModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
-    provideQuillConfig({
-      modules: {
-        syntax: true,
-      }
-    })
+
   ]
 })
 export class AdminEventModule { }

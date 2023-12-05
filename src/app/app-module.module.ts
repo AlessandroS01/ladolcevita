@@ -40,6 +40,8 @@ import {AdminHeaderModule} from "./components/admin/admin-header/admin-header.mo
 import {AdminComponent} from "./components/admin/admin/admin.component";
 import {NgxPaginationModule} from "ngx-pagination";
 import {AdminEventModule} from "./components/admin/admin-event/admin-event.module";
+import { PhotoComponent } from './components/admin/photo/photo/photo.component';
+import {AngularEditorModule} from "@kolkov/angular-editor";
 
 
 
@@ -50,7 +52,8 @@ import {AdminEventModule} from "./components/admin/admin-event/admin-event.modul
     AppComponent,
     NotFoundComponent,
     UnauthorizedComponent,
-    AdminComponent
+    AdminComponent,
+    PhotoComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ import {AdminEventModule} from "./components/admin/admin-event/admin-event.modul
     CarouselCaptionComponent,
     CarouselControlComponent,
     NgOptimizedImage,
-    AdminHeaderModule
+    AdminHeaderModule,
+    AngularEditorModule
   ],
   providers: [],
   exports: [
