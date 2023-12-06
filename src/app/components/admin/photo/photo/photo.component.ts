@@ -20,9 +20,16 @@ export class PhotoComponent {
       imageValidator
     ])
   });
+  photoUploaded: any;
 
   htmlContent = '';
 
 
   protected readonly editorConfig = editorConfig;
+
+  onChange(event: any) {
+    if (this.formPhoto.valid) {
+      this.photoUploaded = event.target.files[0];
+    }
+  }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {User} from "../../../models/user/user.model";
-import {map, Observable, take} from "rxjs";
+import {forkJoin, map, Observable, of, switchMap, take} from "rxjs";
 import {Event, Subparagraph} from "../../../models/event/event";
+import {AngularFireStorage} from "@angular/fire/compat/storage";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,12 @@ export class EventService {
   private dbPath: string = '/events';
   eventsRef: AngularFirestoreCollection<Event>;
 
-  constructor(private db: AngularFirestore) {
+  uploadPercentage: Observable<number> = of();
+
+  constructor(
+    private db: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {
     this.eventsRef = db.collection(this.dbPath);
   }
 
@@ -40,43 +46,61 @@ export class EventService {
     );
   }
 
-  create(event: Event) {
-    this.getAllUIDs().pipe(
-      take(1)
-    ).subscribe(uids=> {
-      let newUid: number = 1;
-      uids.forEach(uid=> {
-        if (newUid == parseInt(uid)){
-          newUid++;
-        }
-      })
-      const eventObject: any = { ...event }; // Convert the Event object to a plain object
-      eventObject.en = { ...eventObject.en }; // Convert the EventDetails object to a plain object
-      eventObject.it = { ...eventObject.it }; // Convert the EventDetails object to a plain object
-      eventObject.ko = { ...eventObject.ko }; // Convert the EventDetails object to a plain object
-      if (eventObject.en.subparagraphs) {
-        eventObject.en.subparagraphs =
-          eventObject.en.subparagraphs.map(
-              (sub: any) => ({ ...sub })
-          ); // Convert the Subparagraph objects to plain objects
-      }
-      if (eventObject.it.subparagraphs) {
-        eventObject.it.subparagraphs =
-          eventObject.it.subparagraphs.map(
-            (sub: any) => ({ ...sub })
-          ); // Convert the Subparagraph objects to plain objects
-      }
-      if (eventObject.ko.subparagraphs) {
-        eventObject.ko.subparagraphs =
-          eventObject.ko.subparagraphs.map(
-            (sub: any) => ({ ...sub })
-          ); // Convert the Subparagraph objects to plain objects
-      }
+  uploadFile(file: File, uid: number): Observable<number | undefined> {
+    const filePath = `${this.dbPath}/${uid}/${file.name}`;
+    const fileRef = this.storage.ref(filePath);
 
-      this.eventsRef.doc(newUid.toString()).set({ ...eventObject});
-    })
+    return fileRef.put(file).percentageChanges();
   }
 
+  create(event: Event): Observable<number> {
+    return this.getAllUIDs().pipe(
+      take(1),
+      switchMap(uids => {
+        let newUid = 1;
+
+        uids.forEach(uid => {
+          if (newUid === parseInt(uid)) {
+            newUid++;
+          }
+        });
+
+        const eventObject: any = this.transformEventObject(event, newUid);
+
+        return this.eventsRef.doc(newUid.toString()).set({ ...eventObject })
+          .then(() => newUid);
+      })
+    );
+  }
+
+  transformEventObject(event: Event, uid: number) {
+    event.id = uid.toString();
+    const eventObject: any = { ...event };
+
+    eventObject.en = { ...eventObject.en };
+    eventObject.it = { ...eventObject.it };
+    eventObject.ko = { ...eventObject.ko };
+    if (eventObject.en.subparagraphs) {
+      eventObject.en.subparagraphs =
+        eventObject.en.subparagraphs.map(
+          (sub: any) => ({ ...sub })
+        );
+    }
+    if (eventObject.it.subparagraphs) {
+      eventObject.it.subparagraphs =
+        eventObject.it.subparagraphs.map(
+          (sub: any) => ({ ...sub })
+        );
+    }
+    if (eventObject.ko.subparagraphs) {
+      eventObject.ko.subparagraphs =
+        eventObject.ko.subparagraphs.map(
+          (sub: any) => ({ ...sub })
+        );
+    }
+
+    return eventObject;
+  }
   update(id: string, event: Event): Promise<void> {
     return this.eventsRef.doc(id).update({ ...event });
   }

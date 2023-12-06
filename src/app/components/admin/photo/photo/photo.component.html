@@ -14,7 +14,7 @@
           type="file"
           accept="image/*"
           formControlName="photo"
-        >
+          (change)="onChange($event)">
       </div>
       <div
         *ngIf="formPhoto.get('photo')?.invalid || formPhoto.get('photo')?.dirty"

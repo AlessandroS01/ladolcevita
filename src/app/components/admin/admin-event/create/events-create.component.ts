@@ -6,6 +6,10 @@ import {PhotoComponent} from "../../photo/photo/photo.component";
 import {futureDateValidator} from "../../../../shared/controls/date/date";
 import {Event, EventDetails, Subparagraph} from "../../../../shared/models/event/event";
 import {EventService} from "../../../../shared/services/model/event/event.service";
+import {combineLatest, Observable, of} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {LoadingPopupComponent} from "../../../popups/loading-popup/loading-popup.component";
+import {Router} from "@angular/router";
 
 
 const imageValidator = fileTypeValidator(['png', 'jpg', 'jpeg']);
@@ -21,7 +25,11 @@ const futureDateValidation = futureDateValidator();
 })
 export class EventsCreateComponent {
 
-  constructor(private eventService: EventService) {
+  constructor(
+    private eventService: EventService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
   }
 
   @ViewChild("englishTextEditor", { read: ViewContainerRef }) vcrEn!: ViewContainerRef;
@@ -41,6 +49,8 @@ export class EventsCreateComponent {
   htmlContentEn = '';
   htmlContentIt = '';
   htmlContentKo = '';
+
+  coverPhotoUploaded: any;
 
   protected readonly editorConfig = editorConfig;
 
@@ -75,6 +85,8 @@ export class EventsCreateComponent {
   onFileChange(event: any) {
     const selectedFile = event.target.files[0];
     if (selectedFile != null) {
+      this.coverPhotoUploaded = selectedFile;
+
       this.changePropertyImageContainer('uploaded');
 
       const imageUrl = URL.createObjectURL(selectedFile);
@@ -164,56 +176,89 @@ export class EventsCreateComponent {
 
   submitForm() {
     this.submitted = true;
+    if (
+      this.checkValidityMainInfo() && this.checkValidityContent() &&
+      this.checkValidityImagesComponents(this.englishComponents, 'english') &&
+      this.checkValidityImagesComponents(this.italianComponents, 'italian') &&
+      this.checkValidityImagesComponents(this.koreanComponents, 'korean')
+    ){
+      this.createNewestEvent();
+    }
+  }
 
+  checkValidityMainInfo(): boolean {
+    let validity = true;
     if (this.eventForm.invalid) {
       if (this.eventForm.get('address')?.invalid) {
         window.alert("Address is required");
-        return;
+        validity = false;
       }
       if (this.eventForm.get('date')?.invalid) {
         window.alert("Date is required or not valid");
-        return;
+        validity = false;
       }
       if (this.eventForm.get('coverPhoto')?.invalid) {
         window.alert("A cover photo is required or not valid");
-        return;
+        validity = false;
       }
     }
+    return validity;
+  }
+  checkValidityContent() {
+    let validity = true;
     if (this.titleForm.invalid) {
       if (this.titleForm.get('enTitle')?.invalid) {
         window.alert("English title required");
-        return;
+        validity = false;
       }
       if (this.titleForm.get('itTitle')?.invalid) {
         window.alert("Italian title required");
-        return;
+        validity = false;
       }
       if (this.titleForm.get('koTitle')?.invalid) {
         window.alert("Korean title required");
-        return;
+        validity = false;
       }
     }
     if (!this.htmlContentEn) {
       window.alert("English paragraph is empty");
-      return;
+      validity = false;
     }
     if (!this.htmlContentIt) {
       window.alert("Italian paragraph is empty");
-      return;
+      validity = false;
     }
     if (!this.htmlContentKo) {
       window.alert("Korean paragraph is empty");
-      return;
+      validity = false;
     }
+    return validity;
+  }
+
+  checkValidityImagesComponents(components: PhotoComponent[], language: string): boolean {
+    let validity: boolean = true;
+    components.forEach(component => {
+      if (component.formPhoto.invalid) {
+        window.alert("Photo/Photos uploaded in "+ language + " language is/are invalid");
+        validity = false;
+      }
+    });
+    return validity;
+  }
+
+  createNewestEvent() {
+    const arrayUploadingFiles: File[] = [];
 
     const newEvent = new Event();
+    arrayUploadingFiles.push(this.coverPhotoUploaded as File);
 
     const eventDetailsEn = new EventDetails();
     this.populateEventDetails(
       eventDetailsEn,
       this.titleForm.get('enTitle')?.value,
       this.htmlContentEn,
-      this.englishComponents
+      this.englishComponents,
+      arrayUploadingFiles
     );
     newEvent.en = eventDetailsEn;
 
@@ -222,7 +267,8 @@ export class EventsCreateComponent {
       eventDetailsIt,
       this.titleForm.get('itTitle')?.value,
       this.htmlContentIt,
-      this.italianComponents
+      this.italianComponents,
+      arrayUploadingFiles
     );
     newEvent.it = eventDetailsIt;
 
@@ -231,7 +277,8 @@ export class EventsCreateComponent {
       eventDetailsKo,
       this.titleForm.get('koTitle')?.value,
       this.htmlContentKo,
-      this.koreanComponents
+      this.koreanComponents,
+      arrayUploadingFiles
     );
     newEvent.ko = eventDetailsKo;
 
@@ -240,11 +287,53 @@ export class EventsCreateComponent {
     newEvent.address = this.eventForm.get('address')?.value;
     newEvent.date_time = this.eventForm.get('date')?.value;
 
-    this.eventService.create(newEvent);
-    window.alert("Event created");
+
+    this.eventService.create(newEvent).subscribe(uid => {
+      const uploadObservables: Observable<number | undefined>[] = [];
+
+      for (let file of arrayUploadingFiles) {
+        uploadObservables.push(this.eventService.uploadFile(file, uid));
+      }
+
+      const dialogRef = this.dialog.open(LoadingPopupComponent, {
+        width: '1000px',
+        height: '350px',
+        maxHeight: '350px',
+        disableClose: true,
+        data: {
+          uploadPercentage: 50,
+          message: 'Event created successfully'
+        } // Initial value, it will be updated
+      });
+
+      combineLatest(uploadObservables).subscribe(percentages => {
+        const totalPercentage = percentages.reduce(
+          (total, current) => (total as number) + (current as number), 0
+        );
+        console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
+        dialogRef.componentInstance.updateUploadPercentage((totalPercentage as number) / uploadObservables.length);
+      });
+
+      dialogRef.afterClosed().subscribe(message =>{
+        if (message == 'new-event') {
+          window.location.reload();
+        }
+        if (message == 'main-page') {
+          this.router.navigate(['admin']);
+        }
+      });
+
+    });
+    //window.alert("Event created");
   }
 
-  populateEventDetails(eventDetails: EventDetails, titleValue: string, htmlContent: string, components: PhotoComponent[]) {
+  populateEventDetails(
+    eventDetails: EventDetails,
+    titleValue: string,
+    htmlContent: string,
+    components: PhotoComponent[],
+    uploadingFiles: File[]
+  ) {
     eventDetails.title = titleValue;
     eventDetails.description = htmlContent;
     eventDetails.subparagraphs = [];
@@ -252,9 +341,12 @@ export class EventsCreateComponent {
     components.forEach((component, index) => {
       const componentData = component.formPhoto;
       const subparagraph = new Subparagraph();
-      if (componentData.get('photo')?.value) {
+      if (componentData.get('photo')?.value && component.photoUploaded instanceof File) {
+        const photo = component.photoUploaded;
+
         let fullPath = componentData.get('photo')?.value;
         subparagraph.photo = fullPath.split('\\').pop();
+        uploadingFiles.push(photo);
       } else {
         subparagraph.photo = '';
       }
@@ -266,4 +358,6 @@ export class EventsCreateComponent {
       }
     });
   }
+
+
 }

@@ -57,11 +57,11 @@
             class="fa fa-arrow-left"></i>
         </div>
         <p
-          (click)="moveVerticalMenu()"
+          (click)="moveVerticalMenu();toggleDropdownMenu('events');"
           routerLink="admin/events/view"
         >View</p>
         <p
-          (click)="moveVerticalMenu()"
+          (click)="moveVerticalMenu();toggleDropdownMenu('events');"
           routerLink="admin/events/create"
         >Create</p>
         <!--

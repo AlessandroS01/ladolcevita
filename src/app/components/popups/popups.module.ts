@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import {LoginPopupComponent} from "./login-popup/login-popup.component";
 import {SignupPopupComponent} from "./signup-popup/signup-popup.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import { LoadingPopupComponent } from './loading-popup/loading-popup.component';
 
 
 
 @NgModule({
   declarations: [
     LoginPopupComponent,
-    SignupPopupComponent
+    SignupPopupComponent,
+    LoadingPopupComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
   exports: [
     LoginPopupComponent,
-    SignupPopupComponent
+    SignupPopupComponent,
+    LoadingPopupComponent
   ]
 })
 export class PopupsModule { }

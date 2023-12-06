@@ -1,0 +1,43 @@
+<div
+  class="loading-container"
+>
+
+  <h3>Uploading</h3>
+
+  <div class="progress-bar-container">
+    <div
+      class="progress"
+      [style.width.%]="uploadPercentage"
+    >
+      <span>{{uploadPercentage}}%</span>
+    </div>
+  </div>
+
+
+  <div
+    *ngIf="uploadPercentage !== 100"
+    class="message-container"
+  >
+    <h6>
+      <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+      Uploading images... Do not close this window
+    </h6>
+  </div>
+
+  <div
+    *ngIf="uploadPercentage === 100"
+    class="message-container"
+  >
+    <h6>
+      <i class="fa fa-check" aria-hidden="true"></i>
+      {{message}}
+    </h6>
+
+    <div class="loading-button-container">
+      <button (click)="closePopup('new-event')">New event</button>
+      <button (click)="closePopup('main-page')">Main page</button>
+    </div>
+  </div>
+
+
+</div>

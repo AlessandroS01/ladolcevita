@@ -27,7 +27,6 @@ export class ParticipantService {
     return this.participantsRef.valueChanges();
   }
   getUserParticipationFulfilled(): Observable<ParticipantFulfilled[] | null> {
-    console.log("A")
     return this.getAll().pipe(
       switchMap(participants => {
         if (!participants || participants.length === 0) {
