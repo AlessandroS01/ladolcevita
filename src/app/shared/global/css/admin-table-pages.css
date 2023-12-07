@@ -1,0 +1,133 @@
+.events-container {
+  margin-top: 30px;
+
+  background-color: white;
+  box-shadow: 0 0 8px #c4c4c4;
+  border-radius: 10px;
+}
+
+
+/* CONTAINER TOP */
+.events-container h6 {
+  font-weight: bold;
+  margin: 0;
+}
+
+.events-container .sub-container {
+  padding: 20px;
+}
+.events-container .top {
+  border-bottom: solid 2px #dadada;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CONTAINER TOP -> SELECT */
+.top select {
+  border-radius: 5px;
+  border-color: #c4c4c4;
+  padding: 5px 15px;
+  cursor: pointer;
+  background-color: rgba(145, 17, 14, 0.05);
+}
+.top select:focus {
+  border-color: #aaa;
+  color: #222;
+  outline: none;
+}
+select option {
+  padding: .6rem;
+  background: white;
+}
+option:not(:checked) {
+  background-color: white;
+}
+
+/* TABLE */
+.table-container {
+  width: 100%;
+  padding: 10px;
+}
+.table-container th {
+  padding: 20px 0;
+  text-align: center;
+  background-color: rgba(145, 17, 14, 0.6);
+  border: none;
+}
+.table-container tr {
+  background-color: rgba(145, 17, 14, 0.05);
+}
+.table-container td {
+  padding: 10px 0;
+  border-bottom: solid 1px #91110E;
+  border-top: solid 1px #91110E;
+  text-align: center;
+}
+
+
+/* TABLE BUTTONS */
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 20px;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.remove-button-container,
+.modify-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.remove-button-container {
+  background-color: darkred;
+}
+.modify-button-container {
+  background-color: darkblue;
+}
+
+.remove-button-container:hover,
+.modify-button-container:hover {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+.buttons-container i {
+  font-size: 25px;
+  color: white;
+}
+
+
+
+/* PAGINATION */
+.pagination-container {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .ngx-pagination .current{
+  background: rgba(145, 17, 14, 0.6)!important;
+  color: black !important;
+}
+
+
+
+@media screen and (max-width: 520px) {
+  .disappearing-cell {
+    display: none;
+  }
+}
+

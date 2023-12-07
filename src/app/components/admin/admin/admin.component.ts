@@ -4,6 +4,7 @@ import {ParticipantService} from "../../../shared/services/model/participant/par
 import {Participant, ParticipantFulfilled} from "../../../shared/models/participant/participant";
 import {map, Observable, of} from "rxjs";
 import {Utils} from "ngx-bootstrap/utils";
+import {AuthService} from "../../../shared/services/auth/auth.service";
 
 
 
@@ -12,48 +13,50 @@ import {Utils} from "ngx-bootstrap/utils";
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: [
+    './admin.component.css',
+    '../../../shared/global/css/admin-table-pages.css'
+  ]
 })
 export class AdminComponent {
 
-  user: User;
+  user: User = {};
   participationFulfilled: ParticipantFulfilled[] = [];
-  completeParticipation: Observable<ParticipantFulfilled[] | null>;
+  completeParticipation: ParticipantFulfilled[] = [];
 
   page = 1;
   pageSize = 5;
 
   constructor(
-    private participantService: ParticipantService
+    private participantService: ParticipantService,
+    private authService: AuthService
   ) {
-    this.user = history.state;
+     this.authService.getLoggedUser().subscribe(user => {
+      if (user != null) {
+        this.user = user;
+      }
+    })
 
-    this.completeParticipation = this.participantService.getUserParticipationFulfilled().pipe(
-      map(snapshot => (snapshot ? snapshot : null))
-    );
-    this.completeParticipation.subscribe(list => {
-      if (list) {
-        list.forEach(item  => {
-          if (item.event?.date_time && item.event.date_time.toMillis() > Date.now()) {
+    this.participantService.getUserParticipationFulfilled().subscribe( participations => {
+      if (participations != null) {
+        this.completeParticipation = participations;
+        this.completeParticipation.forEach(item  => {
+          if (item.event?.date_time && item.event.date_time.toDate().getTime() > Date.now()) {
             this.participationFulfilled.push(item);
           }
-        })
+        });
         this.sortingArray();
       }
     });
+
 
   }
 
   handlePageChange(pageNumber: number): void {
     this.page = pageNumber;
-
-    this.completeParticipation.subscribe(data => {
-      if (data) {
-        const startIndex = (this.page - 1) * this.pageSize;
-        const endIndex = startIndex + this.pageSize;
-        this.participationFulfilled = data.slice(startIndex, endIndex);
-      }
-    });
+    const startIndex = (this.page - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.participationFulfilled = this.completeParticipation.slice(startIndex, endIndex);
   }
 
 
@@ -61,46 +64,34 @@ export class AdminComponent {
     this.participationFulfilled = [];
 
     if (value == "1") {
-      this.completeParticipation.subscribe(list => {
-        if (list) {
-          list.forEach(item  => {
-            if (item.event?.date_time && item.event.date_time.toMillis() > Date.now()) {
-              this.participationFulfilled.push(item);
-            }
-          })
+      this.completeParticipation.forEach(item  => {
+        if (item.event?.date_time && item.event.date_time.toDate().getTime() > Date.now()) {
+          this.participationFulfilled.push(item);
         }
-        this.sortingArray();
-      });
+      })
+      this.sortingArray();
     } else if (value == "2"){
-      this.completeParticipation.subscribe(list => {
-        if (list) {
-          list.forEach(item  => {
-            if (item.event?.date_time && item.event.date_time.toMillis() < Date.now()) {
-              this.participationFulfilled.push(item);
-            }
-          })
+      this.completeParticipation.forEach(item  => {
+        if (item.event?.date_time && item.event.date_time.toDate().getTime() < Date.now()) {
+          this.participationFulfilled.push(item);
         }
-        this.sortingArray();
-      });
+      })
+      this.sortingArray();
     } else {
-      this.completeParticipation.subscribe(list => {
-        if (list) {
-          list.forEach(item  => {
-            if (item.event?.date_time) {
-              this.participationFulfilled.push(item);
-            }
-          })
+      this.completeParticipation.forEach(item  => {
+        if (item.event?.date_time) {
+          this.participationFulfilled.push(item);
         }
-        this.sortingArray();
-      });
+      })
+      this.sortingArray();
     }
   }
 
   sortingArray() {
     this.participationFulfilled.sort((a, b) => {
       if (a.event?.date_time && b.event?.date_time) {
-        const dateA = a.event.date_time.toMillis();
-        const dateB = b.event.date_time.toMillis();
+        const dateA = a.event.date_time.toDate().getTime();
+        const dateB = b.event.date_time.toDate().getTime();
 
 
         return dateA - dateB;

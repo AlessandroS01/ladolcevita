@@ -13,8 +13,6 @@ export class EventService {
   private dbPath: string = '/events';
   eventsRef: AngularFirestoreCollection<Event>;
 
-  uploadPercentage: Observable<number> = of();
-
   constructor(
     private db: AngularFirestore,
     private storage: AngularFireStorage
@@ -53,6 +51,12 @@ export class EventService {
     return fileRef.put(file).percentageChanges();
   }
 
+  getCoverPhotoEvent(event: Event): Observable<string> {
+    const reference =
+      this.storage.ref(`${this.dbPath}/${event.id}/${event.photo}`);
+    return reference.getDownloadURL();
+  }
+
   create(event: Event): Observable<number> {
     return this.getAllUIDs().pipe(
       take(1),
@@ -75,6 +79,7 @@ export class EventService {
 
   transformEventObject(event: Event, uid: number) {
     event.id = uid.toString();
+
     const eventObject: any = { ...event };
 
     eventObject.en = { ...eventObject.en };
@@ -105,7 +110,24 @@ export class EventService {
     return this.eventsRef.doc(id).update({ ...event });
   }
 
-  delete(id: string): Promise<void> {
-    return this.eventsRef.doc(id).delete();
+  delete(id: string) {
+    console.log(`${this.dbPath}/${id}`);
+    const folderPath = this.storage.ref(`${this.dbPath}/${id}`);
+    folderPath.listAll().subscribe(result => {
+      result.items.forEach(fileRef => {
+        fileRef.delete();
+      })
+      this.eventsRef.doc(id).delete();
+      const database = this.db.firestore;
+      database.collection('/participants').where(
+        'event', '==', id
+      ).get().then(snapshot => {
+        snapshot.forEach(doc=> {
+          doc.ref.delete();
+        })
+      })
+    })
   }
+
+
 }

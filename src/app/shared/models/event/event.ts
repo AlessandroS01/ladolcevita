@@ -1,5 +1,5 @@
 import firebase from "firebase/compat";
-import Timestamp = firebase.firestore.Timestamp;
+import { Timestamp } from "@firebase/firestore";
 
 export class Event {
   id?: string;

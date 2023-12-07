@@ -4,6 +4,7 @@ import { EventsViewComponent } from './view/events-view.component';
 import { EventsCreateComponent } from './create/events-create.component';
 import {AngularEditorModule} from "@kolkov/angular-editor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 
@@ -13,12 +14,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     EventsViewComponent,
     EventsCreateComponent
   ],
-  imports: [
-    CommonModule,
-    AngularEditorModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        AngularEditorModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxPaginationModule
+    ],
   providers: [
 
   ]

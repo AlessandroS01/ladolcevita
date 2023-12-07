@@ -10,6 +10,7 @@ import {combineLatest, Observable, of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {LoadingPopupComponent} from "../../../popups/loading-popup/loading-popup.component";
 import {Router} from "@angular/router";
+import {Timestamp} from "@firebase/firestore";
 
 
 const imageValidator = fileTypeValidator(['png', 'jpg', 'jpeg']);
@@ -252,6 +253,8 @@ export class EventsCreateComponent {
     const newEvent = new Event();
     arrayUploadingFiles.push(this.coverPhotoUploaded as File);
 
+
+
     const eventDetailsEn = new EventDetails();
     this.populateEventDetails(
       eventDetailsEn,
@@ -285,7 +288,8 @@ export class EventsCreateComponent {
     let fullPath = this.eventForm.get('coverPhoto')?.value;
     newEvent.photo = fullPath.split('\\').pop();
     newEvent.address = this.eventForm.get('address')?.value;
-    newEvent.date_time = this.eventForm.get('date')?.value;
+
+    newEvent.date_time = Timestamp.fromDate(new Date(this.eventForm.get('date')?.value));
 
 
     this.eventService.create(newEvent).subscribe(uid => {
@@ -311,7 +315,9 @@ export class EventsCreateComponent {
           (total, current) => (total as number) + (current as number), 0
         );
         console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
-        dialogRef.componentInstance.updateUploadPercentage((totalPercentage as number) / uploadObservables.length);
+        dialogRef.componentInstance.updateUploadPercentage(
+          (totalPercentage as number) / uploadObservables.length
+        );
       });
 
       dialogRef.afterClosed().subscribe(message =>{
@@ -321,10 +327,13 @@ export class EventsCreateComponent {
         if (message == 'main-page') {
           this.router.navigate(['admin']);
         }
+        if (message == 'see-events') {
+          this.router.navigate(['admin/events/view']);
+        }
       });
 
     });
-    //window.alert("Event created");
+
   }
 
   populateEventDetails(
@@ -358,6 +367,4 @@ export class EventsCreateComponent {
       }
     });
   }
-
-
 }

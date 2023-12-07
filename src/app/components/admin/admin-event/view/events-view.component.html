@@ -1,1 +1,107 @@
-<p>view works!</p>
+<h2 style="font-weight: bold">Event list</h2>
+<div
+  *ngIf="!isDataLoaded"
+  class="events-container"
+>
+  <i class="fa fa-spin fa-circle-o-notch"></i>
+</div>
+
+
+<div
+  *ngIf="isDataLoaded"
+  class="events-container"
+>
+  <div>
+    <div class="sub-container top">
+      <h6>All events</h6>
+      <select #select (change)="onSelectChange(select.value)">
+        <option [value]=1>Future</option>
+        <option [value]=2>Past</option>
+        <option [value]=3>All</option>
+      </select>
+    </div>
+
+    <div
+      class="sub-container bottom"
+    >
+      <h6
+        style="text-align: center"
+        *ngIf="eventList.length == 0"
+      >No events saved</h6>
+
+
+      <table
+        class="table-container"
+        *ngIf="eventList.length > 0"
+      >
+        <tr>
+          <th
+            class="first-header"
+          >Cover photo</th>
+          <th
+            class="second-header"
+          >Date</th>
+          <th>Event</th>
+          <th class="disappearing-cell">Address</th>
+          <th style="border-top-right-radius: 10px;">Actions</th>
+        </tr>
+        <tr
+          *ngFor="let event of eventList | paginate: {
+                                                              itemsPerPage: pageSize,
+                                                              currentPage: page,
+                                                              totalItems: eventList.length
+                                                              };"
+        >
+          <td class="image-cell-container">
+            <div class="image-div-container">
+              <img [src]="mapCoverPhoto.get(event.photo!)">
+            </div>
+          </td>
+          <td
+            style="width: 25%;"
+          >{{event.date_time?.toDate() | date:"EEE, MMM d, y"}}
+            <br>
+            {{event.date_time?.toDate() | date:"h:mma"}}
+          </td>
+          <td style="width: 15%;">{{event.en?.title}}</td>
+          <td
+            class="disappearing-cell"
+            style="width: 15%;"
+          >{{event.address}}</td>
+          <td style="width: 20%;">
+            <div class="buttons-container">
+              <div
+                class="remove-button-container"
+                title="Delete event"
+                (click)="deleteEvent(event)"
+              >
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </div>
+              <div
+                class="modify-button-container"
+                title="Edit event"
+              >
+                <i class="fa fa-pencil-square-o" aria-hidden="true">
+                </i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+
+      <div *ngIf="eventList.length > 0">
+        <div *ngIf="eventList.length > 0" class="pagination-container">
+          <pagination-controls
+            previousLabel="Prev"
+            nextLabel="Next"
+            [responsive]="true"
+            (pageChange)="handlePageChange($event)"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
