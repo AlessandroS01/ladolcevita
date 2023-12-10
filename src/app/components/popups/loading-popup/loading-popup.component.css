@@ -16,20 +16,26 @@
 }
 
 .progress-bar-container {
-  padding: 0 20px;
-}
-
-.progress {
-  height: auto;
-  padding: 8px 0;
-  background-color: rgba(145, 17, 14, 0.3);
   display: flex;
-  justify-content: center;
+  align-items: center;
+  margin: 0 20px;
+  height: 30px;
+  border: solid 1px #91110E;
+  position: relative;
 }
 
-.progress span{
+.progress-bar {
+  position: absolute;
+  padding: 15px 0;
+  background-color: rgba(145, 17, 14, 0.3);
+}
+
+.progress-bar-container span{
   color: black;
   font-weight: bold;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .message-container{
