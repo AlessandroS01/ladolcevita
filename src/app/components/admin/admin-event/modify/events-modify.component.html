@@ -1,10 +1,12 @@
-<div class="text-editor-container">
-  <h1 class="main-title-text-editor">Create event</h1>
+<div
+  class="text-editor-container"
+  *ngIf="isDataLoaded"
+>
+  <h1 class="main-title-text-editor">Modify event <br>{{event.id}}:{{event.en?.title}}</h1>
 
   <form
     id="form-editor"
-    [formGroup]="eventForm"
-   >
+  >
     <div class="grid-container">
       <div class="form-element-container">
         <div class="element">
@@ -14,16 +16,16 @@
           </label>
           <input
             type="text"
-            formControlName="address"
+            [formControl]="addressFormControl"
             placeholder="Enter the address"
           >
         </div>
         <div
-          *ngIf="eventForm.get('address')?.dirty || eventForm.get('address')?.touched || submitted"
+          *ngIf="addressFormControl.dirty || addressFormControl.touched || submitted"
           class="invalid-input"
         >
           <div
-            *ngIf="eventForm.get('address')?.hasError('required')"
+            *ngIf="addressFormControl.hasError('required')"
           >
             <i class="fa fa-exclamation-circle"></i> Address is required
           </div>
@@ -38,21 +40,21 @@
           </label>
           <input
             type="datetime-local"
-            formControlName="date"
+            [formControl]="dateFormControl"
             onkeydown="return false"
           >
         </div>
         <div
-          *ngIf="eventForm.get('date')?.dirty || eventForm.get('date')?.touched || submitted"
+          *ngIf="dateFormControl.dirty || dateFormControl.touched || submitted"
           class="invalid-input"
         >
           <div
-            *ngIf="eventForm.get('date')?.hasError('required')"
+            *ngIf="dateFormControl.hasError('required')"
           >
             <i class="fa fa-exclamation-circle"></i> Date is required
           </div>
           <div
-            *ngIf="eventForm.get('date')?.hasError('futureDateValidation')"
+            *ngIf="dateFormControl.hasError('futureDateValidation')"
           >
             <i class="fa fa-exclamation-circle"></i> Date is not valid
           </div>
@@ -73,21 +75,21 @@
           style="width: 100%"
           type="file"
           accept="image/*"
-          formControlName="coverPhoto"
+          [formControl]="coverPhotoFormControl"
           (change)="onFileChange($event)"
         >
       </div>
       <div
-        *ngIf="eventForm.get('coverPhoto')?.dirty || eventForm.get('coverPhoto')?.touched || submitted"
+        *ngIf="coverPhotoFormControl.dirty || submitted"
         class="invalid-input"
       >
         <div
-          *ngIf="eventForm.get('coverPhoto')?.hasError('required')"
+          *ngIf="coverPhotoFormControl.hasError('required') && coverPhotoFormControl.dirty"
         >
           <i class="fa fa-exclamation-circle"></i> Cover photo is required
         </div>
         <div
-          *ngIf="eventForm.get('coverPhoto')?.hasError('imageValidator')"
+          *ngIf="coverPhotoFormControl.hasError('imageValidator')"
         >
           <i class="fa fa-exclamation-circle"></i> The format is not accepted
         </div>
@@ -97,7 +99,7 @@
 
     <div
       id="im-cont" class="image-container hidden"
-      *ngIf="!eventForm.get('coverPhoto')?.hasError('imageValidator')"
+      *ngIf="!coverPhotoFormControl.hasError('imageValidator')"
     >
       <img id="uploaded-image" alt="eventImage">
     </div>
@@ -122,6 +124,7 @@
     >Korean</button>
   </div>
 
+
   <div
     id="text-editors"
     class="text-editors"
@@ -132,7 +135,6 @@
     >
 
       <form
-        [formGroup]="titleForm"
       >
         <div class="form-element-container">
           <div class="element">
@@ -145,15 +147,15 @@
               placeholder="English title"
               style="width: 100%"
               type="text"
-              formControlName="enTitle"
+              [formControl]="titleEnFormControl"
             >
           </div>
           <div
-            *ngIf="titleForm.get('enTitle')?.dirty || titleForm.get('enTitle')?.touched || submitted"
+            *ngIf="titleEnFormControl.dirty || titleEnFormControl.touched || submitted"
             class="invalid-input"
           >
             <div
-              *ngIf="titleForm.get('enTitle')?.hasError('required')"
+              *ngIf="titleEnFormControl.hasError('required')"
             >
               <i class="fa fa-exclamation-circle"></i> English title is required
             </div>
@@ -188,7 +190,6 @@
     >
 
       <form
-        [formGroup]="titleForm"
       >
         <div class="form-element-container">
           <div class="element">
@@ -201,15 +202,15 @@
               placeholder="Italian title"
               style="width: 100%"
               type="text"
-              formControlName="itTitle"
+              [formControl]="titleItFormControl"
             >
           </div>
           <div
-            *ngIf="titleForm.get('itTitle')?.dirty || titleForm.get('itTitle')?.touched || submitted"
+            *ngIf="titleItFormControl.dirty || titleItFormControl.touched || submitted"
             class="invalid-input"
           >
             <div
-              *ngIf="titleForm.get('itTitle')?.hasError('required')"
+              *ngIf="titleItFormControl.hasError('required')"
             >
               <i class="fa fa-exclamation-circle"></i> Italian title is required
             </div>
@@ -244,7 +245,6 @@
     >
 
       <form
-        [formGroup]="titleForm"
       >
         <div class="form-element-container">
           <div class="element">
@@ -257,15 +257,15 @@
               id="ko-title"
               style="width: 100%"
               type="text"
-              formControlName="koTitle"
+              [formControl]="titleKoFormControl"
             >
           </div>
           <div
-            *ngIf="titleForm.get('koTitle')?.dirty || titleForm.get('koTitle')?.touched || submitted"
+            *ngIf="titleKoFormControl.dirty || titleKoFormControl.touched || submitted"
             class="invalid-input"
           >
             <div
-              *ngIf="titleForm.get('koTitle')?.hasError('required')"
+              *ngIf="titleKoFormControl.hasError('required')"
             >
               <i class="fa fa-exclamation-circle"></i> Korean title is required
             </div>
@@ -297,13 +297,7 @@
 
 
   <button class="form-submitter" (click)="submitForm();">
-    Create event
+    Modify event
   </button>
-
-
-
-
-
-
 
 </div>

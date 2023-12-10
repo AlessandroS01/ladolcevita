@@ -34,6 +34,12 @@ form {
   align-items: center;
 }
 
+.element-photo {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
 .form-element-container label {
   margin-right: 20px;
   font-size: 16px;
@@ -135,7 +141,8 @@ angular-editor::ng-deep .angular-editor-textarea {
 
 @media screen and (max-width: 800px) {
   /* FORM ELEMENT */
-  .element {
+  .element,
+  .element-photo {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -5,6 +5,8 @@ import { EventsCreateComponent } from './create/events-create.component';
 import {AngularEditorModule} from "@kolkov/angular-editor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "ngx-pagination";
+import { EventsModifyComponent } from './modify/events-modify.component';
+import {RouterLink} from "@angular/router";
 
 
 
@@ -12,14 +14,16 @@ import {NgxPaginationModule} from "ngx-pagination";
 @NgModule({
   declarations: [
     EventsViewComponent,
-    EventsCreateComponent
+    EventsCreateComponent,
+    EventsModifyComponent
   ],
     imports: [
         CommonModule,
         AngularEditorModule,
         ReactiveFormsModule,
         FormsModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        RouterLink
     ],
   providers: [
 

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {User} from "../../../models/user/user.model";
-import {forkJoin, map, Observable, of, switchMap, take} from "rxjs";
+import {forkJoin, from, map, Observable, of, switchMap, take} from "rxjs";
 import {Event, Subparagraph} from "../../../models/event/event";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -106,12 +107,17 @@ export class EventService {
 
     return eventObject;
   }
-  update(id: string, event: Event): Promise<void> {
-    return this.eventsRef.doc(id).update({ ...event });
+  update(
+    oldEvent: Event,
+    updatedEvent: Event
+
+  ): Observable<void> {
+    const eventObject: any = this.transformEventObject(updatedEvent, parseInt(oldEvent.id!));
+
+    return from(this.eventsRef.doc(oldEvent.id).set({ ...eventObject }));
   }
 
-  delete(id: string) {
-    console.log(`${this.dbPath}/${id}`);
+  deleteFolder(id: string) {
     const folderPath = this.storage.ref(`${this.dbPath}/${id}`);
     folderPath.listAll().subscribe(result => {
       result.items.forEach(fileRef => {
@@ -130,4 +136,9 @@ export class EventService {
   }
 
 
+  deleteFile(updatedEvent: Event, namePhoto: string) {
+    const reference = this.storage.ref(`${this.dbPath}/${updatedEvent.id}/${namePhoto}`);
+
+    return reference.delete();
+  }
 }

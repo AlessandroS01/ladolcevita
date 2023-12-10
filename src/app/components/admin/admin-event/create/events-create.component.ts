@@ -110,7 +110,6 @@ export class EventsCreateComponent {
           div.classList.remove('hidden');
         }
       }
-
     }
   }
 
@@ -253,8 +252,6 @@ export class EventsCreateComponent {
     const newEvent = new Event();
     arrayUploadingFiles.push(this.coverPhotoUploaded as File);
 
-
-
     const eventDetailsEn = new EventDetails();
     this.populateEventDetails(
       eventDetailsEn,
@@ -291,49 +288,92 @@ export class EventsCreateComponent {
 
     newEvent.date_time = Timestamp.fromDate(new Date(this.eventForm.get('date')?.value));
 
+    if (this.checkPhotoNames(newEvent)){
+      this.eventService.create(newEvent).subscribe(uid => {
+        const uploadObservables: Observable<number | undefined>[] = [];
 
-    this.eventService.create(newEvent).subscribe(uid => {
-      const uploadObservables: Observable<number | undefined>[] = [];
+        for (let file of arrayUploadingFiles) {
+          uploadObservables.push(this.eventService.uploadFile(file, uid));
+        }
 
-      for (let file of arrayUploadingFiles) {
-        uploadObservables.push(this.eventService.uploadFile(file, uid));
+        const dialogRef = this.dialog.open(LoadingPopupComponent, {
+          width: '1000px',
+          height: '350px',
+          maxHeight: '350px',
+          disableClose: true,
+          data: {
+            uploadPercentage: 0,
+            message: 'Event created successfully'
+          } // Initial value, it will be updated
+        });
+
+        combineLatest(uploadObservables).subscribe(percentages => {
+          const totalPercentage = percentages.reduce(
+            (total, current) => (total as number) + (current as number), 0
+          );
+          console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
+          dialogRef.componentInstance.updateUploadPercentage(
+            (totalPercentage as number) / uploadObservables.length
+          );
+        });
+
+        dialogRef.afterClosed().subscribe(message =>{
+          if (message == 'new-event') {
+            window.location.reload();
+          }
+          if (message == 'main-page') {
+            this.router.navigate(['admin']);
+          }
+          if (message == 'see-events') {
+            this.router.navigate(['admin/events/view']);
+          }
+        });
+      });
+    } else {
+      window.alert('Some photos have the same name. Please change them.')
+    }
+
+
+  }
+
+  checkPhotoNames(newEvent: Event): boolean {
+    const photoSet = new Set<string>();
+    let counter = 0;
+
+    photoSet.add(newEvent.photo!);
+    counter++;
+
+    counter = this.addPhotoNamesToSetCollection(
+      photoSet,
+      newEvent.en?.subparagraphs!,
+      counter
+    );
+    counter = this.addPhotoNamesToSetCollection(
+      photoSet,
+      newEvent.it?.subparagraphs!,
+      counter
+    );
+    counter = this.addPhotoNamesToSetCollection(
+      photoSet,
+      newEvent.ko?.subparagraphs!,
+      counter
+    );
+
+    return counter == photoSet.size;
+  }
+  addPhotoNamesToSetCollection(
+    photoSet: Set<string>,
+    subparagraphs: Subparagraph[],
+    counter: number
+  ): number {
+
+    subparagraphs.forEach(sub => {
+      if (sub.photo!) {
+        photoSet.add(sub.photo!);
+        counter++;
       }
-
-      const dialogRef = this.dialog.open(LoadingPopupComponent, {
-        width: '1000px',
-        height: '350px',
-        maxHeight: '350px',
-        disableClose: true,
-        data: {
-          uploadPercentage: 50,
-          message: 'Event created successfully'
-        } // Initial value, it will be updated
-      });
-
-      combineLatest(uploadObservables).subscribe(percentages => {
-        const totalPercentage = percentages.reduce(
-          (total, current) => (total as number) + (current as number), 0
-        );
-        console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
-        dialogRef.componentInstance.updateUploadPercentage(
-          (totalPercentage as number) / uploadObservables.length
-        );
-      });
-
-      dialogRef.afterClosed().subscribe(message =>{
-        if (message == 'new-event') {
-          window.location.reload();
-        }
-        if (message == 'main-page') {
-          this.router.navigate(['admin']);
-        }
-        if (message == 'see-events') {
-          this.router.navigate(['admin/events/view']);
-        }
-      });
-
     });
-
+    return counter;
   }
 
   populateEventDetails(

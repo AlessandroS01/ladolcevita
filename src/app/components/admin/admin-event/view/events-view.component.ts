@@ -40,10 +40,10 @@ export class EventsViewComponent {
           this.eventList.push(event);
         }
       });
-    });
 
-    this.sortingArray();
-    this.isDataLoaded = true;
+      this.sortingArray();
+      this.isDataLoaded = true;
+    });
   }
 
   handlePageChange(pageNumber: number) {
@@ -100,7 +100,7 @@ export class EventsViewComponent {
 
   deleteEvent(event: Event) {
     if (confirm("Are you sure you want to delete the selected event?")) {
-      this.eventService.delete(event.id as string);
+      this.eventService.deleteFolder(event.id as string);
       return;
     } else {
       return;

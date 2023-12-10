@@ -21,15 +21,22 @@ export class PhotoComponent {
     ])
   });
   photoUploaded: any;
+  initialPhoto:string | null = null;
 
   htmlContent = '';
-
 
   protected readonly editorConfig = editorConfig;
 
   onChange(event: any) {
     if (this.formPhoto.valid) {
       this.photoUploaded = event.target.files[0];
+      this.initialPhoto = null;
     }
+  }
+
+  removePhoto() {
+    this.photoUploaded = null;
+    this.initialPhoto = null;
+    this.formPhoto.reset();
   }
 }

@@ -7,3 +7,20 @@
   background-color: rgba(145, 17, 14, 0.1);
 }
 
+.remove-photo-container {
+  background-color: white;
+  margin: 0;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #c4c4c4;
+  padding: 15px;
+  display: inline-block;
+
+  cursor: pointer;
+  transition: all ease-in-out 0.2s;
+}
+
+.remove-photo-container:hover {
+  background-color: darkred;
+  color: white;
+}
+

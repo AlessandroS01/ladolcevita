@@ -1,10 +1,22 @@
 <div class="new-photo-container">
+
+  <div style="width: 100%; display: flex; justify-content: flex-end;">
+    <div
+      class="remove-photo-container"
+      (click)="removePhoto()"
+    >
+      Remove photo
+      <i class="fa fa-close"></i>
+    </div>
+  </div>
+
+
   <form
     class="input-photo-container"
     [formGroup]="formPhoto"
   >
     <div class="form-element-container">
-      <div class="element">
+      <div class="element-photo">
         <label>
           <i class="fa fa-picture-o" aria-hidden="true"></i>
           New photo
@@ -15,6 +27,12 @@
           accept="image/*"
           formControlName="photo"
           (change)="onChange($event)">
+        <p
+          *ngIf="initialPhoto != null"
+          style="margin: 0;"
+        >
+          Initial photo name: {{initialPhoto}}
+        </p>
       </div>
       <div
         *ngIf="formPhoto.get('photo')?.invalid || formPhoto.get('photo')?.dirty"
