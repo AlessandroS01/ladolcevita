@@ -34,9 +34,9 @@
     </h6>
 
     <div class="loading-button-container">
-      <button (click)="closePopup('new-event')">New event</button>
-      <button (click)="closePopup('see-events')">See events</button>
-      <button (click)="closePopup('main-page')">Main page</button>
+      <button (click)="closePopup(data.create.value)">{{data.create.title}}</button>
+      <button (click)="closePopup(data.view.value)">{{data.view.title}}</button>
+      <button (click)="closePopup(data.main.value)">{{data.main.title}}</button>
     </div>
   </div>
 

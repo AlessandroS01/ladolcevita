@@ -9,6 +9,9 @@ import {UnauthorizedComponent} from "./components/error-pages/unauthorized/unaut
 import {EventsViewComponent} from "./components/admin/admin-event/view/events-view.component";
 import {EventsCreateComponent} from "./components/admin/admin-event/create/events-create.component";
 import {EventsModifyComponent} from "./components/admin/admin-event/modify/events-modify.component";
+import {ArticlesViewComponent} from "./components/admin/admin-article/view/view-articles.component";
+import {ArticlesCreateComponent} from "./components/admin/admin-article/create/articles-create.component";
+import {ArticlesModifyComponent} from "./components/admin/admin-article/modify/articles-modify.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -17,6 +20,9 @@ const routes: Routes = [
   { path: 'admin/events/view', canActivate:[adminGuard], component: EventsViewComponent},
   { path: 'admin/events/create', canActivate:[adminGuard], component: EventsCreateComponent},
   { path: 'admin/events/modify/:id', canActivate:[adminGuard], component: EventsModifyComponent},
+  { path: 'admin/articles/view', canActivate:[adminGuard], component: ArticlesViewComponent},
+  { path: 'admin/articles/create', canActivate:[adminGuard], component: ArticlesCreateComponent},
+  { path: 'admin/articles/modify/:id', canActivate:[adminGuard], component: ArticlesModifyComponent},
 
   { path: 'unauthorized', component: UnauthorizedComponent},
   { path: '**', component: NotFoundComponent}, // leave this at the end

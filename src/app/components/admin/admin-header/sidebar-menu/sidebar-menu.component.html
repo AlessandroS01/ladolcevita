@@ -64,14 +64,6 @@
           (click)="moveVerticalMenu();toggleDropdownMenu('events');"
           routerLink="admin/events/create"
         >Create</p>
-        <!--
-        <p
-          (click)="changeTextMenu('Events')"
-        >Modify</p>
-        <p
-          (click)="changeTextMenu('Events')"
-        >Delete</p>
-        -->
       </div>
 
 
@@ -95,10 +87,14 @@
             style="font-size: 16px"
             class="fa fa-arrow-left"></i>
         </div>
-        <p>View</p>
-        <p>Create</p>
-        <p>Modify</p>
-        <p>Delete</p>
+        <p
+          (click)="moveVerticalMenu();toggleDropdownMenu('articles');"
+          routerLink="admin/articles/view"
+        >View</p>
+        <p
+          (click)="moveVerticalMenu();toggleDropdownMenu('articles');"
+          routerLink="admin/articles/create"
+        >Create</p>
       </div>
 
 

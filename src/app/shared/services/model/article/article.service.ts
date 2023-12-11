@@ -1,32 +1,31 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {User} from "../../../models/user/user.model";
-import {forkJoin, from, map, Observable, of, switchMap, take} from "rxjs";
+import {from, map, Observable, of, switchMap, take} from "rxjs";
 import {Event} from "../../../models/event/event";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
-import {HttpClient} from "@angular/common/http";
+import {Article} from "../../../models/article/article";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventService {
+export class ArticleService {
 
-  private dbPath: string = '/events';
-  eventsRef: AngularFirestoreCollection<Event>;
+  private dbPath: string = '/articles';
+  articlesRef: AngularFirestoreCollection<Article>;
 
   constructor(
     private db: AngularFirestore,
     private storage: AngularFireStorage
   ) {
-    this.eventsRef = db.collection(this.dbPath);
+    this.articlesRef = db.collection(this.dbPath);
   }
 
-  getAll(): Observable<Event[]> {
-    return this.eventsRef.valueChanges();
+  getAll(): Observable<Article[]> {
+    return this.articlesRef.valueChanges();
   }
 
-  getEventById(uid: string) {
-    return this.eventsRef.doc(uid).get().pipe(
+  getArticlesById(uid: string) {
+    return this.articlesRef.doc(uid).get().pipe(
       map(snapshot => {
         if (snapshot.data != null) {
           return snapshot.data() as Event;
@@ -38,7 +37,7 @@ export class EventService {
   }
 
   getAllUIDs(): Observable<string[]> {
-    return this.eventsRef.snapshotChanges().pipe(
+    return this.articlesRef.snapshotChanges().pipe(
       map(actions => {
         return actions.map(action => action.payload.doc.id);
       })
@@ -52,13 +51,13 @@ export class EventService {
     return fileRef.put(file).percentageChanges();
   }
 
-  getCoverPhotoEvent(event: Event): Observable<string> {
+  getCoverPhotoArticle(article: Article): Observable<string> {
     const reference =
-      this.storage.ref(`${this.dbPath}/${event.id}/${event.photo}`);
+      this.storage.ref(`${this.dbPath}/${article.id}/${article.photo}`);
     return reference.getDownloadURL();
   }
 
-  create(event: Event): Observable<number> {
+  create(article: Article): Observable<number> {
     return this.getAllUIDs().pipe(
       take(1),
       switchMap(uids => {
@@ -70,18 +69,18 @@ export class EventService {
           }
         });
 
-        const eventObject: any = this.transformEventObject(event, newUid);
+        const eventObject: any = this.transformArticleObject(article, newUid);
 
-        return this.eventsRef.doc(newUid.toString()).set({ ...eventObject })
+        return this.articlesRef.doc(newUid.toString()).set({ ...eventObject })
           .then(() => newUid);
       })
     );
   }
 
-  transformEventObject(event: Event, uid: number) {
-    event.id = uid.toString();
+  transformArticleObject(article: Article, uid: number) {
+    article.id = uid.toString();
 
-    const eventObject: any = { ...event };
+    const eventObject: any = { ...article };
 
     eventObject.en = { ...eventObject.en };
     eventObject.it = { ...eventObject.it };
@@ -108,13 +107,13 @@ export class EventService {
     return eventObject;
   }
   update(
-    oldEvent: Event,
-    updatedEvent: Event
+    oldArticle: Article,
+    updatedArticle: Article
 
   ): Observable<void> {
-    const eventObject: any = this.transformEventObject(updatedEvent, parseInt(oldEvent.id!));
+    const eventObject: any = this.transformArticleObject(updatedArticle, parseInt(oldArticle.id!));
 
-    return from(this.eventsRef.doc(oldEvent.id).set({ ...eventObject }));
+    return from(this.articlesRef.doc(oldArticle.id).set({ ...eventObject }));
   }
 
   deleteFolder(id: string) {
@@ -123,21 +122,12 @@ export class EventService {
       result.items.forEach(fileRef => {
         fileRef.delete();
       })
-      this.eventsRef.doc(id).delete();
-      const database = this.db.firestore;
-      database.collection('/participants').where(
-        'event', '==', id
-      ).get().then(snapshot => {
-        snapshot.forEach(doc=> {
-          doc.ref.delete();
-        })
-      })
     })
   }
 
 
-  deleteFile(updatedEvent: Event, namePhoto: string) {
-    const reference = this.storage.ref(`${this.dbPath}/${updatedEvent.id}/${namePhoto}`);
+  deleteFile(updatedArticle: Article, namePhoto: string) {
+    const reference = this.storage.ref(`${this.dbPath}/${updatedArticle.id}/${namePhoto}`);
 
     return reference.delete();
   }

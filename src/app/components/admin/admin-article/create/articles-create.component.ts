@@ -1,38 +1,36 @@
 import {Component, ComponentRef, ViewChild, ViewContainerRef} from '@angular/core';
 import {editorConfig} from "../../../../shared/global/variables/global";
+import {PhotoComponent} from "../../photo/photo/photo.component";
+import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {fileTypeValidator} from "../../../../shared/controls/file-type/filetype";
-import {PhotoComponent} from "../../photo/photo/photo.component";
 import {futureDateValidator} from "../../../../shared/controls/date/date";
+import {MemberService} from "../../../../shared/services/model/member/member.service";
+import {Member} from "../../../../shared/models/member/member";
 import {Event} from "../../../../shared/models/event/event";
-import {EventService} from "../../../../shared/services/model/event/event.service";
-import {combineLatest, Observable, of} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
-import {LoadingPopupComponent} from "../../../popups/loading-popup/loading-popup.component";
-import {Router} from "@angular/router";
-import {Timestamp} from "@firebase/firestore";
 import {Details, Subparagraph} from "../../../../shared/models/common/details-subparagraphs";
-
+import {Timestamp} from "@firebase/firestore";
+import {Article} from "../../../../shared/models/article/article";
+import {ArticleService} from "../../../../shared/services/model/article/article.service";
+import {combineLatest, Observable} from "rxjs";
+import {LoadingPopupComponent} from "../../../popups/loading-popup/loading-popup.component";
 
 const imageValidator = fileTypeValidator(['png', 'jpg', 'jpeg']);
 const futureDateValidation = futureDateValidator();
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './events-create.component.html',
+  selector: 'app-create-articles',
+  templateUrl: './articles-create.component.html',
   styleUrls: [
-    '../../../../shared/global/css/text-editor.css',
-    './events-create.component.css'
+    './articles-create.component.css',
+    '../../../../shared/global/css/text-editor.css'
   ]
 })
-export class EventsCreateComponent {
+export class ArticlesCreateComponent {
 
-  constructor(
-    private eventService: EventService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
+  memberList: Member[] = [];
+  writerEmail: string = '';
 
   @ViewChild("englishTextEditor", { read: ViewContainerRef }) vcrEn!: ViewContainerRef;
   refEnglish!: ComponentRef<PhotoComponent>
@@ -46,19 +44,14 @@ export class EventsCreateComponent {
   refKorean!: ComponentRef<PhotoComponent>
   koreanComponents: PhotoComponent[] = [];
 
-  selectedLanguage= 'english';
-
-  htmlContentEn = '';
-  htmlContentIt = '';
-  htmlContentKo = '';
-
-  coverPhotoUploaded: any;
-
   protected readonly editorConfig = editorConfig;
 
-  eventForm: FormGroup = new FormGroup({
-    address: new FormControl('', [
-      Validators.required
+  articleForm: FormGroup = new FormGroup({
+    lecture: new FormControl(
+      '', [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(60),
     ]),
     date: new FormControl('', [
       Validators.required,
@@ -70,6 +63,10 @@ export class EventsCreateComponent {
     ]),
   });
 
+
+  submitted: boolean = false;
+  coverPhotoUploaded: any;
+  selectedLanguage: string = 'english';
   titleForm: FormGroup = new FormGroup({
     enTitle: new FormControl('', [
       Validators.required
@@ -81,8 +78,31 @@ export class EventsCreateComponent {
       Validators.required
     ]),
   });
-  submitted: boolean = false;
 
+
+  htmlContentEn: string = '';
+  htmlContentIt: string = '';
+  htmlContentKo: string = '';
+
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private articleService: ArticleService,
+    private memberService: MemberService
+  ) {
+    this.memberService.getAll().subscribe(members=> {
+      this.memberList = members;
+      if (members.at(0)) {
+        this.writerEmail = members.at(0)!.email as string;
+      }
+
+    })
+  }
+
+  onWriterChange(event: any) {
+    const memberValue: string = event.target.value;
+    this.writerEmail = memberValue.split('/ ').pop() as string;
+  }
 
   onFileChange(event: any) {
     const selectedFile = event.target.files[0];
@@ -99,7 +119,7 @@ export class EventsCreateComponent {
     }
   }
 
-  changePropertyImageContainer(action: string) {
+  private changePropertyImageContainer(action: string) {
     const div = document.getElementById('im-cont');
     if (div != null) {
       if (action === 'removed') {
@@ -174,38 +194,43 @@ export class EventsCreateComponent {
     }
   }
 
-
   submitForm() {
     this.submitted = true;
+
     if (
       this.checkValidityMainInfo() && this.checkValidityContent() &&
       this.checkValidityImagesComponents(this.englishComponents, 'english') &&
       this.checkValidityImagesComponents(this.italianComponents, 'italian') &&
       this.checkValidityImagesComponents(this.koreanComponents, 'korean')
     ){
-      this.createNewestEvent();
+      this.createNewestArticle();
     }
   }
 
-  checkValidityMainInfo(): boolean {
+  private checkValidityMainInfo(): boolean {
     let validity = true;
-    if (this.eventForm.invalid) {
-      if (this.eventForm.get('address')?.invalid) {
-        window.alert("Address is required");
+    if (this.articleForm.invalid) {
+      if (this.writerEmail == '') {
+        window.alert("Please select the writer");
         validity = false;
       }
-      if (this.eventForm.get('date')?.invalid) {
+      if (this.articleForm.get('lecture')?.invalid) {
+        window.alert("Lecture time is required or not valid");
+        validity = false;
+      }
+      if (this.articleForm.get('date')?.invalid) {
         window.alert("Date is required or not valid");
         validity = false;
       }
-      if (this.eventForm.get('coverPhoto')?.invalid) {
+      if (this.articleForm.get('coverPhoto')?.invalid) {
         window.alert("A cover photo is required or not valid");
         validity = false;
       }
     }
     return validity;
   }
-  checkValidityContent() {
+
+  private checkValidityContent(): boolean {
     let validity = true;
     if (this.titleForm.invalid) {
       if (this.titleForm.get('enTitle')?.invalid) {
@@ -247,54 +272,54 @@ export class EventsCreateComponent {
     return validity;
   }
 
-  createNewestEvent() {
+  private createNewestArticle() {
     const arrayUploadingFiles: File[] = [];
 
-    const newEvent = new Event();
+    const newArticle = new Article();
     arrayUploadingFiles.push(this.coverPhotoUploaded as File);
 
-    const eventDetailsEn = new Details();
-    this.populateEventDetails(
-      eventDetailsEn,
+    const articleDetailsEn = new Details();
+    this.populateArticleDetails(
+      articleDetailsEn,
       this.titleForm.get('enTitle')?.value,
       this.htmlContentEn,
       this.englishComponents,
       arrayUploadingFiles
     );
-    newEvent.en = eventDetailsEn;
+    newArticle.en = articleDetailsEn;
 
-    const eventDetailsIt = new Details();
-    this.populateEventDetails(
-      eventDetailsIt,
+    const articleDetailsIt = new Details();
+    this.populateArticleDetails(
+      articleDetailsIt,
       this.titleForm.get('itTitle')?.value,
       this.htmlContentIt,
       this.italianComponents,
       arrayUploadingFiles
     );
-    newEvent.it = eventDetailsIt;
+    newArticle.it = articleDetailsIt;
 
-    const eventDetailsKo = new Details();
-    this.populateEventDetails(
-      eventDetailsKo,
+    const articleDetailsKo = new Details();
+    this.populateArticleDetails(
+      articleDetailsKo,
       this.titleForm.get('koTitle')?.value,
       this.htmlContentKo,
       this.koreanComponents,
       arrayUploadingFiles
     );
-    newEvent.ko = eventDetailsKo;
+    newArticle.ko = articleDetailsKo;
 
-    let fullPath = this.eventForm.get('coverPhoto')?.value;
-    newEvent.photo = fullPath.split('\\').pop();
-    newEvent.address = this.eventForm.get('address')?.value;
+    let fullPath = this.articleForm.get('coverPhoto')?.value;
+    newArticle.photo = fullPath.split('\\').pop();
+    newArticle.email = this.writerEmail;
 
-    newEvent.date_time = Timestamp.fromDate(new Date(this.eventForm.get('date')?.value));
+    newArticle.date_time = Timestamp.fromDate(new Date(this.articleForm.get('date')?.value));
 
-    if (this.checkPhotoNames(newEvent)){
-      this.eventService.create(newEvent).subscribe(uid => {
+    if (this.checkPhotoNames(newArticle)) {
+      this.articleService.create(newArticle).subscribe(uid=> {
         const uploadObservables: Observable<number | undefined>[] = [];
 
         for (let file of arrayUploadingFiles) {
-          uploadObservables.push(this.eventService.uploadFile(file, uid));
+          uploadObservables.push(this.articleService.uploadFile(file, uid));
         }
 
         const dialogRef = this.dialog.open(LoadingPopupComponent, {
@@ -304,14 +329,14 @@ export class EventsCreateComponent {
           disableClose: true,
           data: {
             uploadPercentage: 0,
-            message: 'Event created successfully',
+            message: 'Article created successfully',
             create: {
-              title: 'New event',
-              value: 'new-event'
+              title: 'New article',
+              value: 'new-article'
             },
             view: {
-              title: 'See events',
-              value: 'see-events'
+              title: 'See articles',
+              value: 'see-articles'
             },
             main: {
               title: 'Main page',
@@ -331,44 +356,42 @@ export class EventsCreateComponent {
         });
 
         dialogRef.afterClosed().subscribe(message =>{
-          if (message == 'new-event') {
+          if (message == 'new-article') {
             window.location.reload();
           }
           if (message == 'main-page') {
             this.router.navigate(['admin']);
           }
-          if (message == 'see-events') {
-            this.router.navigate(['admin/events/view']);
+          if (message == 'see-articles') {
+            this.router.navigate(['admin/articles/view']);
           }
         });
-      });
+      })
     } else {
       window.alert('Some photos have the same name. Please change them.')
     }
-
-
   }
 
-  checkPhotoNames(newEvent: Event): boolean {
+  checkPhotoNames(newArticle: Article): boolean {
     const photoSet = new Set<string>();
     let counter = 0;
 
-    photoSet.add(newEvent.photo!);
+    photoSet.add(newArticle.photo!);
     counter++;
 
     counter = this.addPhotoNamesToSetCollection(
       photoSet,
-      newEvent.en?.subparagraphs!,
+      newArticle.en?.subparagraphs!,
       counter
     );
     counter = this.addPhotoNamesToSetCollection(
       photoSet,
-      newEvent.it?.subparagraphs!,
+      newArticle.it?.subparagraphs!,
       counter
     );
     counter = this.addPhotoNamesToSetCollection(
       photoSet,
-      newEvent.ko?.subparagraphs!,
+      newArticle.ko?.subparagraphs!,
       counter
     );
 
@@ -389,16 +412,16 @@ export class EventsCreateComponent {
     return counter;
   }
 
-  populateEventDetails(
-    eventDetails: Details,
+  populateArticleDetails(
+    articleDetails: Details,
     titleValue: string,
     htmlContent: string,
     components: PhotoComponent[],
     uploadingFiles: File[]
   ) {
-    eventDetails.title = titleValue;
-    eventDetails.description = htmlContent;
-    eventDetails.subparagraphs = [];
+    articleDetails.title = titleValue;
+    articleDetails.description = htmlContent;
+    articleDetails.subparagraphs = [];
 
     components.forEach((component, index) => {
       const componentData = component.formPhoto;
@@ -416,8 +439,9 @@ export class EventsCreateComponent {
         subparagraph.description = component.htmlContent;
       }
       if (subparagraph.description != '' || subparagraph.photo != '') {
-        eventDetails.subparagraphs!.push(subparagraph);
+        articleDetails.subparagraphs!.push(subparagraph);
       }
     });
   }
+
 }

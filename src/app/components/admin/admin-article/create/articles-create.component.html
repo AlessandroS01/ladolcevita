@@ -1,31 +1,72 @@
-<div class="text-editor-container">
-  <h1 class="main-title-text-editor">Create event</h1>
+<div
+  class="text-editor-container"
+  *ngIf="memberList.length == 0"
+>
+  <h1 class="main-title-text-editor">Create article</h1>
+  <h3 class="main-title-text-editor">Add a member first</h3>
+</div>
+
+<div
+  class="text-editor-container"
+  *ngIf="memberList.length > 0"
+>
+  <h1 class="main-title-text-editor">Create article</h1>
 
   <form
     id="form-editor"
-    [formGroup]="eventForm"
-   >
+    [formGroup]="articleForm"
+  >
+    <div class="form-element-container">
+      <div class="element">
+        <label>
+          <i class="fa fa-pencil"></i>
+          Writer
+        </label>
+        <select
+          class="select-member"
+          style="width: 100%"
+          (change)="onWriterChange($event)"
+        >
+          <option
+            *ngFor="let member of memberList;"
+          >{{member.name}} {{member.surname}} / {{member.email}}
+          </option>
+        </select>
+
+      </div>
+    </div>
+
     <div class="grid-container">
       <div class="form-element-container">
         <div class="element">
           <label>
-            <i class="fa fa-map-marker"></i>
-            Address
+            <i class="fa fa-clock-o"></i>
+            Lecture time
           </label>
           <input
-            type="text"
-            formControlName="address"
-            placeholder="Enter the address"
+            type="number"
+            formControlName="lecture"
+            placeholder="Length of the lecture in minutes"
           >
         </div>
         <div
-          *ngIf="eventForm.get('address')?.dirty || eventForm.get('address')?.touched || submitted"
+          *ngIf="articleForm.get('lecture')?.dirty || articleForm.get('lecture')?.touched || submitted"
           class="invalid-input"
         >
           <div
-            *ngIf="eventForm.get('address')?.hasError('required')"
+            *ngIf="articleForm.get('lecture')?.hasError('required')"
           >
-            <i class="fa fa-exclamation-circle"></i> Address is required
+            <i class="fa fa-exclamation-circle"></i> Lecture time is required
+          </div>
+          <div
+            *ngIf="articleForm.get('lecture')?.hasError('min')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Lecture time must be at least equal to 1 minute
+          </div>
+          <div
+            *ngIf="articleForm.get('lecture')?.hasError('max')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Lecture time must be less than or equal to 60 minutes
           </div>
         </div>
       </div>
@@ -34,25 +75,25 @@
         <div class="element">
           <label>
             <i class="fa fa-calendar"></i>
-            Date
+            Release date
           </label>
           <input
-            type="datetime-local"
+            type="date"
             formControlName="date"
             onkeydown="return false"
           >
         </div>
         <div
-          *ngIf="eventForm.get('date')?.dirty || eventForm.get('date')?.touched || submitted"
+          *ngIf="articleForm.get('date')?.dirty || articleForm.get('date')?.touched || submitted"
           class="invalid-input"
         >
           <div
-            *ngIf="eventForm.get('date')?.hasError('required')"
+            *ngIf="articleForm.get('date')?.hasError('required')"
           >
             <i class="fa fa-exclamation-circle"></i> Date is required
           </div>
           <div
-            *ngIf="eventForm.get('date')?.hasError('futureDateValidation')"
+            *ngIf="articleForm.get('date')?.hasError('futureDateValidation')"
           >
             <i class="fa fa-exclamation-circle"></i> Date is not valid
           </div>
@@ -78,16 +119,16 @@
         >
       </div>
       <div
-        *ngIf="eventForm.get('coverPhoto')?.dirty || eventForm.get('coverPhoto')?.touched || submitted"
+        *ngIf="articleForm.get('coverPhoto')?.dirty || articleForm.get('coverPhoto')?.touched || submitted"
         class="invalid-input"
       >
         <div
-          *ngIf="eventForm.get('coverPhoto')?.hasError('required')"
+          *ngIf="articleForm.get('coverPhoto')?.hasError('required')"
         >
           <i class="fa fa-exclamation-circle"></i> Cover photo is required
         </div>
         <div
-          *ngIf="eventForm.get('coverPhoto')?.hasError('imageValidator')"
+          *ngIf="articleForm.get('coverPhoto')?.hasError('imageValidator')"
         >
           <i class="fa fa-exclamation-circle"></i> The format is not accepted
         </div>
@@ -97,7 +138,7 @@
 
     <div
       id="im-cont" class="image-container hidden"
-      *ngIf="!eventForm.get('coverPhoto')?.hasError('imageValidator')"
+      *ngIf="!articleForm.get('coverPhoto')?.hasError('imageValidator')"
     >
       <img id="uploaded-image" alt="eventImage">
     </div>
@@ -297,7 +338,8 @@
 
 
   <button class="form-submitter" (click)="submitForm();">
-    Create event
+    Create article
   </button>
 
 </div>
+

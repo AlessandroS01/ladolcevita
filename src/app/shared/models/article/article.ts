@@ -1,15 +1,13 @@
-import { Timestamp } from "@firebase/firestore";
+import {Timestamp} from "@firebase/firestore";
 import {Details} from "../common/details-subparagraphs";
 
-export class Event {
+export class Article {
   id?: string;
   en?: Details;
   it?: Details;
   ko?: Details;
-  address?: string;
+  email?:string;
+  photo?:string;
   date_time?: Timestamp;
-  photo?: string;
+  lecture_time?: string;
 }
-
-
-

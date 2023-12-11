@@ -42,6 +42,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {AdminEventModule} from "./components/admin/admin-event/admin-event.module";
 import { PhotoComponent } from './components/admin/photo/photo/photo.component';
 import {AngularEditorModule} from "@kolkov/angular-editor";
+import {AdminArticleModule} from "./components/admin/admin-article/admin-article.module";
 
 
 
@@ -73,6 +74,7 @@ import {AngularEditorModule} from "@kolkov/angular-editor";
     FooterModule,
     PopupsModule,
     AdminEventModule,
+    AdminArticleModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,

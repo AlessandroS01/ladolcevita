@@ -1,7 +1,7 @@
 import {Component, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../../shared/services/model/event/event.service";
-import {Event, EventDetails, Subparagraph} from "../../../../shared/models/event/event";
+import {Event} from "../../../../shared/models/event/event";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {fileTypeValidator} from "../../../../shared/controls/file-type/filetype";
 import {futureDateValidator} from "../../../../shared/controls/date/date";
@@ -12,6 +12,7 @@ import {Timestamp} from "@firebase/firestore";
 import {combineLatest, Observable} from "rxjs";
 import {LoadingPopupComponent} from "../../../popups/loading-popup/loading-popup.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Details, Subparagraph} from "../../../../shared/models/common/details-subparagraphs";
 
 
 const imageValidator = fileTypeValidator(['png', 'jpg', 'jpeg']);
@@ -391,7 +392,7 @@ export class EventsModifyComponent implements OnInit {
     updatedEvent.address = this.addressFormControl.value!;
     updatedEvent.date_time = Timestamp.fromDate(new Date(this.dateFormControl.value!));
 
-    const eventDetailsEn = new EventDetails();
+    const eventDetailsEn = new Details();
     this.populateEventDetails(
       eventDetailsEn,
       this.titleEnFormControl.value!,
@@ -402,7 +403,7 @@ export class EventsModifyComponent implements OnInit {
     );
     updatedEvent.en = eventDetailsEn;
 
-    const eventDetailsIt = new EventDetails();
+    const eventDetailsIt = new Details();
     this.populateEventDetails(
       eventDetailsIt,
       this.titleItFormControl.value!,
@@ -413,7 +414,7 @@ export class EventsModifyComponent implements OnInit {
     );
     updatedEvent.it = eventDetailsIt;
 
-    const eventDetailsKo = new EventDetails();
+    const eventDetailsKo = new Details();
     this.populateEventDetails(
       eventDetailsKo,
       this.titleKoFormControl.value!,
@@ -473,7 +474,19 @@ export class EventsModifyComponent implements OnInit {
               disableClose: true,
               data: {
                 uploadPercentage: 0,
-                message: 'Event updated successfully'
+                message: 'Event updated successfully',
+                create: {
+                  title: 'New event',
+                  value: 'new-event'
+                },
+                view: {
+                  title: 'See events',
+                  value: 'see-events'
+                },
+                main: {
+                  title: 'Main page',
+                  value: 'main-page'
+                }
               } // Initial value, it will be updated
             })
           : this.dialog.open(
@@ -572,7 +585,7 @@ export class EventsModifyComponent implements OnInit {
   }
 
   populateEventDetails(
-    eventDetails: EventDetails,
+    eventDetails: Details,
     titleValue: string,
     htmlContent: string,
     components: PhotoComponent[],

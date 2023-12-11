@@ -15,7 +15,19 @@ export class LoadingPopupComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {
       uploadPercentage: number,
-      message: string
+      message: string,
+      create: {
+        title: string,
+        value: string
+      },
+      view: {
+        title: string,
+        value: string
+      },
+      main: {
+        title: string,
+        value: string
+      }
     },
     private ref: MatDialogRef<LoadingPopupComponent>,
   ) {
