@@ -1,7 +1,7 @@
 <div *ngIf="user != {}">
   <h2 style="font-weight: bold">Welcome back {{user.name}} {{user.surname}}</h2>
 
-  <div class="events-container">
+  <div class="admin-view-pages-container">
     <div class="sub-container top">
       <h6>Users participation to events</h6>
       <select #select (change)="onSelectChange(select.value)">

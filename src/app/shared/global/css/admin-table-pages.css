@@ -1,4 +1,4 @@
-.events-container {
+.admin-view-pages-container {
   margin-top: 30px;
 
   background-color: white;
@@ -8,15 +8,15 @@
 
 
 /* CONTAINER TOP */
-.events-container h6 {
+.admin-view-pages-container h6 {
   font-weight: bold;
   margin: 0;
 }
 
-.events-container .sub-container {
+.admin-view-pages-container .sub-container {
   padding: 20px;
 }
-.events-container .top {
+.admin-view-pages-container .top {
   border-bottom: solid 2px #dadada;
   display: flex;
   flex-direction: row;

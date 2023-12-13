@@ -12,10 +12,12 @@ import {EventsModifyComponent} from "./components/admin/admin-event/modify/event
 import {ArticlesViewComponent} from "./components/admin/admin-article/view/view-articles.component";
 import {ArticlesCreateComponent} from "./components/admin/admin-article/create/articles-create.component";
 import {ArticlesModifyComponent} from "./components/admin/admin-article/modify/articles-modify.component";
+import {ArticlesComponent} from "./components/articles/articles.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'about', component: AboutComponent},
+  { path: 'articles', component: ArticlesComponent},
   { path: 'admin', canActivate:[adminGuard], component: AdminComponent},
   { path: 'admin/events/view', canActivate:[adminGuard], component: EventsViewComponent},
   { path: 'admin/events/create', canActivate:[adminGuard], component: EventsCreateComponent},

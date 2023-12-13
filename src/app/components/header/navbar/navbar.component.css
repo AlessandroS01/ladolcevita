@@ -11,6 +11,8 @@
   flex-direction: column;
   justify-content: space-around;
 
+  z-index: 999;
+
   transition: all ease-out 0.25s;
 }
 

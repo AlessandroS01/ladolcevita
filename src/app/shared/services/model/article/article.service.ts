@@ -24,11 +24,11 @@ export class ArticleService {
     return this.articlesRef.valueChanges();
   }
 
-  getArticlesById(uid: string) {
+  getArticlesById(uid: string): Observable<Article | null> {
     return this.articlesRef.doc(uid).get().pipe(
       map(snapshot => {
         if (snapshot.data != null) {
-          return snapshot.data() as Event;
+          return snapshot.data() as Article;
         } else {
           return null;
         }
@@ -109,7 +109,6 @@ export class ArticleService {
   update(
     oldArticle: Article,
     updatedArticle: Article
-
   ): Observable<void> {
     const eventObject: any = this.transformArticleObject(updatedArticle, parseInt(oldArticle.id!));
 
@@ -122,6 +121,8 @@ export class ArticleService {
       result.items.forEach(fileRef => {
         fileRef.delete();
       })
+
+      this.articlesRef.doc(id).delete();
     })
   }
 

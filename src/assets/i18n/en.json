@@ -2,7 +2,14 @@
 
   "home": "Home",
   "events": "Events",
-  "articles": "Articles",
+  "articles": {
+    "nav-title": "Articles",
+    "subparagraph": {
+      "articles": "Articles",
+      "writers": "Writers",
+      "minutes": "minutes lecture"
+    }
+  },
   "about": {
     "nav-title": "About",
     "member-title": "Members information"

@@ -1,7 +1,14 @@
 {
   "home": "홈",
   "events": "이벤트",
-  "articles": "논문",
+  "articles": {
+    "nav-title": "논문",
+    "subparagraph": {
+      "articles": "기사",
+      "writers": "작성자",
+      "minutes": "읽는 시간"
+    }
+  },
   "about": {
     "nav-title": "소개",
     "member-title": "학회원 정보"

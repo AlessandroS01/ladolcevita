@@ -1,7 +1,14 @@
 {
   "home": "Home",
   "events": "Eventi",
-  "articles": "Articoli",
+  "articles": {
+    "nav-title": "Articoli",
+    "subparagraph": {
+      "articles": "Articoli",
+      "writers": "Scrittori",
+      "minutes": "minuti di lettura"
+    }
+  },
   "about": {
     "nav-title": "Chi siamo",
     "member-title": "Informazioni dei membri"

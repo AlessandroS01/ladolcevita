@@ -5,6 +5,8 @@ import {ArticlesCreateComponent} from "./create/articles-create.component";
 import {ArticlesModifyComponent} from "./modify/articles-modify.component";
 import {AngularEditorModule} from "@kolkov/angular-editor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgxPaginationModule} from "ngx-pagination";
+import {RouterLink} from "@angular/router";
 
 
 
@@ -18,7 +20,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     AngularEditorModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    RouterLink
   ]
 })
 export class AdminArticleModule { }

@@ -1,8 +1,8 @@
 
 
 .page-container {
-  margin-top: 300px;
-  margin-bottom: 150px;
+  margin-top: 310px;
+  margin-bottom: 200px;
 }
 
 .container-admin-page {
@@ -30,47 +30,3 @@ app-footer {
   }
 }
 
-
-
-
-
-/*
-.container {
-  background: url("../assets/img/italia.jpg") no-repeat center center;
-  background-size: cover;
-}
-
-.page-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.main-content {
-  flex: 1;
-}
-
-.content {
-  margin-top: 0;
-}
-
-@media (max-width: 780px) {
-
-  .footer {
-    overflow: hidden;
-    z-index: 0;
-  }
-
-  .header {
-    position: relative;
-    z-index: 100;
-  }
-
-
-  .content {
-    margin-top: 0;
-  }
-
-}
-
- */

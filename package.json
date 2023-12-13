@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@kolkov/angular-editor": "^3.0.0-beta.0",
+    "@ng-icons/core": "^26.3.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "firebase": "^10.6.0",

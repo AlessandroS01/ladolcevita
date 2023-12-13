@@ -43,6 +43,7 @@ import {AdminEventModule} from "./components/admin/admin-event/admin-event.modul
 import { PhotoComponent } from './components/admin/photo/photo/photo.component';
 import {AngularEditorModule} from "@kolkov/angular-editor";
 import {AdminArticleModule} from "./components/admin/admin-article/admin-article.module";
+import {ArticlesModule} from "./components/articles/articles.module";
 
 
 
@@ -71,10 +72,12 @@ import {AdminArticleModule} from "./components/admin/admin-article/admin-article
     HeaderModule,
     HomeModule,
     AboutModule,
+	  ArticlesModule,
     FooterModule,
     PopupsModule,
     AdminEventModule,
     AdminArticleModule,
+
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,

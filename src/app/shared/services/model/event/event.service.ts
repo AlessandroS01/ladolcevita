@@ -122,8 +122,10 @@ export class EventService {
     folderPath.listAll().subscribe(result => {
       result.items.forEach(fileRef => {
         fileRef.delete();
-      })
+      });
+
       this.eventsRef.doc(id).delete();
+
       const database = this.db.firestore;
       database.collection('/participants').where(
         'event', '==', id

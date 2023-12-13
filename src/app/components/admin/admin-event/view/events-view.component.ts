@@ -65,10 +65,6 @@ export class EventsViewComponent {
       }
       return 0;
     });
-
-    this.eventList.forEach((event, index) => {
-
-    })
   }
 
   onSelectChange(value: string) {

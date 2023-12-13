@@ -17,7 +17,6 @@ import {combineLatest, Observable} from "rxjs";
 import {LoadingPopupComponent} from "../../../popups/loading-popup/loading-popup.component";
 
 const imageValidator = fileTypeValidator(['png', 'jpg', 'jpeg']);
-const futureDateValidation = futureDateValidator();
 
 @Component({
   selector: 'app-create-articles',
@@ -53,9 +52,9 @@ export class ArticlesCreateComponent {
       Validators.min(1),
       Validators.max(60),
     ]),
-    date: new FormControl('', [
-      Validators.required,
-      futureDateValidation
+    date: new FormControl(
+      new Date().toISOString().slice(0, 10), [
+      Validators.required
     ]),
     coverPhoto: new FormControl('', [
       Validators.required,
@@ -307,6 +306,8 @@ export class ArticlesCreateComponent {
       arrayUploadingFiles
     );
     newArticle.ko = articleDetailsKo;
+
+		newArticle.lecture_time = this.articleForm.get('lecture')?.value as string;
 
     let fullPath = this.articleForm.get('coverPhoto')?.value;
     newArticle.photo = fullPath.split('\\').pop();

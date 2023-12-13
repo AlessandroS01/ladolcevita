@@ -1,0 +1,96 @@
+<div
+  *ngIf="isDataLoaded"
+  class="articles-page-container"
+>
+
+  <div
+    *ngIf="articleList.length > 0"
+    class="list-articles-container"
+  >
+    <h3
+      class="articles-page-titles-container"
+    >{{"articles.subparagraph.articles" | translate}}</h3>
+    <hr>
+
+    <div
+      class="display-article-container"
+      *ngFor="let article of articleList | paginate: {
+                                                              itemsPerPage: pageSize,
+                                                              currentPage: page,
+                                                              totalItems: articleList.length
+                                                              }"
+    >
+      <div
+        class="article-image-container"
+      >
+        <img [src]="mapArticlePhoto.get(article.id!)">
+      </div>
+
+      <div
+        class="article-info-container"
+      >
+        <div
+          class="writer-info-container"
+        >
+          <div>
+            <img [src]="mapMemberPhoto.get(article.email!)" alt="member-photo">
+          </div>
+
+          <div
+            style="display: flex; flex-direction: column; align-items: flex-start"
+          >
+            <h6
+              style="font-size: 14px;"
+            >{{mapArticleMember.get(article.id!)}} <i class="fa fa-pencil" aria-hidden="true"></i></h6>
+            <h6
+              style="font-size: 14px;"
+            >{{article.date_time?.toDate() | date:"MMM d, y" }} &#x2022; {{article.lecture_time}} {{"articles.subparagraph.minutes" | translate}}</h6>
+          </div>
+        </div>
+
+        <div style="overflow: hidden; text-overflow: ellipsis">
+          <h6 class="article-title">{{mapArticleLanguage.get(article.id!)?.title}}</h6>
+          <p class="hide" [innerHTML]="mapArticleLanguage.get(article.id!)?.description"></p>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div *ngIf="articleList.length > 0">
+      <div *ngIf="articleList.length > 0" class="pagination-container">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          [responsive]="true"
+          (pageChange)="handlePageChange($event)"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="filters-articles-container"
+    id="filter-articles"
+  >
+    <h3
+      class="articles-page-titles-container"
+    >{{"articles.subparagraph.writers" | translate}}</h3>
+    <hr>
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+      <p>Content</p>
+      <p>Content</p>
+      <p>Content</p>
+      <p>Content</p>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+    <hr>
+
+  </div>
+
+</div>

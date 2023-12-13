@@ -154,7 +154,6 @@ export class EventsModifyComponent implements OnInit {
         }
       })
     });
-
   }
 
   initializeLanguageComponents(
@@ -300,17 +299,17 @@ export class EventsModifyComponent implements OnInit {
 
   submitForm() {
     this.submitted = true;
-    /*
+
     if (
       this.checkValidityMainInfo() && this.checkValidityContent() &&
       this.checkValidityImagesComponents(this.englishComponents, 'english') &&
       this.checkValidityImagesComponents(this.italianComponents, 'italian') &&
       this.checkValidityImagesComponents(this.koreanComponents, 'korean')
-    )
-     */
+    ) {
       const coverPhotoChanged: boolean = this.coverPhotoFormControl.dirty && this.coverPhotoFormControl.valid;
 
       this.modifyExistingEvent(coverPhotoChanged);
+    }
   }
 
   checkValidityMainInfo(): boolean {
@@ -495,10 +494,22 @@ export class EventsModifyComponent implements OnInit {
               height: '350px',
               maxHeight: '350px',
               disableClose: true,
-              data: {
-                uploadPercentage: 100,
-                message: 'Event updated successfully'
-              } // Initial value, it will be updated
+			        data: {
+				        uploadPercentage: 100,
+				        message: 'Event updated successfully',
+				        create: {
+					        title: 'New event',
+					        value: 'new-event'
+				        },
+				        view: {
+					        title: 'See events',
+					        value: 'see-events'
+				        },
+				        main: {
+					        title: 'Main page',
+					        value: 'main-page'
+				        }
+			        }
             });
 
         if (uploadObservables.length > 0 ){

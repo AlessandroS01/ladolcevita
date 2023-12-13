@@ -1,7 +1,7 @@
 <h2 style="font-weight: bold">Event list</h2>
 <div
   *ngIf="!isDataLoaded"
-  class="events-container"
+  class="admin-view-pages-container"
 >
   <i class="fa fa-spin fa-circle-o-notch"></i>
 </div>
@@ -9,7 +9,7 @@
 
 <div
   *ngIf="isDataLoaded"
-  class="events-container"
+  class="admin-view-pages-container"
 >
   <div>
     <div class="sub-container top">
@@ -27,7 +27,7 @@
       <h6
         style="text-align: center"
         *ngIf="eventList.length == 0"
-      >No events saved</h6>
+      >No events published</h6>
 
 
       <table

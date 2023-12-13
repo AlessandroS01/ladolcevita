@@ -1,1 +1,114 @@
-<p>view-articles works!</p>
+<h2 style="font-weight: bold">Article list</h2>
+<div
+  *ngIf="!isDataLoaded"
+  class="admin-view-pages-container"
+>
+  <i class="fa fa-spin fa-circle-o-notch"></i>
+</div>
+
+
+<div
+  *ngIf="isDataLoaded"
+  class="admin-view-pages-container"
+>
+  <div>
+    <div class="sub-container top">
+      <h6>All articles</h6>
+      <select #select (change)="onSelectChange(select.value)">
+        <option
+          [value]="'all'"
+        >
+          All members
+        </option>
+        <option
+          *ngFor="let member of allMembers"
+          [value]="member.email"
+        >
+          {{member.name}}  {{member.surname}}
+        </option>
+      </select>
+    </div>
+
+    <div
+      class="sub-container bottom"
+    >
+      <h6
+        style="text-align: center"
+        *ngIf="articleList.length == 0"
+      >No articles published</h6>
+
+
+      <table
+        class="table-container"
+        *ngIf="articleList.length > 0"
+      >
+        <tr>
+          <th
+            class="first-header"
+          >Cover photo</th>
+          <th
+            class="second-header"
+          >Publish date</th>
+          <th>Article</th>
+          <th class="disappearing-cell">Writer</th>
+          <th style="border-top-right-radius: 10px;">Actions</th>
+        </tr>
+        <tr
+          *ngFor="let article of articleList | paginate: {
+                                                              itemsPerPage: pageSize,
+                                                              currentPage: page,
+                                                              totalItems: articleList.length
+                                                              };"
+        >
+          <td class="image-cell-container">
+            <div class="image-div-container">
+              <img [src]="mapCoverPhoto.get(article.photo!)">
+            </div>
+          </td>
+          <td
+            style="width: 25%;"
+          >{{article.date_time?.toDate() | date:"EEE, MMM d, y"}}
+          </td>
+          <td style="width: 15%;">{{article.en?.title}}</td>
+          <td
+            class="disappearing-cell"
+            style="width: 15%;"
+          >{{mapArticleMember.get(article.id!)}}</td>
+          <td style="width: 20%;">
+            <div class="buttons-container">
+              <div
+                class="remove-button-container"
+                title="Delete event"
+                (click)="deleteArticle(article)"
+              >
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </div>
+              <div
+                class="modify-button-container"
+                title="Edit event"
+                [routerLink]="['/admin/articles/modify', article.id]"
+              >
+                <i class="fa fa-pencil-square-o" aria-hidden="true">
+                </i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+
+      <div *ngIf="articleList.length > 0">
+        <div *ngIf="articleList.length > 0" class="pagination-container">
+          <pagination-controls
+            previousLabel="Prev"
+            nextLabel="Next"
+            [responsive]="true"
+            (pageChange)="handlePageChange($event)"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
