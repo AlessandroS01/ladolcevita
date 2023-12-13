@@ -5,6 +5,7 @@
     "nav-title": "논문",
     "subparagraph": {
       "articles": "기사",
+      "no-articles": "기사를 찾을 수 없습니다",
       "writers": "작성자",
       "minutes": "읽는 시간"
     }

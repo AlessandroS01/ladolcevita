@@ -6,6 +6,7 @@
     "nav-title": "Articles",
     "subparagraph": {
       "articles": "Articles",
+      "no-articles": "No articles found",
       "writers": "Writers",
       "minutes": "minutes lecture"
     }

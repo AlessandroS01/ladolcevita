@@ -14,7 +14,8 @@ import {Details} from "../../shared/models/common/details-subparagraphs";
 export class ArticlesComponent {
 
 	allArticles: Article[] = [];
-	articleList: Article[] = [];
+	allArticlesFiltered: Article[] = [];
+	articleListDisplayed: Article[] = [];
 	allMembers: Member[] = [];
 	isDataLoaded: boolean = false;
 
@@ -22,9 +23,12 @@ export class ArticlesComponent {
 	mapArticleMember: Map<string, string> = new Map();
 	mapArticleLanguage: Map<string, Details> = new Map();
 	mapMemberPhoto: Map<string, string> = new Map();
+	mapMemberVisible: Map<string, boolean> = new Map();
+
+	lang: string = 'en';
 
 	page = 1;
-	pageSize = 10;
+	pageSize = 3;
 
 	constructor(
 		private articleService: ArticleService,
@@ -32,17 +36,16 @@ export class ArticlesComponent {
 		private languageService: LanguageService
 	) {
 		this.articleService.getAll().subscribe(articles => {
-
 			this.allArticles = articles;
-			this.articleList = articles;
+			this.allArticlesFiltered = articles;
+			this.articleListDisplayed = articles;
 
 			this.memberService.getAll().subscribe(members => {
 				this.allMembers = members;
 
 				this.languageService.language.subscribe(lang => {
-					this.articleList.forEach(article => {
-
-						//this.mapArticleLanguage.clear();
+					this.articleListDisplayed.forEach(article => {
+						this.lang = lang;
 						this.populateLanguageMap(lang, article);
 
 						this.articleService.getCoverPhotoArticle(article).subscribe(photo => {
@@ -52,22 +55,28 @@ export class ArticlesComponent {
 							)
 						});
 						this.allMembers.forEach(member => {
-							if (member.email == article.email) {
-								this.memberService.getMemberPhoto(member.photo!).subscribe(photo => {
-									this.mapMemberPhoto.set(
-										member.email!,
-										photo
-									);
+							this.mapMemberVisible.set(
+								member.email!,
+								true
+							);
 
+							this.memberService.getMemberPhoto(member.photo!).subscribe(photo => {
+								this.mapMemberPhoto.set(
+									member.email!,
+									photo
+								);
+
+								if (member.email == article.email) {
 									this.mapArticleMember.set(
 										article.id as string,
 										member.name + ' ' + member.surname
 									);
-								})
-							}
+								}
+							})
 						})
 					});
 				});
+				this.sortingArticleList();
 				this.isDataLoaded = true;
 			})
 		});
@@ -104,6 +113,54 @@ export class ArticlesComponent {
 
 		const startIndex = (this.page - 1) * this.pageSize;
 		const endIndex = startIndex + this.pageSize;
-		this.articleList = this.allArticles.slice(startIndex, endIndex);
+
+		this.articleListDisplayed = this.allArticlesFiltered.slice(startIndex, endIndex);
+	}
+
+	sortingArticleList() {
+		this.allArticlesFiltered.sort((a, b) => {
+			if (a.date_time?.toMillis()! < b.date_time?.toMillis()!) {
+				return 1;
+			}
+			else if (a.date_time?.toMillis()! > b.date_time?.toMillis()!) {
+				return -1;
+			}
+			else return 0;
+		})
+	}
+
+	toggleMemberArticle(member: Member, id: string) {
+		const memberEmail = member.email!;
+
+		const element = document.getElementById(id);
+
+		if (element) {
+			if (this.mapMemberVisible.get(memberEmail)) {
+				this.mapMemberVisible.set(
+					memberEmail,
+					false
+				);
+				element.classList.remove('active');
+
+				this.allArticlesFiltered = this.allArticlesFiltered.filter(article=> {
+					return article.email != memberEmail
+				});
+			} else {
+				this.mapMemberVisible.set(
+					memberEmail,
+					true
+				);
+				element.classList.add('active');
+
+				this.allArticles.filter(article=> {
+					return article.email == memberEmail
+				}).forEach(article=> {
+					this.allArticlesFiltered.push(article);
+				});
+			}
+		}
+		this.articleListDisplayed = this.allArticlesFiltered;
+
+		this.sortingArticleList();
 	}
 }

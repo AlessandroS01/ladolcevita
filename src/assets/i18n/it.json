@@ -5,6 +5,7 @@
     "nav-title": "Articoli",
     "subparagraph": {
       "articles": "Articoli",
+      "no-articles": "Nessun articolo trovato",
       "writers": "Scrittori",
       "minutes": "minuti di lettura"
     }
