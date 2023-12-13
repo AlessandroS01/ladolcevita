@@ -16,6 +16,9 @@
   font-size: 18px;
   font-weight: bold;
   text-transform: uppercase;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 /* LIST ARTICLES CONTAINER */
