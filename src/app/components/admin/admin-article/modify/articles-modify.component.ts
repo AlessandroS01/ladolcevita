@@ -571,8 +571,6 @@ export class ArticlesModifyComponent {
 		const photoSet = new Set<string>();
 		let counter = 0;
 
-		console.log(updatedArticle.photo!)
-
 		photoSet.add(updatedArticle.photo as string);
 		counter++;
 
@@ -591,9 +589,6 @@ export class ArticlesModifyComponent {
 			updatedArticle.ko?.subparagraphs!,
 			counter
 		);
-
-		console.log(photoSet)
-		console.log(counter)
 
 		return counter == photoSet.size;
 	}

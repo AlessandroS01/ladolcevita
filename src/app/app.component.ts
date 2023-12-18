@@ -11,6 +11,8 @@ export class AppComponent implements OnInit {
 
   hideNavbarAndFooter: boolean = false;
 
+	articlePageVisible: boolean = false;
+
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -18,6 +20,8 @@ export class AppComponent implements OnInit {
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       this.hideNavbarAndFooter = !event.url.startsWith('/admin');
+
+			this.articlePageVisible = event.url.startsWith('/articles/article');
     });
   }
 }

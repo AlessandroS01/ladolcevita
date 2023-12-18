@@ -34,13 +34,13 @@
     >
       <h6
         style="text-align: center"
-        *ngIf="articleList.length == 0"
+        *ngIf="articleListDisplayed.length == 0"
       >No articles published</h6>
 
 
       <table
         class="table-container"
-        *ngIf="articleList.length > 0"
+        *ngIf="articleListDisplayed.length > 0"
       >
         <tr>
           <th
@@ -54,10 +54,10 @@
           <th style="border-top-right-radius: 10px;">Actions</th>
         </tr>
         <tr
-          *ngFor="let article of articleList | paginate: {
+          *ngFor="let article of articleListDisplayed | paginate: {
                                                               itemsPerPage: pageSize,
                                                               currentPage: page,
-                                                              totalItems: articleList.length
+                                                              totalItems: allArticlesFiltered.length
                                                               };"
         >
           <td class="image-cell-container">
@@ -97,8 +97,8 @@
       </table>
 
 
-      <div *ngIf="articleList.length > 0">
-        <div *ngIf="articleList.length > 0" class="pagination-container">
+      <div *ngIf="allArticlesFiltered.length > 0">
+        <div class="pagination-container">
           <pagination-controls
             previousLabel="Prev"
             nextLabel="Next"

@@ -5,6 +5,7 @@ import {MemberService} from "../../shared/services/model/member/member.service";
 import {Member} from "../../shared/models/member/member";
 import {LanguageService} from "../../shared/services/language/language.service";
 import {Details} from "../../shared/models/common/details-subparagraphs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-articles',
@@ -28,12 +29,12 @@ export class ArticlesComponent {
 	lang: string = 'en';
 
 	page = 1;
-	pageSize = 3;
+	pageSize = 8;
 
 	constructor(
 		private articleService: ArticleService,
 		private memberService: MemberService,
-		private languageService: LanguageService
+		private languageService: LanguageService,
 	) {
 		this.articleService.getAll().subscribe(articles => {
 			this.allArticles = articles;

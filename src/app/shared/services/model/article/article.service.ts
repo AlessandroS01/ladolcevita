@@ -56,6 +56,11 @@ export class ArticleService {
       this.storage.ref(`${this.dbPath}/${article.id}/${article.photo}`);
     return reference.getDownloadURL();
   }
+	getPhotoArticle(photoName: string, articleId: string): Observable<string> {
+		const reference =
+			this.storage.ref(`${this.dbPath}/${articleId}/${photoName}`);
+		return reference.getDownloadURL();
+	}
 
   create(article: Article): Observable<number> {
     return this.getAllUIDs().pipe(

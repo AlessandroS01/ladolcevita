@@ -23,6 +23,7 @@
     <hr>
 
     <div
+      [routerLink]="['/articles/article', article.id]"
       class="display-article-container"
       *ngFor="let article of articleListDisplayed | paginate: {
                                                               itemsPerPage: pageSize,

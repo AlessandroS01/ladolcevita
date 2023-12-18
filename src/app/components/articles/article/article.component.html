@@ -1,0 +1,144 @@
+<div
+  class="article-page-container"
+  *ngIf="!isDataLoaded"
+>
+  <i class="fa fa-spin fa-fa-spinner"></i>
+</div>
+
+<div
+  *ngIf="isDataLoaded"
+  class="article-page-container"
+>
+  <div
+    *ngIf="mapArticleLang.get(article.id!) as info"
+  >
+
+    <div
+      class="cover-photo-container"
+    >
+      <img [src]="mapPhotoUrl.get('cover')" alt="cover">
+
+      <div
+        routerLink="/articles"
+        class="back-arrow"
+      >
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div
+      class="article-container"
+    >
+      <div
+        class="info-article"
+      >
+        <div
+          class="article-title-container"
+        >
+          {{info.title}}
+        </div>
+
+        <div
+          class="writer-article-container"
+        >
+          <p>by {{member.name}} {{member.surname}} | {{article.date_time?.toDate() | date:("EEE, MMMM d, y")}} | {{article.lecture_time}} {{articleLength}}</p>
+        </div>
+
+
+        <hr>
+
+        <div [innerHTML]="info.description"></div>
+
+        <div
+          class="subparagraph-container"
+          *ngFor="let sub of info.subparagraphs"
+        >
+          <img *ngIf="sub.photo != ''"  [src]="mapPhotoUrl.get(sub.photo!)">
+          <div [innerHTML]="sub.description!"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div
+    class="other-links-container"
+  >
+    <div
+      class="change-lang-article-container"
+    >
+      <div
+        class="change-lang-article"
+      >
+        <div
+          (click)="changeLangArticle('en')"
+        >
+          <img src="./assets/img/languages/united-kingdom-squared.png">
+        </div>
+        <div
+          (click)="changeLangArticle('ko')"
+        >
+          <img src="./assets/img/languages/south-korea-squared.png">
+        </div>
+        <div
+          (click)="changeLangArticle('it')"
+        >
+          <img src="./assets/img/languages/italian-squared.png">
+        </div>
+
+      </div>
+
+      <div>
+        <h6
+          style="font-weight: bold;"
+        >
+          {{language}}
+        </h6>
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="relatedArticles.length > 0"
+    >
+      <p
+        class="related-articles-title"
+      >
+        <i class="fa fa-compass" aria-hidden="true"></i>
+        {{relatedArticlesTitle}}
+      </p>
+
+      <div
+        (click)="reloadCurrentRoute(article.id!)"
+        *ngFor="let article of relatedArticles"
+        class="related-articles-list"
+      >
+        <div
+          *ngIf="language == 'English'"
+        >
+          <h6>{{ article.en?.title }}</h6>
+          <p [innerHTML]="article.en?.description"></p>
+        </div>
+        <div
+          *ngIf="language == '한국인'"
+        >
+          <h6>{{ article.ko?.title }}</h6>
+          <p [innerHTML]="article.ko?.description"></p>
+        </div>
+        <div
+          *ngIf="language == 'Italiano'"
+        >
+        <h6>{{ article.it?.title }}</h6>
+        <p [innerHTML]="article.it?.description"></p>
+        </div>
+
+
+        <hr>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

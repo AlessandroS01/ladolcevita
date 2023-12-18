@@ -18,6 +18,8 @@ export class ArticlesViewComponent {
 
   isDataLoaded: boolean = false;
   allArticles: Article[] = [];
+	allArticlesFiltered: Article[] = [];
+	articleListDisplayed: Article[] = [];
   allMembers: Member[] = [];
 
   articleList: Article[] = [];
@@ -36,12 +38,10 @@ export class ArticlesViewComponent {
       this.allMembers = members;
 
       this.articleService.getAll().subscribe(articles => {
-        this.allArticles = [];
-        this.articleList = [];
+	      this.allArticles = articles;
+	      this.allArticlesFiltered = articles;
+	      this.articleListDisplayed = articles;
 
-
-
-        this.allArticles = articles;
         this.allArticles.forEach(article => {
           this.articleService.getCoverPhotoArticle(article).subscribe(photo => {
             this.mapCoverPhoto.set(
@@ -63,7 +63,7 @@ export class ArticlesViewComponent {
 
         });
 
-        this.sortingArray();
+        this.sortingArticleList();
         this.isDataLoaded = true;
       });
     })
@@ -74,36 +74,33 @@ export class ArticlesViewComponent {
 
     const startIndex = (this.page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.articleList = this.allArticles.slice(startIndex, endIndex);
+
+	  this.articleListDisplayed = this.allArticlesFiltered.slice(startIndex, endIndex);
   };
 
 
-  private sortingArray() {
-    this.articleList.sort((a, b) => {
-      if (a.date_time && b.date_time) {
-        const dateA = a.date_time.seconds;
-        const dateB = b.date_time.seconds;
-
-        return dateA - dateB;
-      }
-      return 0;
-    });
+  private sortingArticleList() {
+	  this.allArticlesFiltered.sort((a, b) => {
+		  if (a.date_time?.toMillis()! < b.date_time?.toMillis()!) {
+			  return 1;
+		  }
+		  else if (a.date_time?.toMillis()! > b.date_time?.toMillis()!) {
+			  return -1;
+		  }
+		  else return 0;
+	  });
   }
 
   onSelectChange(value: string) {
-    this.articleList = [];
-
     if (value == 'all') {
-      this.allArticles.forEach(article=> {
-        this.articleList.push(article);
-      })
+	    this.allArticlesFiltered = this.allArticles;
     } else {
-      this.allArticles.forEach(article=> {
-        if (article.email == value) {
-          this.articleList.push(article);
-        }
-      })
+	    this.allArticlesFiltered = this.allArticles.filter(article=> {
+		    return article.email == value
+	    });
     }
+	  this.articleListDisplayed = this.allArticlesFiltered;
+	  this.sortingArticleList();
   }
 
   deleteArticle(article: Article) {

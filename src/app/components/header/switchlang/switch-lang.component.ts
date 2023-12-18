@@ -9,12 +9,14 @@ import {LanguageService} from "../../../shared/services/language/language.servic
 })
 export class SwitchLangComponent implements OnInit{
 
-  // isDivHidden: boolean = true;
-  // langSelected: string = "English";
-  // flagLangSelected: string = "assets/img/languages/united-kingdom.png";
+  langSelected: string = "en";
 
   ngOnInit() {
-    this.changeDisplayCss('english-language');
+		this.languageService.language.subscribe(lang=> {
+			this.langSelected = lang;
+
+			this.changeDisplayCss(this.langSelected);
+		})
   }
 
   constructor(
@@ -28,34 +30,11 @@ export class SwitchLangComponent implements OnInit{
   switchLang(lang: string) {
     this.translate.use(lang);
 
-    if (lang == "en") {
-      // this.langSelected = "English"
-      // this.flagLangSelected = "assets/img/languages/united-kingdom.png";
-      this.changeDisplayCss('english-language');
+		this.langSelected = lang;
 
-      this.languageService.setLanguage("en");
-    }
-    if (lang == "it") {
-      // this.langSelected = "Italiano"
-      // this.flagLangSelected = "assets/img/languages/italian.png";
-      this.changeDisplayCss('italian-language');
-      this.languageService.setLanguage("it");
-    }
-    if (lang == "ko") {
-      // this.langSelected = "한국어"
-      // this.flagLangSelected = "assets/img/languages/south-korea.png";
-      this.changeDisplayCss('korean-language');
-      this.languageService.setLanguage("ko");
-    }
-
-    //this.isDivHidden = true;
+		this.changeDisplayCss(lang);
+		this.languageService.setLanguage(lang);
   }
-
-  /*
-  toggleDiv() {
-    this.isDivHidden = !this.isDivHidden;
-  }
-   */
 
   changeDisplayCss(id: string) {
     const element = document.getElementById(id);
