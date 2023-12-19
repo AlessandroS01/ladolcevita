@@ -11,11 +11,18 @@
 >
   <c-carousel [interval]="3000">
     <c-carousel-inner>
-      <c-carousel-item *ngFor="let slide of images">
-        <img
-          [src]="slide"
-          alt="slider-image"
-        />
+      <c-carousel-item
+        *ngFor="let slide of images"
+        style="border-radius: 8px;"
+      >
+        <div
+          style="border-radius: 8px;"
+        >
+          <img
+            [src]="slide"
+            alt="slider-image"
+          />
+        </div>
       </c-carousel-item>
     </c-carousel-inner>
     <c-carousel-control caption="Previous" direction="prev"></c-carousel-control>
