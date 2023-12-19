@@ -1,5 +1,11 @@
 {
-  "home": "Home",
+  "home": {
+    "nav-title": "Home",
+    "subparagraph": {
+      "articles": "I Nostri Ultimi Articoli",
+      "events": "Prossimi Eventi"
+    }
+  },
   "events": "Eventi",
   "articles": {
     "nav-title": "Articoli",

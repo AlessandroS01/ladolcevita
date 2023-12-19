@@ -1,6 +1,11 @@
 {
-
-  "home": "Home",
+  "home": {
+    "nav-title": "Home",
+    "subparagraph": {
+      "articles": "Check Our Latest Articles",
+      "events": "Upcoming Events"
+    }
+  },
   "events": "Events",
   "articles": {
     "nav-title": "Articles",

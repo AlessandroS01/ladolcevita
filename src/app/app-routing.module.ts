@@ -14,6 +14,7 @@ import {ArticlesCreateComponent} from "./components/admin/admin-article/create/a
 import {ArticlesModifyComponent} from "./components/admin/admin-article/modify/articles-modify.component";
 import {ArticlesComponent} from "./components/articles/articles.component";
 import {ArticleComponent} from "./components/articles/article/article.component";
+import {HomeAdminComponent} from "./components/admin/admin-home/home/home-admin.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'articles', component: ArticlesComponent},
   { path: 'articles/article/:id', component: ArticleComponent},
   { path: 'admin', canActivate:[adminGuard], component: AdminComponent},
+  { path: 'admin/home', canActivate:[adminGuard], component: HomeAdminComponent},
   { path: 'admin/events/view', canActivate:[adminGuard], component: EventsViewComponent},
   { path: 'admin/events/create', canActivate:[adminGuard], component: EventsCreateComponent},
   { path: 'admin/events/modify/:id', canActivate:[adminGuard], component: EventsModifyComponent},

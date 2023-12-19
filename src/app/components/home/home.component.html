@@ -1,39 +1,75 @@
-<!--
-<home-slideshow></home-slideshow>
--->
+<div
+  class="title-home-page-container"
+>
+  <h1
+    class="title-home-page"
+  >La Dolce Vita</h1>
+</div>
 
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
-<p>Home</p>
+<home-slideshow></home-slideshow>
+
+<div
+  class="home-container"
+>
+  <div
+    class="article-section-home"
+  >
+    <h3>
+      {{ "home.subparagraph.articles" | translate }}
+    </h3>
+
+    <div
+      [routerLink]="['/articles/article', article.id]"
+      class="display-article-container"
+      *ngFor="let article of articles"
+    >
+      <div
+        class="article-image-container"
+      >
+        <img [src]="mapArticlePhoto.get(article.id!)">
+      </div>
+
+      <div
+        class="article-info-container"
+      >
+        <div
+          class="writer-info-container"
+        >
+          <div>
+            <img [src]="mapMemberPhoto.get(article.email!)" alt="member-photo">
+          </div>
+
+          <div
+            style="display: flex; flex-direction: column; align-items: flex-start"
+          >
+            <h6
+              style="font-size: 14px;"
+            >{{mapArticleMember.get(article.id!)}} <i class="fa fa-pencil" aria-hidden="true"></i></h6>
+            <h6
+              style="font-size: 14px;"
+            >{{article.lecture_time}} {{"articles.subparagraph.minutes" | translate}}</h6>
+          </div>
+        </div>
+
+        <div style="overflow: hidden; text-overflow: ellipsis">
+          <h6 class="article-title">{{mapArticleLanguage.get(article.id!)?.title}}</h6>
+          <p class="hide" [innerHTML]="mapArticleLanguage.get(article.id!)?.description"></p>
+
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <div
+    class="event-section-home"
+  >
+    <h3>
+      {{ "home.subparagraph.events" | translate }}
+    </h3>
+  </div>
+</div>
 
 

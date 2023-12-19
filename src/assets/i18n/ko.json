@@ -1,5 +1,11 @@
 {
-  "home": "홈",
+  "home": {
+    "nav-title": "홈",
+    "subparagraph": {
+      "articles": "최신 기사 확인",
+      "events": "다가오는 이벤트"
+    }
+  },
   "events": "이벤트",
   "articles": {
     "nav-title": "논문",

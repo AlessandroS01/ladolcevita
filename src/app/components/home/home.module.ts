@@ -9,6 +9,8 @@ import {
   CarouselItemComponent
 } from "@coreui/angular";
 import {RouterLink} from "@angular/router";
+import {NgxPaginationModule} from "ngx-pagination";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 
@@ -17,14 +19,16 @@ import {RouterLink} from "@angular/router";
     HomeComponent,
     HomeSlideshowComponent
   ],
-  imports: [
-    CommonModule,
-    CarouselComponent,
-    CarouselInnerComponent,
-    CarouselItemComponent,
-    CarouselControlComponent,
-    RouterLink,
-    CarouselIndicatorsComponent
-  ]
+	imports: [
+		CommonModule,
+		CarouselComponent,
+		CarouselInnerComponent,
+		CarouselItemComponent,
+		CarouselControlComponent,
+		RouterLink,
+		CarouselIndicatorsComponent,
+		NgxPaginationModule,
+		TranslateModule
+	]
 })
 export class HomeModule { }

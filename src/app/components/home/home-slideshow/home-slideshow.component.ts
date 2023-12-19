@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HomeService} from "../../../shared/services/page-info/home/home.service";
+import {LanguageService} from "../../../shared/services/language/language.service";
+import {HomePageData} from "../../../shared/interfaces/home_page/home-page-data";
+
+const animation = { duration: 25000, easing: (t: any) => t }
 
 @Component({
   selector: 'home-slideshow',
@@ -7,32 +11,34 @@ import {HomeService} from "../../../shared/services/page-info/home/home.service"
   styleUrls: ['./home-slideshow.component.css']
 })
 export class HomeSlideshowComponent {
-  sliderImages: {
-    id: number,
-    src: string
-  }[] = [];
+	images: String[] = [];
+	homeData!: HomePageData;
 
-  constructor(
-    private homeService : HomeService
-  ) {
+	description: string = '';
 
-  }
+	constructor(
+		private homeService: HomeService,
+		private languageService: LanguageService
+	) {
+		this.homeService.getSliderImages().subscribe(photos => {
+			this.homeService.getHomePageInfo().subscribe(info=> {
+				if (info.data()) {
+					this.homeData = info.data() as HomePageData;
+					this.languageService.language.subscribe(lang=> {
+						if (lang == 'en') {
+							this.description = this.homeData.en.sliderDescription;
+						}
+						if (lang == 'it') {
+							this.description = this.homeData.it.sliderDescription;
+						}
+						if (lang == 'ko') {
+							this.description = this.homeData.ko.sliderDescription;
+						}
+					})
+				}
+			})
 
-  ngOnInit(): void {
-
-    this.homeService.getSliderImages().subscribe(downloadUrls => {
-      this.sliderImages = downloadUrls.filter(url =>
-        url.includes('.jpg') || url.includes('.png')
-      ).map((item: string, index: number) => {
-        return {
-          id: index,
-          src: item
-        }
-      });
-
-      console.log(this.sliderImages)
-    });
-
-  }
-
+			this.images = photos;
+		});
+	}
 }

@@ -1,3 +1,62 @@
+/* TITLE */
+.title-home-page-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.title-home-page {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 56px;
+  color: #2F4858;
+  /*
+  background: linear-gradient(
+    to right,
+    #91110E,
+    #FFBCDF,
+    #FF85A8,
+    #C34F74
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+   */
+}
 
+.home-container {
+  margin-top: 40px;
+  padding: 20px 5%;
+}
+
+/* SECTIONS */
+.article-section-home,
+.event-section-home {
+  margin: 60px 0 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.article-section-home h3,
+.event-section-home h3 {
+  width: 100%;
+  padding: 20px;
+  border: solid 1px #91110E;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0 8px #c4c4c4;
+
+  color: #2F4858;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+@media screen and (max-width: 800px) {
+  .title-home-page {
+    font-size: 40px;
+  }
+}
 
 

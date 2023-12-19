@@ -1,0 +1,121 @@
+<div
+  class="text-editor-container"
+  *ngIf="isDataLoaded"
+>
+
+  <h1 class="main-title-text-editor">Home page info</h1>
+
+  <div class="form-element-container">
+    <div class="element">
+      <label>
+        English slide description
+      </label>
+      <input
+        type="text"
+        [formControl]="sliderEnDescription"
+        placeholder="English description"
+      >
+    </div>
+    <div
+      *ngIf="sliderEnDescription.dirty || sliderEnDescription.touched || submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="sliderEnDescription.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> English description is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-element-container">
+    <div class="element">
+      <label>
+        Italian slide description
+      </label>
+      <input
+        type="text"
+        [formControl]="sliderItDescription"
+        placeholder="Italian description"
+      >
+    </div>
+    <div
+      *ngIf="sliderItDescription.dirty || sliderItDescription.touched || submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="sliderItDescription.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Italian description is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-element-container">
+    <div class="element">
+      <label>
+        Korean slide description
+      </label>
+      <input
+        type="text"
+        [formControl]="sliderKoDescription"
+        placeholder="Korean description"
+      >
+    </div>
+    <div
+      *ngIf="sliderKoDescription.dirty || sliderKoDescription.touched || submitted"
+      class="invalid-input"
+    >
+      <div
+        *ngIf="sliderKoDescription.hasError('required')"
+      >
+        <i class="fa fa-exclamation-circle"></i> Korean description is required
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="home-page-images"
+  *ngIf="isDataLoaded"
+>
+
+  <h3
+    style="font-weight: bold"
+  >Slider images</h3>
+
+  <div
+    class="image-slider-container"
+    *ngFor="let photo of imagesSlider"
+  >
+
+    <img [src]="photo">
+
+    <div
+      class="remove-image-container"
+      title="Delete event"
+      (click)="removePhotoFromSlider(photo)"
+    >
+      <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </div>
+
+  </div>
+
+  <button
+    class="add-slider-image-button"
+    (click)="addNewImageSlider()"
+  >
+    Add a new image to the slider
+  </button>
+
+  <ng-template #sliderPhoto></ng-template>
+
+
+  <button
+    (click)="submitChanges()"
+    class="submit-button"
+  >
+    Submit changes
+  </button>
+
+</div>

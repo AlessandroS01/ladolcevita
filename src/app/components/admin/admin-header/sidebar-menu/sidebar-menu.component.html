@@ -175,7 +175,10 @@
           style="font-size: 16px"
           class="fa fa-arrow-left"></i>
       </div>
-      <p>Home</p>
+      <p
+        (click)="moveVerticalMenu();toggleDropdownMenu('pages');"
+        routerLink="admin/home"
+      >Home</p>
       <p>About</p>
     </div>
 

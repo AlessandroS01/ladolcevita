@@ -1,22 +1,30 @@
+<div
+  class="slideshow-container"
+  *ngIf="images.length == 0"
+>
 
-<div class="carousel-container">
-  <div class="carousel">
-    <c-carousel [dark]="true" *ngIf="sliderImages.length > 0" [interval]="2000">
-
-      <c-carousel-inner>
-        <c-carousel-item *ngFor="let slide of sliderImages">
-          <img
-            loading="eager"
-            src="{{slide.src}}"
-          />
-        </c-carousel-item>
-      </c-carousel-inner>
-      <!--
-      <c-carousel-control caption="Previous" direction="prev"></c-carousel-control>
-      <c-carousel-control caption="Next" direction="next"></c-carousel-control>
-      -->
-    </c-carousel>
-  </div>
 </div>
 
+<div
+  class="slideshow-container"
+  *ngIf="images.length != 0"
+>
+  <c-carousel [interval]="3000">
+    <c-carousel-inner>
+      <c-carousel-item *ngFor="let slide of images">
+        <img
+          [src]="slide"
+          alt="slider-image"
+        />
+      </c-carousel-item>
+    </c-carousel-inner>
+    <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+    <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
+    <p
+      class="title-slideshow"
+    >{{description}}</p>
+  </c-carousel>
 
+
+
+</div>

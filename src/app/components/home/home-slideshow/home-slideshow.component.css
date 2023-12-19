@@ -1,21 +1,80 @@
-
-
-.carousel-container {
+.slideshow-container {
   width: 100%;
-}
-
-.carousel {
   display: flex;
-
-  justify-content: center;
-  width: 80%;
+  flex-direction: column;
+  align-items: center;
 }
 
-.carousel-container c-carousel {
-  z-index: -1;
+c-carousel {
+  position: relative;
 }
 
-.carousel-container img {
-  max-width: 100%;
-  height: auto;
+c-carousel,
+c-carousel img {
+  width: 1200px;
+  height: 700px;
 }
+
+.title-slideshow {
+  color: white;
+  margin: 5px;
+  position: absolute;
+  width: 40%;
+  bottom: 0;
+  left: 0;
+  background-color: #91110E;
+  padding: 5px;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 1400px) {
+  c-carousel,
+  c-carousel img {
+    width: 1000px;
+    height: 600px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  c-carousel,
+  c-carousel img {
+    width: 800px;
+    height: 500px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  c-carousel,
+  c-carousel img {
+    width: 600px;
+    height: 450px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  c-carousel,
+  c-carousel img {
+    width: 400px;
+    height: 280px;
+  }
+
+  .title-slideshow {
+    font-size: 14px;
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  c-carousel,
+  c-carousel img {
+    width: 300px;
+    height: 140px;
+  }
+
+  .title-slideshow {
+    font-size: 10px;
+    width: 60%;
+  }
+}
+
+

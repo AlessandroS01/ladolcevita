@@ -34,9 +34,15 @@
     </h6>
 
     <div class="loading-button-container">
-      <button (click)="closePopup(data.create.value)">{{data.create.title}}</button>
-      <button (click)="closePopup(data.view.value)">{{data.view.title}}</button>
-      <button (click)="closePopup(data.main.value)">{{data.main.title}}</button>
+      <button
+        *ngIf="data.create.title != ''"
+        (click)="closePopup(data.create.value)">{{data.create.title}}</button>
+      <button
+        *ngIf="data.view.title != ''"
+        (click)="closePopup(data.view.value)">{{data.view.title}}</button>
+      <button
+        *ngIf="data.main.title != ''"
+        (click)="closePopup(data.main.value)">{{data.main.title}}</button>
     </div>
   </div>
 
