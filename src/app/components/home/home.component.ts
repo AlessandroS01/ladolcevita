@@ -10,7 +10,7 @@ import {MemberService} from "../../shared/services/model/member/member.service";
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: [
-	  './../articles/articles.component.css',
+	  './../../shared/global/css/articles-events.css',
 		'./home.component.css'
   ]
 })

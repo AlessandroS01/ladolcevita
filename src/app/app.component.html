@@ -1,6 +1,6 @@
 <div
   class="content"
-  *ngIf="hideNavbarAndFooter && !articlePageVisible"
+  *ngIf="hideNavbarAndFooter && !articlePageVisible && !eventPageVisible"
 >
   <app-navbar></app-navbar>
 
@@ -28,10 +28,17 @@
   <router-outlet></router-outlet>
 </div>
 
+<div
+  class="content event"
+  *ngIf="eventPageVisible"
+>
+  <router-outlet></router-outlet>
+</div>
+
 
 <div
   class="content"
-  *ngIf="!hideNavbarAndFooter && !articlePageVisible"
+  *ngIf="!hideNavbarAndFooter && !articlePageVisible && !eventPageVisible"
 >
   <app-admin-header *ngIf="!hideNavbarAndFooter"></app-admin-header>
 

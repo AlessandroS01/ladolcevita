@@ -10,7 +10,10 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.css']
+  styleUrls: [
+		'./articles.component.css',
+	  './../../shared/global/css/articles-events.css'
+  ]
 })
 export class ArticlesComponent {
 

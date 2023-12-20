@@ -26,13 +26,13 @@
     >
       <h6
         style="text-align: center"
-        *ngIf="eventList.length == 0"
+        *ngIf="eventListFiltered.length == 0"
       >No events published</h6>
 
 
       <table
         class="table-container"
-        *ngIf="eventList.length > 0"
+        *ngIf="eventListFiltered.length > 0"
       >
         <tr>
           <th
@@ -46,10 +46,10 @@
           <th style="border-top-right-radius: 10px;">Actions</th>
         </tr>
         <tr
-          *ngFor="let event of eventList | paginate: {
+          *ngFor="let event of eventListDisplayed | paginate: {
                                                               itemsPerPage: pageSize,
                                                               currentPage: page,
-                                                              totalItems: eventList.length
+                                                              totalItems: eventListFiltered.length
                                                               };"
         >
           <td class="image-cell-container">
@@ -91,8 +91,8 @@
       </table>
 
 
-      <div *ngIf="eventList.length > 0">
-        <div *ngIf="eventList.length > 0" class="pagination-container">
+      <div *ngIf="eventListFiltered.length > 0">
+        <div *ngIf="eventListFiltered.length > 0" class="pagination-container">
           <pagination-controls
             previousLabel="Prev"
             nextLabel="Next"

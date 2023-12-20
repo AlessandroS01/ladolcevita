@@ -99,8 +99,8 @@ export class ArticlesViewComponent {
 		    return article.email == value
 	    });
     }
-	  this.articleListDisplayed = this.allArticlesFiltered;
 	  this.sortingArticleList();
+	  this.articleListDisplayed = this.allArticlesFiltered;
   }
 
   deleteArticle(article: Article) {

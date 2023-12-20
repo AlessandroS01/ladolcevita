@@ -1,0 +1,8 @@
+.articles-page-container select {
+  border-radius: 5px;
+  border-color: #c4c4c4;
+  padding: 15px 5px;
+  cursor: pointer;
+  background-color: rgba(145, 17, 14, 0.05);
+  outline: none;
+}

@@ -5,26 +5,26 @@
 
   <div
     *ngIf="articleListDisplayed.length == 0"
-    class="list-articles-container"
+    class="list-articles-events-container"
   >
     <h3
-      class="articles-page-titles-container"
+      class="articles-events-page-titles-container"
     >{{"articles.subparagraph.no-articles" | translate}}</h3>
     <hr>
   </div>
 
   <div
     *ngIf="articleListDisplayed.length > 0"
-    class="list-articles-container"
+    class="list-articles-events-container"
   >
     <h3
-      class="articles-page-titles-container"
+      class="articles-events-page-titles-container"
     >{{"articles.subparagraph.articles" | translate}}</h3>
     <hr>
 
     <div
       [routerLink]="['/articles/article', article.id]"
-      class="display-article-container"
+      class="display-article-event-container"
       *ngFor="let article of articleListDisplayed | paginate: {
                                                               itemsPerPage: pageSize,
                                                               currentPage: page,
@@ -32,13 +32,13 @@
                                                               }"
     >
       <div
-        class="article-image-container"
+        class="article-event-image-container"
       >
         <img [src]="mapArticlePhoto.get(article.id!)">
       </div>
 
       <div
-        class="article-info-container"
+        class="article-event-info-container"
       >
         <div
           class="writer-info-container"
@@ -83,11 +83,11 @@
   </div>
 
   <div
-    class="filters-articles-container"
+    class="filters-articles-events-container"
     id="filter-articles"
   >
     <h3
-      class="articles-page-titles-container"
+      class="articles-events-page-titles-container"
     >
       {{"articles.subparagraph.writers" | translate}}
 

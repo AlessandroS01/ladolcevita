@@ -20,17 +20,17 @@
 
     <div
       [routerLink]="['/articles/article', article.id]"
-      class="display-article-container"
+      class="display-article-event-container"
       *ngFor="let article of articles"
     >
       <div
-        class="article-image-container"
+        class="article-event-image-container"
       >
         <img [src]="mapArticlePhoto.get(article.id!)">
       </div>
 
       <div
-        class="article-info-container"
+        class="article-event-info-container"
       >
         <div
           class="writer-info-container"

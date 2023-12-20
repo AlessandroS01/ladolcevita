@@ -18,6 +18,10 @@
   min-height: 100%;
   background-color: #DBD3D6!important;
 }
+.event {
+  min-height: 100%;
+  background-color: #DAD0CB !important;
+}
 
 app-footer {
   position: sticky;

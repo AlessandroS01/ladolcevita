@@ -6,12 +6,24 @@
       "events": "Upcoming Events"
     }
   },
-  "events": "Events",
+  "events": {
+    "nav-title": "Events",
+    "subparagraph": {
+      "events": "Events",
+      "no-events": "No event found",
+      "date": "Date",
+      "select" : {
+        "future": "Upcoming",
+        "past": "Past",
+        "all": "All"
+      }
+    }
+  },
   "articles": {
     "nav-title": "Articles",
     "subparagraph": {
       "articles": "Articles",
-      "no-articles": "No articles found",
+      "no-articles": "No article found",
       "writers": "Writers",
       "minutes": "minutes lecture"
     }

@@ -46,6 +46,7 @@ import {AdminArticleModule} from "./components/admin/admin-article/admin-article
 import {ArticlesModule} from "./components/articles/articles.module";
 import {AdminHomeModule} from "./components/admin/admin-home/admin-home.module";
 import { NewPhotoComponent } from './components/admin/admin-home/new-photo/new-photo.component';
+import {EventsModule} from "./components/events/events.module";
 
 
 
@@ -75,6 +76,7 @@ import { NewPhotoComponent } from './components/admin/admin-home/new-photo/new-p
     HomeModule,
     AboutModule,
 	  ArticlesModule,
+	  EventsModule,
     FooterModule,
     PopupsModule,
     AdminEventModule,

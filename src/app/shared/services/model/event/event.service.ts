@@ -143,4 +143,10 @@ export class EventService {
 
     return reference.delete();
   }
+
+	getPhotoEvent(photoName: string, eventId: string): Observable<string> {
+		const reference =
+			this.storage.ref(`${this.dbPath}/${eventId}/${photoName}`);
+		return reference.getDownloadURL();
+	}
 }

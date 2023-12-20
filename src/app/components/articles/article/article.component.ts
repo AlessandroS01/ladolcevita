@@ -10,7 +10,10 @@ import {Member} from "../../../shared/models/member/member";
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.css']
+  styleUrls: [
+		'./article.component.css',
+	  './../../../shared/global/css/article-event.css'
+  ]
 })
 export class ArticleComponent implements OnInit{
 

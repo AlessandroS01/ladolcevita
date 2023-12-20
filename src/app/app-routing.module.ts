@@ -15,10 +15,14 @@ import {ArticlesModifyComponent} from "./components/admin/admin-article/modify/a
 import {ArticlesComponent} from "./components/articles/articles.component";
 import {ArticleComponent} from "./components/articles/article/article.component";
 import {HomeAdminComponent} from "./components/admin/admin-home/home/home-admin.component";
+import {EventsComponent} from "./components/events/events.component";
+import {EventComponent} from "./components/events/event/event.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'about', component: AboutComponent},
+	{ path: 'events', component: EventsComponent},
+	{ path: 'events/event/:id', component: EventComponent},
   { path: 'articles', component: ArticlesComponent},
   { path: 'articles/article/:id', component: ArticleComponent},
   { path: 'admin', canActivate:[adminGuard], component: AdminComponent},

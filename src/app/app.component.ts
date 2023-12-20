@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   hideNavbarAndFooter: boolean = false;
 
 	articlePageVisible: boolean = false;
+	eventPageVisible: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
       this.hideNavbarAndFooter = !event.url.startsWith('/admin');
 
 			this.articlePageVisible = event.url.startsWith('/articles/article');
+			this.eventPageVisible = event.url.startsWith('/events/event');
     });
   }
 }

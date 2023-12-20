@@ -10,7 +10,7 @@
   class="article-event-page-container"
 >
   <div
-    *ngIf="mapArticleLang.get(article.id!) as info"
+    *ngIf="mapEventLang.get(event.id!) as info"
   >
 
     <div
@@ -19,7 +19,7 @@
       <img [src]="mapPhotoUrl.get('cover')" alt="cover">
 
       <div
-        routerLink="/articles"
+        [routerLink]="'/events'"
         class="back-arrow"
       >
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -41,7 +41,11 @@
         <div
           class="writer-article-container"
         >
-          <p>by {{member.name}} {{member.surname}} | {{article.date_time?.toDate() | date:("EEE, MMMM d, y")}} | {{article.lecture_time}} {{articleLength}}</p>
+          <p>
+            <i class="fa fa-calendar-check-o"></i> {{event.date_time?.toDate() | date:("EEE, MMMM d, y 'at' h:mm a")}}
+            <br>
+            <i class="fa fa-map-marker"></i> {{event.address}}
+          </p>
         </div>
 
 
@@ -56,9 +60,55 @@
           <img *ngIf="sub.photo != ''"  [src]="mapPhotoUrl.get(sub.photo!)">
           <div [innerHTML]="sub.description!"></div>
         </div>
+
+        <div
+          class="button-claim-container"
+          *ngIf="!eventExpired"
+        >
+          <div
+            class="button-claim-container"
+            *ngIf="loggedUser != null"
+          >
+            <div
+              *ngIf="hasTicket"
+              class="button-claim-ticket"
+            >
+              {{ticketOwnedString}}
+            </div>
+
+            <div
+              *ngIf="!hasTicket"
+              (click)="addNewParticipant()"
+              class="button-claim-ticket"
+            >
+              {{claimTicketString}}
+            </div>
+          </div>
+          <div
+            *ngIf="loggedUser == null"
+            class="button-claim-ticket"
+            (click)="openLogin()"
+          >
+            {{logInString}}
+          </div>
+        </div>
+
+        <div
+          class="button-claim-container"
+          *ngIf="eventExpired"
+        >
+          <div
+            class="button-claim-ticket"
+          >
+            {{eventExpiredString}}
+          </div>
+
+        </div>
+
       </div>
 
     </div>
+
 
   </div>
 
@@ -72,17 +122,17 @@
         class="change-lang-article-event"
       >
         <div
-          (click)="changeLangArticle('en')"
+          (click)="changeLangEvent('en')"
         >
           <img src="./assets/img/languages/united-kingdom-squared.png">
         </div>
         <div
-          (click)="changeLangArticle('ko')"
+          (click)="changeLangEvent('ko')"
         >
           <img src="./assets/img/languages/south-korea-squared.png">
         </div>
         <div
-          (click)="changeLangArticle('it')"
+          (click)="changeLangEvent('it')"
         >
           <img src="./assets/img/languages/italian-squared.png">
         </div>
@@ -100,44 +150,41 @@
     </div>
 
     <div
-      *ngIf="relatedArticles.length > 0"
+      *ngIf="relatedEvents.length > 0"
     >
       <p
         class="related-articles-events-title"
       >
         <i class="fa fa-compass" aria-hidden="true"></i>
-        {{relatedArticlesTitle}}
+        {{relatedEventsTitle}}
       </p>
 
       <div
-        (click)="reloadCurrentRoute(article.id!)"
-        *ngFor="let article of relatedArticles"
+        (click)="reloadCurrentRoute(event.id!)"
+        *ngFor="let event of relatedEvents"
         class="related-articles-events-list"
       >
         <div
           *ngIf="language == 'English'"
         >
-          <h6>{{ article.en?.title }}</h6>
-          <p [innerHTML]="article.en?.description"></p>
+          <h6>{{ event.en?.title }}</h6>
+          <p [innerHTML]="event.en?.description"></p>
         </div>
         <div
           *ngIf="language == '한국인'"
         >
-          <h6>{{ article.ko?.title }}</h6>
-          <p [innerHTML]="article.ko?.description"></p>
+          <h6>{{ event.ko?.title }}</h6>
+          <p [innerHTML]="event.ko?.description"></p>
         </div>
         <div
           *ngIf="language == 'Italiano'"
         >
-        <h6>{{ article.it?.title }}</h6>
-        <p [innerHTML]="article.it?.description"></p>
+          <h6>{{ event.it?.title }}</h6>
+          <p [innerHTML]="event.it?.description"></p>
         </div>
-
-
         <hr>
       </div>
     </div>
-
 
   </div>
 

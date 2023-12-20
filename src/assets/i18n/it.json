@@ -6,7 +6,19 @@
       "events": "Prossimi Eventi"
     }
   },
-  "events": "Eventi",
+  "events": {
+    "nav-title": "Eventi",
+    "subparagraph": {
+      "events": "Eventi",
+      "no-events": "Nessun evento trovato",
+      "date": "Data",
+      "select" : {
+        "future": "Prossimi",
+        "past": "Passati",
+        "all": "Tutti"
+      }
+    }
+  },
   "articles": {
     "nav-title": "Articoli",
     "subparagraph": {

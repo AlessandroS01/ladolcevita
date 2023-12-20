@@ -1,0 +1,39 @@
+.button-claim-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-claim-ticket {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 8px #B1BDC5;
+  padding: 15px 10px;
+
+  border-radius: 12px;
+  transition: all ease-in-out 0.2s;
+  cursor: pointer;
+}
+
+.button-claim-ticket:hover {
+  background-color: #DADDE2;
+}
+
+@media screen and (max-width: 850px) {
+  .button-claim-ticket {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .button-claim-ticket {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .button-claim-ticket {
+    width: 100%;
+  }
+}

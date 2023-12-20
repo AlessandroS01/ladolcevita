@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {Participant, ParticipantFulfilled} from "../../../models/participant/participant";
-import {forkJoin, map, Observable, of, switchMap} from "rxjs";
+import {forkJoin, map, Observable, of, switchMap, take} from "rxjs";
 import {EventService} from "../event/event.service";
 import {UserService} from "../user/user.service";
 import {User} from "../../../models/user/user.model";
@@ -65,8 +65,31 @@ export class ParticipantService {
     return this.participantsRef.doc(uid).get();
   }
 
-  create(participant: Participant, uid: string): any {
-    return this.participantsRef.doc(uid).set({ ...participant });
+	getAllUIDs(): Observable<string[]> {
+		return this.participantsRef.snapshotChanges().pipe(
+			map(actions => {
+				return actions.map(action => action.payload.doc.id);
+			})
+		);
+	}
+
+  create(participant: Participant) {
+	  return this.getAllUIDs().pipe(
+		  take(1),
+		  switchMap(uids => {
+			  let newUid = 1;
+
+			  uids.forEach(uid => {
+				  if (newUid === parseInt(uid)) {
+					  newUid++;
+				  }
+			  });
+
+			  const participationObj: any = {... participant};
+
+			  return this.participantsRef.doc(newUid.toString()).set({ ...participationObj });
+		  })
+	  );
   }
 
   update(id: string, participant: Participant): Promise<void> {
@@ -76,4 +99,15 @@ export class ParticipantService {
   delete(id: string): Promise<void> {
     return this.participantsRef.doc(id).delete();
   }
+
+	getUserParticipationByEvent(eventId: string, email: string) {
+		const database = this.db.firestore;
+		return database.collection('/participants').where(
+			'event', '==', eventId
+		).where(
+			'email', '==', email
+		).get().then( snapshot=> {
+			return !snapshot.empty;
+		});
+	}
 }

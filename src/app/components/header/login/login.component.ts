@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit{
 
   constructor(
       private authService: AuthService,
-      private dialog: MatDialog,
-      private userService: UserService
+      private dialog: MatDialog
   ) {
     this.isLogged = this.authService.getAuthState().pipe(
       map(authState => authState?.uid ?? null)
