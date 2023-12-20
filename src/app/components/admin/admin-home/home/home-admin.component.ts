@@ -8,6 +8,7 @@ import {combineLatest, Observable} from "rxjs";
 import {LoadingPopupComponent} from "../../../popups/loading-popup/loading-popup.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
+import {Event} from "../../../../shared/models/event/event";
 
 @Component({
   selector: 'app-home',
@@ -183,102 +184,118 @@ export class HomeAdminComponent {
 		};
 
 
-		this.removedPhotos.forEach(filename=> {
-			this.homeService.deleteFile(filename);
+		if (this.checkPhotoNames(newHomePageInfo)) {
+			this.removedPhotos.forEach(filename=> {
+				this.homeService.deleteFile(filename);
+			})
+
+			this.homeService.modifyHomePage(newHomePageInfo).then(_ => {
+				const uploadObservables: Observable<number | undefined>[] = [];
+
+				for (let file of arrayUploadingFiles) {
+					uploadObservables.push(this.homeService.uploadFile(file));
+				}
+
+				if (uploadObservables.length == 0) {
+					const dialogRef = this.dialog.open(LoadingPopupComponent, {
+						width: '1000px',
+						height: '350px',
+						maxHeight: '350px',
+						disableClose: true,
+						data: {
+							uploadPercentage: 100,
+							message: 'Home page modified successfully',
+							create: {
+								title: 'Modify again',
+								value: 'new-update'
+							},
+							view: {
+								title: '',
+								value: ''
+							},
+							main: {
+								title: 'Main page',
+								value: 'main-page'
+							}
+						} // Initial value, it will be updated
+					});
+
+					combineLatest(uploadObservables).subscribe(percentages => {
+						const totalPercentage = percentages.reduce(
+							(total, current) => (total as number) + (current as number), 0
+						);
+						console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
+						dialogRef.componentInstance.updateUploadPercentage(
+							(totalPercentage as number) / uploadObservables.length
+						);
+					});
+
+					dialogRef.afterClosed().subscribe(message =>{
+						if (message == 'new-update') {
+							window.location.reload();
+						}
+						if (message == 'main-page') {
+							this.router.navigate(['admin']);
+						}
+					});
+
+				} else {
+					const dialogRef = this.dialog.open(LoadingPopupComponent, {
+						width: '1000px',
+						height: '350px',
+						maxHeight: '350px',
+						disableClose: true,
+						data: {
+							uploadPercentage: 0,
+							message: 'Home page modified successfully',
+							create: {
+								title: 'Modify again',
+								value: 'new-update'
+							},
+							view: {
+								title: '',
+								value: ''
+							},
+							main: {
+								title: 'Main page',
+								value: 'main-page'
+							}
+						} // Initial value, it will be updated
+					});
+
+					combineLatest(uploadObservables).subscribe(percentages => {
+						const totalPercentage = percentages.reduce(
+							(total, current) => (total as number) + (current as number), 0
+						);
+						console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
+						dialogRef.componentInstance.updateUploadPercentage(
+							(totalPercentage as number) / uploadObservables.length
+						);
+					});
+					dialogRef.afterClosed().subscribe(message =>{
+						if (message == 'new-update') {
+							window.location.reload();
+						}
+						if (message == 'main-page') {
+							this.router.navigate(['admin']);
+						}
+					});
+				}
+			});
+		} else {
+			window.alert('Some photos have the same name. Please change them.')
+		}
+	}
+
+	checkPhotoNames(newHomePageInfo: HomePageData): boolean {
+		const photoSet = new Set<string>();
+		let counter = 0;
+
+		newHomePageInfo.photos.forEach(photo=> {
+			photoSet.add(photo);
+			counter++;
 		})
 
-		this.homeService.modifyHomePage(newHomePageInfo).then(_ => {
-			const uploadObservables: Observable<number | undefined>[] = [];
-
-			for (let file of arrayUploadingFiles) {
-				uploadObservables.push(this.homeService.uploadFile(file));
-			}
-
-			if (uploadObservables.length == 0) {
-				const dialogRef = this.dialog.open(LoadingPopupComponent, {
-					width: '1000px',
-					height: '350px',
-					maxHeight: '350px',
-					disableClose: true,
-					data: {
-						uploadPercentage: 100,
-						message: 'Home page modified successfully',
-						create: {
-							title: 'Modify again',
-							value: 'new-update'
-						},
-						view: {
-							title: '',
-							value: ''
-						},
-						main: {
-							title: 'Main page',
-							value: 'main-page'
-						}
-					} // Initial value, it will be updated
-				});
-
-				combineLatest(uploadObservables).subscribe(percentages => {
-					const totalPercentage = percentages.reduce(
-						(total, current) => (total as number) + (current as number), 0
-					);
-					console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
-					dialogRef.componentInstance.updateUploadPercentage(
-						(totalPercentage as number) / uploadObservables.length
-					);
-				});
-
-				dialogRef.afterClosed().subscribe(message =>{
-					if (message == 'new-update') {
-						window.location.reload();
-					}
-					if (message == 'main-page') {
-						this.router.navigate(['admin']);
-					}
-				});
-
-			} else {
-				const dialogRef = this.dialog.open(LoadingPopupComponent, {
-					width: '1000px',
-					height: '350px',
-					maxHeight: '350px',
-					disableClose: true,
-					data: {
-						uploadPercentage: 0,
-						message: 'Home page modified successfully',
-						create: {
-							title: 'Modify again',
-							value: 'new-update'
-						},
-						view: {
-							title: '',
-							value: ''
-						},
-						main: {
-							title: 'Main page',
-							value: 'main-page'
-						}
-					} // Initial value, it will be updated
-				});
-
-				combineLatest(uploadObservables).subscribe(percentages => {
-					const totalPercentage = percentages.reduce(
-						(total, current) => (total as number) + (current as number), 0
-					);
-					console.log(`Uploaded percentage ${(totalPercentage as number) / uploadObservables.length}`);
-					dialogRef.componentInstance.updateUploadPercentage(
-						(totalPercentage as number) / uploadObservables.length
-					);
-				});
-				dialogRef.afterClosed().subscribe(message =>{
-					if (message == 'new-update') {
-						window.location.reload();
-					}
-					if (message == 'main-page') {
-						this.router.navigate(['admin']);
-					}
-				});
-			}
-		});
+		return counter == photoSet.size;
 	}
 }

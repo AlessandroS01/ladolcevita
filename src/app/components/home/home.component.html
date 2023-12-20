@@ -20,7 +20,7 @@
 
     <div
       [routerLink]="['/articles/article', article.id]"
-      class="display-article-event-container"
+      class="display-article-event-container full"
       *ngFor="let article of articles"
     >
       <div
@@ -69,6 +69,49 @@
     <h3>
       {{ "home.subparagraph.events" | translate }}
     </h3>
+
+    <div
+      [routerLink]="['/events/event', event.id]"
+      class="display-article-event-container full"
+      *ngFor="let event of events"
+    >
+      <div
+        class="article-event-image-container"
+      >
+        <img [src]="mapEventPhoto.get(event.id!)">
+      </div>
+
+      <div
+        class="article-event-info-container"
+      >
+        <div
+          class="writer-info-container"
+        >
+
+          <div
+            style="display: flex; flex-direction: column; justify-content: center"
+          >
+            <h6
+              style="font-size: 14px; color: #484554; font-weight: bold;"
+            ><i class="fa fa-calendar-check-o"></i> {{event.date_time?.toDate() | date:"MMM d, y 'at' h:mm a" }} </h6>
+            <h6
+              style="font-size: 14px; color: #484554; font-weight: bold"
+            ><i class="fa fa-map-marker"></i> {{event.address}}</h6>
+          </div>
+        </div>
+
+        <div style="overflow: hidden; text-overflow: ellipsis">
+          <h6
+            style="font-size: 18px"
+            class="article-title">{{mapEventLanguage.get(event.id!)?.title}}</h6>
+          <p
+            class="hide" [innerHTML]="mapEventLanguage.get(event.id!)?.description"></p>
+        </div>
+
+      </div>
+
+
+    </div>
   </div>
 </div>
 

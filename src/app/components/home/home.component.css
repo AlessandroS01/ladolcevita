@@ -53,6 +53,10 @@
   margin-bottom: 30px;
 }
 
+.full {
+  width: 100%;
+}
+
 @media screen and (max-width: 800px) {
   .title-home-page {
     font-size: 40px;

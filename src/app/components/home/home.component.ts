@@ -5,6 +5,8 @@ import {Article} from "../../shared/models/article/article";
 import {LanguageService} from "../../shared/services/language/language.service";
 import {Details} from "../../shared/models/common/details-subparagraphs";
 import {MemberService} from "../../shared/services/model/member/member.service";
+import {Event} from "../../shared/models/event/event";
+import {EventService} from "../../shared/services/model/event/event.service";
 
 @Component({
   selector: 'app-home',
@@ -17,17 +19,48 @@ import {MemberService} from "../../shared/services/model/member/member.service";
 export class HomeComponent {
 
 	articles: Article[] = [];
+	events: Event[] = [];
 
 	mapArticlePhoto: Map<string, string> = new Map();
+	mapEventPhoto: Map<string, string> = new Map();
 	mapMemberPhoto: Map<string, string> = new Map();
 	mapArticleMember: Map<string, string> = new Map();
 	mapArticleLanguage: Map<string, Details> = new Map();
+	mapEventLanguage: Map<string, Details> = new Map();
 
   constructor(
     private articleService: ArticleService,
     private languageService: LanguageService,
-    private memberService: MemberService
+    private memberService: MemberService,
+    private eventService: EventService
   ) {
+		this.eventService.getAll().subscribe(events=> {
+			this.events = events.filter(event=> {
+				return event.date_time?.toDate().getTime()! >= Date.now()
+			}).sort((a, b) => {
+				if (a.date_time?.toMillis()! < b.date_time?.toMillis()!) {
+					return -1;
+				}
+				else if (a.date_time?.toMillis()! > b.date_time?.toMillis()!) {
+					return 1;
+				}
+				else return 0;
+			}).slice(0, 2);
+
+			this.languageService.language.subscribe(lang=> {
+				this.events.forEach(event=> {
+					this.eventService.getCoverPhotoEvent(event).subscribe(photo=> {
+						this.mapEventPhoto.set(
+							event.id!,
+							photo
+						)
+					});
+					this.populateLanguageMapEvents(lang, event);
+				});
+			})
+
+		});
+
 		this.articleService.getAll().subscribe(articles=> {
 			articles.sort((a, b) => {
 				if (a.date_time?.toMillis()! < b.date_time?.toMillis()!) {
@@ -51,7 +84,7 @@ export class HomeComponent {
 								photo
 							)
 						});
-						this.populateLanguageMap(lang, article);
+						this.populateLanguageMapArticles(lang, article);
 
 						members.forEach(member=> {
 							if (member.email == article.email) {
@@ -77,7 +110,7 @@ export class HomeComponent {
   }
 
 
-	private populateLanguageMap(lang: string, article: Article) {
+	private populateLanguageMapArticles(lang: string, article: Article) {
 		switch (lang) {
 			case 'en': {
 				this.mapArticleLanguage.set(
@@ -97,6 +130,31 @@ export class HomeComponent {
 				this.mapArticleLanguage.set(
 					article.id!,
 					article.ko!
+				);
+				break;
+			}
+		}
+	}
+	private populateLanguageMapEvents(lang: string, event: Event) {
+		switch (lang) {
+			case 'en': {
+				this.mapArticleLanguage.set(
+					event.id!,
+					event.en!
+				);
+				break;
+			}
+			case 'it': {
+				this.mapArticleLanguage.set(
+					event.id!,
+					event.it!
+				);
+				break;
+			}
+			case 'ko': {
+				this.mapArticleLanguage.set(
+					event.id!,
+					event.ko!
 				);
 				break;
 			}

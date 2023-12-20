@@ -6,7 +6,8 @@
 }
 
 .button-claim-ticket {
-  width: 40%;
+  margin-top: 50px;
+  width: 50%;
   display: flex;
   justify-content: center;
   background-color: #f5f5f5;
@@ -22,18 +23,19 @@
   background-color: #DADDE2;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 950px) {
   .button-claim-ticket {
     width: 60%;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .button-claim-ticket {
     width: 80%;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
   .button-claim-ticket {
     width: 100%;
+    font-size: 14px;
   }
 }
