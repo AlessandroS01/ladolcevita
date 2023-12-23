@@ -17,6 +17,7 @@ import {Subscription} from "rxjs";
 import * as events from "events";
 import {user} from "@angular/fire/auth";
 import {Participant} from "../../../shared/models/participant/participant";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-event',
@@ -118,6 +119,7 @@ export class EventComponent implements OnInit, OnDestroy {
 	}
 
 	constructor(
+		protected sanitizer: DomSanitizer,
 		private route: ActivatedRoute,
 		private router: Router,
 		private eventService: EventService,

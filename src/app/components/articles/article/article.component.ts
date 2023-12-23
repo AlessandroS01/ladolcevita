@@ -6,6 +6,7 @@ import {MemberService} from "../../../shared/services/model/member/member.servic
 import {LanguageService} from "../../../shared/services/language/language.service";
 import {Details, Subparagraph} from "../../../shared/models/common/details-subparagraphs";
 import {Member} from "../../../shared/models/member/member";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-article',
@@ -84,6 +85,7 @@ export class ArticleComponent implements OnInit{
 	}
 
 	constructor(
+		protected sanitizer: DomSanitizer,
 		private route: ActivatedRoute,
 		private router: Router,
 		private articleService: ArticleService,

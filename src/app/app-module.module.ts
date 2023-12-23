@@ -47,6 +47,8 @@ import {ArticlesModule} from "./components/articles/articles.module";
 import {AdminHomeModule} from "./components/admin/admin-home/admin-home.module";
 import { NewPhotoComponent } from './components/admin/admin-home/new-photo/new-photo.component';
 import {EventsModule} from "./components/events/events.module";
+import {PrivateSectionModule} from "./components/private-section/private-section.module";
+import {AdminAboutModule} from "./components/admin/admin-about/admin-about.module";
 
 
 
@@ -82,6 +84,8 @@ import {EventsModule} from "./components/events/events.module";
     AdminEventModule,
     AdminArticleModule,
 	  AdminHomeModule,
+	  AdminAboutModule,
+	  PrivateSectionModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,

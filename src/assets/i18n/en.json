@@ -32,6 +32,14 @@
     "nav-title": "About",
     "member-title": "Members information"
   },
+  "tickets": {
+    "title": "Your tickets",
+    "participation": "Your participation to events",
+    "no-participation": "No participation found",
+    "date": "Date",
+    "address": "Address",
+    "event": "Event"
+  },
   "unauthorized-access": "Error 401: Unathorized Access",
   "page-not-found": "Error 404: Page Not Found",
 

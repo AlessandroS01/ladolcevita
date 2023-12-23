@@ -47,14 +47,14 @@
 
         <hr>
 
-        <div [innerHTML]="info.description"></div>
+        <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(info.description!)"></div>
 
         <div
           class="subparagraph-container"
           *ngFor="let sub of info.subparagraphs"
         >
           <img *ngIf="sub.photo != ''"  [src]="mapPhotoUrl.get(sub.photo!)">
-          <div [innerHTML]="sub.description!"></div>
+          <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(sub.description!)"></div>
         </div>
       </div>
 
@@ -118,19 +118,19 @@
           *ngIf="language == 'English'"
         >
           <h6>{{ article.en?.title }}</h6>
-          <p [innerHTML]="article.en?.description"></p>
+          <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(article.en?.description!)"></p>
         </div>
         <div
           *ngIf="language == '한국인'"
         >
           <h6>{{ article.ko?.title }}</h6>
-          <p [innerHTML]="article.ko?.description"></p>
+          <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(article.ko?.description!)"></p>
         </div>
         <div
           *ngIf="language == 'Italiano'"
         >
         <h6>{{ article.it?.title }}</h6>
-        <p [innerHTML]="article.it?.description"></p>
+        <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(article.it?.description!)"></p>
         </div>
 
 

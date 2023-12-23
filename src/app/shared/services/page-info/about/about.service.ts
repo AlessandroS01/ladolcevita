@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {Observable, map, from, switchMap, forkJoin} from "rxjs";
+import {AboutPageData} from "../../../interfaces/about_page/about-page-data";
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +39,9 @@ export class AboutService {
   }
 
 
+	changePageInfo(pageInfo: AboutPageData) {
+		const eventObj = {...pageInfo};
+
+		return this.db.collection(this.dbPath).doc('page').set(eventObj);
+	}
 }

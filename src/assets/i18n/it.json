@@ -32,6 +32,14 @@
     "nav-title": "Chi siamo",
     "member-title": "Informazioni dei membri"
   },
+  "tickets": {
+    "title": "I tuoi biglietti",
+    "participation": "La tua partecipazione agli eventi",
+    "no-participation": "Nessuna partecipazione trovata",
+    "date": "Data",
+    "address": "Indirizzo",
+    "event": "Evento"
+  },
   "unauthorized-access": "Errore 401: Accesso Non Autorizzato",
   "page-not-found": "Error 404: Pagina Non Trovata",
 

@@ -1,36 +1,16 @@
 <div
-  *ngIf="title != ''"
+  *ngIf="isDataLoaded"
   class="about-container">
 
-  <!--
-  <div class="title-image-container">
-    <img [src]="titleImageURL">
-  </div>
-  -->
-  <div class="title-container">
-    <h2> {{title}} </h2>
-
-
-    <p>{{titleDescription}}</p>
-  </div>
-
-  <!--
-  <about-slideshow></about-slideshow>
-  -->
-
   <div
-    class="subtitle-container"
-    *ngFor="let subtitle of subtitles"
-  >
-    <h4>{{subtitle.value}}</h4>
-    <p>{{subtitle.description}}</p>
-  </div>
+    [innerHTML]="sanitizer.bypassSecurityTrustHtml(mapLangPageInfo.get(langSelected)!)"
+  ></div>
 
 
   <!-- MEMBERS -->
   <div
     class="members-container"
-    *ngIf="(memberPhotos | async) !== null && (members | async) !== null"
+    *ngIf="(memberPhotos | async) !== null && (members | async) !== null && isDataLoaded"
   >
     <div class="member-title-container">
       <h2>{{ 'about.member-title' | translate}}</h2>

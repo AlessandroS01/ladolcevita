@@ -7,6 +7,7 @@ import {Details} from "../../shared/models/common/details-subparagraphs";
 import {MemberService} from "../../shared/services/model/member/member.service";
 import {Event} from "../../shared/models/event/event";
 import {EventService} from "../../shared/services/model/event/event.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-home',

@@ -99,6 +99,7 @@
 
 
       <!-- ANNOUNCEMENTS -->
+      <!--
       <div
         class="entry-container"
         (click)="toggleDropdownMenu('announcements')"
@@ -124,6 +125,7 @@
         <p>Modify</p>
         <p>Delete</p>
       </div>
+      -->
 
 
       <!-- MEMBERS -->
@@ -179,7 +181,10 @@
         (click)="moveVerticalMenu();toggleDropdownMenu('pages');"
         routerLink="admin/home"
       >Home</p>
-      <p>About</p>
+      <p
+        (click)="moveVerticalMenu();toggleDropdownMenu('pages');"
+        routerLink="admin/about"
+      >About</p>
     </div>
 
 

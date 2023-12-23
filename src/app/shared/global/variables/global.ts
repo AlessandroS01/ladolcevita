@@ -4,6 +4,7 @@ import {AngularEditorConfig} from "@kolkov/angular-editor";
 export const editorConfig: AngularEditorConfig = {
   editable: true,
   spellcheck: true,
+	sanitize: false,
   height: 'auto',
   maxHeight: '500px',
   width: '100%',

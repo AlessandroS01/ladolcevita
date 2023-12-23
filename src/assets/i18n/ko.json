@@ -32,6 +32,14 @@
     "nav-title": "소개",
     "member-title": "학회원 정보"
   },
+  "tickets": {
+    "title": "당신의 티켓",
+    "participation": "이벤트 참여",
+    "no-participation": "참여 내역 없음",
+    "date": "날짜",
+    "address": "주소",
+    "event": "이벤트"
+  },
   "unauthorized-access": "에러 401: 무단 액세스",
   "page-not-found": "에러 404: 페이지를 찾을 수 없음",
 

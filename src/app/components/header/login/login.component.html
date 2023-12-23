@@ -51,10 +51,13 @@
         >{{ "manage-site" | translate}}</p>
       </a>
 
-      <p
-         class="user-menu-link"
-         (click)="toggleDiv()"
-      >{{ "user-menu-ticket" | translate}}</p>
+      <a [routerLink]="['tickets']">
+        <p
+          class="user-menu-link"
+          (click)="toggleDiv()"
+        >{{ "user-menu-ticket" | translate}}</p>
+      </a>
+
 
       <p
          class="user-menu-link"

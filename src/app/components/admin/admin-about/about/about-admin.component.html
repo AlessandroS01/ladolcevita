@@ -1,0 +1,77 @@
+<div class="text-editor-container">
+  <h1 class="main-title-text-editor">About page info</h1>
+
+  <div id="buttons-container" class="buttons-container">
+    <button
+      class="selected"
+      (click)="changeSelectedTextEditor('english')"
+      id="english-button"
+    >English</button>
+    <button
+      (click)="changeSelectedTextEditor('italian')"
+      id="italian-button"
+    >Italian</button>
+    <button
+      (click)="changeSelectedTextEditor('korean')"
+      id="korean-button"
+    >Korean</button>
+  </div>
+
+  <div
+    id="text-editors"
+    class="text-editors"
+  >
+    <div
+      id="english-text-editor"
+      [hidden]="selectedLanguage !== 'english'"
+    >
+
+      <angular-editor id="editor-create-events-en" [(ngModel)]="htmlContentEn" [config]="editorConfig">
+        <ng-template>
+          <ae-toolbar-set>
+            <!--<ae-button iconClass="fa fa-html5" title="Angular editor logo" (buttonClick)="executeCommandFn('insertHtml')"></ae-button>-->
+          </ae-toolbar-set>
+        </ng-template>
+      </angular-editor>
+
+    </div>
+
+    <div
+      id="italian-text-editor"
+      [hidden]="selectedLanguage !== 'italian'"
+    >
+
+
+
+      <angular-editor id="editor-create-events-it" [(ngModel)]="htmlContentIt" [config]="editorConfig">
+        <ng-template>
+          <ae-toolbar-set>
+            <!--<ae-button iconClass="fa fa-html5" title="Angular editor logo" (buttonClick)="executeCommandFn('insertHtml')"></ae-button>-->
+          </ae-toolbar-set>
+        </ng-template>
+      </angular-editor>
+
+    </div>
+
+    <div
+      id="korean-text-editor"
+      [hidden]="selectedLanguage !== 'korean'"
+    >
+
+      <angular-editor id="editor-create-events-ko" [(ngModel)]="htmlContentKo" [config]="editorConfig">
+        <ng-template>
+          <ae-toolbar-set>
+            <!--<ae-button iconClass="fa fa-html5" title="Angular editor logo" (buttonClick)="executeCommandFn('insertHtml')"></ae-button>-->
+          </ae-toolbar-set>
+        </ng-template>
+      </angular-editor>
+
+    </div>
+  </div>
+
+
+  <button class="form-submitter" (click)="submitForm();">
+    Submit changes
+  </button>
+
+</div>

@@ -5,6 +5,7 @@ import {AboutPageData} from "../../shared/interfaces/about_page/about-page-data"
 import {MemberService} from "../../shared/services/model/member/member.service";
 import {Member} from "../../shared/models/member/member";
 import {forkJoin, map, Observable, of} from "rxjs";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-about',
@@ -14,21 +15,20 @@ import {forkJoin, map, Observable, of} from "rxjs";
 
 export class AboutComponent implements OnInit {
 
-  title: string = '';
-  titleDescription: string = '';
+	isDataLoaded: boolean = false;
 
-  subtitles: {
-    value: string,
-    description: string
-  }[] = [];
+	pageInfo!: AboutPageData;
+	mapLangPageInfo: Map<string, string> = new Map();
+	langSelected: string = '';
 
   members: Observable<Member[] | null>;
   memberPhotos: Observable<string[] | null> = of(null);
 
   constructor(
-    private languageService: LanguageService,
-    private aboutService: AboutService,
-    private memberService: MemberService
+	  private languageService: LanguageService,
+	  private aboutService: AboutService,
+	  private memberService: MemberService,
+	  protected sanitizer: DomSanitizer
   ) {
     this.members = this.memberService.getAll().pipe(
       map(snapshot => (snapshot ? snapshot : null))
@@ -67,47 +67,42 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
     this.aboutService.getAboutPageInfo().subscribe(snapshot => {
-      const allData = snapshot.data() as AboutPageData;
+			if (snapshot.data()) {
+				this.pageInfo = snapshot.data() as AboutPageData;
 
-      console.log(allData);
+				this.languageService.language.subscribe(lang=> {
+					this.langSelected = lang;
+					this.populateLangMap(lang);
 
-      this.languageService.language.subscribe((language: string) => {
-        this.clearPageInfo();
-        if (language != null) {
-          switch (language) {
-            case 'en': {
-              const data = allData.en;
-              this.title = data.title;
-              this.titleDescription = data.title_description;
-
-              this.subtitles = data.subtitles;
-              break;
-            }
-            case 'it': {
-              const data = allData.it;
-              this.title = data.title;
-              this.titleDescription = data.title_description;
-
-              this.subtitles = data.subtitles;
-              break;
-            }
-            case 'ko': {
-              const data = allData.ko;
-              this.title = data.title;
-              this.titleDescription = data.title_description;
-
-              this.subtitles = data.subtitles;
-              break;
-            }
-          }
-        }
-      });
+					this.isDataLoaded = true;
+				});
+			}
     });
   }
 
-  clearPageInfo() {
-    this.title = '';
-    this.titleDescription = '';
-    this.subtitles = [];
-  }
+	private populateLangMap(lang: string) {
+		switch (lang) {
+			case 'en': {
+				this.mapLangPageInfo.set(
+					lang,
+					this.pageInfo.en
+				);
+				break;
+			}
+			case 'it': {
+				this.mapLangPageInfo.set(
+					lang,
+					this.pageInfo.it
+				);
+				break;
+			}
+			case 'ko': {
+				this.mapLangPageInfo.set(
+					lang,
+					this.pageInfo.ko
+				);
+				break;
+			}
+		}
+	}
 }

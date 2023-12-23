@@ -61,6 +61,41 @@ export class ParticipantService {
     );
   }
 
+	getSpecificUserParticipationFulfilled(email: string): Observable<ParticipantFulfilled[] | null> {
+		return this.getAll().pipe(
+			switchMap(participants => {
+				if (!participants || participants.length === 0) {
+					return of(null);
+				}
+
+				const observables = participants
+					.filter(item => item.email && item.event && item.email == email)
+					.map(item => {
+						return forkJoin({
+							user: this.userService.getUserByEmail(item.email as string),
+							event: this.eventService.getEventById(item.event as string).pipe(
+								map(snapshot => {
+									return snapshot as Event | null;
+								})
+							)
+						});
+					});
+
+				return forkJoin(observables).pipe(
+					map(results => {
+						const participationFulfilled: ParticipantFulfilled[] = [];
+						results.forEach(({ user, event }) => {
+							if (user && event) {
+								participationFulfilled.push({ user, event });
+							}
+						});
+						return participationFulfilled;
+					})
+				);
+			})
+		);
+	}
+
   getParticipantById(uid: string) {
     return this.participantsRef.doc(uid).get();
   }

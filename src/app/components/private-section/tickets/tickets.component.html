@@ -1,9 +1,11 @@
-<div *ngIf="user != {}">
-  <h2 style="font-weight: bold">Welcome back {{user.name}} {{user.surname}}</h2>
+<div
+  style="padding: 0 5% 5% 5%"
+  *ngIf="user != {}">
+  <h2 style="font-weight: bold">{{'tickets.title' | translate }}</h2>
 
   <div class="admin-view-pages-container">
     <div class="sub-container top">
-      <h6>Users participation to events</h6>
+      <h6>{{'tickets.participation' | translate }}</h6>
       <select #select (change)="onSelectChange(select.value)">
         <option [value]=1>Future</option>
         <option [value]=2>Past</option>
@@ -13,17 +15,16 @@
 
     <div
       class="sub-container bottom">
-      <h6 style="text-align: center" *ngIf="filteredParticipation.length == 0">No users with a participation</h6>
+      <h6 style="text-align: center" *ngIf="filteredParticipation.length == 0">{{'tickets.no-participation' | translate }}</h6>
 
       <table
         class="table-container"
         *ngIf="(filteredParticipation.length > 0)"
       >
         <tr>
-          <th style="border-top-left-radius: 10px;">Date</th>
-          <th>Event</th>
-          <th class="disappearing-cell" >Address</th>
-          <th style="border-top-right-radius: 10px;">Participant</th>
+          <th style="border-top-left-radius: 10px;">{{'tickets.date' | translate }}</th>
+          <th>{{'tickets.event' | translate }}</th>
+          <th style="border-top-right-radius: 10px;">{{'tickets.address' | translate }}</th>
         </tr>
         <tr
           *ngFor="let participation of displayedParticipation | paginate: {
@@ -33,21 +34,15 @@
                                                             }"
         >
           <td
-            style="width: 25%;"
+            style="width: 33%;"
           >{{participation.event?.date_time?.toDate() | date:"EEE, MMM d, y"}}
             <br>
             {{participation.event?.date_time?.toDate() | date:"h:mma"}}
           </td>
-          <td style="width: 25%;">{{participation.event?.en?.title}}</td>
+          <td style="width: 33%;">{{mapEventInfoLang.get(participation.event?.id!)?.title}}</td>
           <td
-            class="disappearing-cell"
-            style="width: 25%;"
+            style="width: 33%;"
           >{{participation.event?.address}}</td>
-          <td style="width: 25%;">
-            {{participation.user?.name}} {{participation.user?.surname}}
-            <br>
-            <a href="mailto:{{participation.user?.email}}" style="cursor: pointer; margin: 0;">{{participation.user?.email}}</a>
-          </td>
 
         </tr>
       </table>
@@ -64,4 +59,3 @@
     </div>
   </div>
 </div>
-
