@@ -6,6 +6,7 @@ import {Member} from "../../shared/models/member/member";
 import {LanguageService} from "../../shared/services/language/language.service";
 import {Details} from "../../shared/models/common/details-subparagraphs";
 import {Router} from "@angular/router";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-articles',
@@ -26,7 +27,7 @@ export class ArticlesComponent {
 	mapArticlePhoto: Map<string, string> = new Map();
 	mapArticleMember: Map<string, string> = new Map();
 	mapArticleLanguage: Map<string, Details> = new Map();
-	mapMemberPhoto: Map<string, string> = new Map();
+	mapMemberPhotos: Map<string, string> = new Map();
 	mapMemberVisible: Map<string, boolean> = new Map();
 
 	lang: string = 'en';
@@ -51,6 +52,7 @@ export class ArticlesComponent {
 					this.articleListDisplayed.forEach(article => {
 						this.lang = lang;
 						this.populateLanguageMap(lang, article);
+						this.populateMaps(article);
 
 						this.articleService.getCoverPhotoArticle(article).subscribe(photo => {
 							this.mapArticlePhoto.set(
@@ -58,30 +60,25 @@ export class ArticlesComponent {
 								photo
 							)
 						});
-						this.allMembers.forEach(member => {
-							this.mapMemberVisible.set(
-								member.email!,
-								true
-							);
 
-							this.memberService.getMemberPhoto(member.photo!).subscribe(photo => {
-								this.mapMemberPhoto.set(
-									member.email!,
+						const photoObservables = members.map(member=>
+							this.memberService.getMemberPhoto(member.photo as string)
+						);
+
+						forkJoin(photoObservables).subscribe(photos => {
+							photos.forEach((photo, index) => {
+								this.mapMemberPhotos.set(
+									members[index].email as string,
 									photo
 								);
+							});
 
-								if (member.email == article.email) {
-									this.mapArticleMember.set(
-										article.id as string,
-										member.name + ' ' + member.surname
-									);
-								}
-							})
-						})
+							this.isDataLoaded = true;
+							this.sortingArticleList();
+						});
 					});
 				});
-				this.sortingArticleList();
-				this.isDataLoaded = true;
+
 			})
 		});
 	}
@@ -166,5 +163,28 @@ export class ArticlesComponent {
 		this.articleListDisplayed = this.allArticlesFiltered;
 
 		this.sortingArticleList();
+	}
+
+	private populateMaps(article: Article) {
+		this.allMembers.forEach(member => {
+			this.mapMemberVisible.set(
+				member.email!,
+				true
+			);
+
+			this.memberService.getMemberPhoto(member.photo!).subscribe(photo => {
+				this.mapMemberPhotos.set(
+					member.email!,
+					photo
+				);
+
+				if (member.email == article.email) {
+					this.mapArticleMember.set(
+						article.id as string,
+						member.name + ' ' + member.surname
+					);
+				}
+			})
+		})
 	}
 }
