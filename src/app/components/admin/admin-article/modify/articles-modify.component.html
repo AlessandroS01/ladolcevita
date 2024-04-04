@@ -113,7 +113,7 @@
         >
       </div>
       <div
-        *ngIf="coverPhotoFormControl.dirty || submitted"
+        *ngIf="coverPhotoFormControl.dirty || (submitted && coverPhotoFormControl.dirty)"
         class="invalid-input"
       >
         <div

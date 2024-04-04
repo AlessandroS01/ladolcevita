@@ -21,8 +21,8 @@ export class AboutComponent implements OnInit {
 	mapLangPageInfo: Map<string, string> = new Map();
 	langSelected: string = '';
 
-  members: Observable<Member[] | null>;
-  memberPhotos: Observable<string[] | null> = of(null);
+  members: Member[] = [];
+  mapMemberPhotos: Map<string, string> = new Map<string, string>();
 
   constructor(
 	  private languageService: LanguageService,
@@ -30,39 +30,29 @@ export class AboutComponent implements OnInit {
 	  private memberService: MemberService,
 	  protected sanitizer: DomSanitizer
   ) {
-    this.members = this.memberService.getAll().pipe(
-      map(snapshot => (snapshot ? snapshot : null))
-    );
+    this.memberService.getAll().subscribe(members=> {
 
-    this.members.subscribe(members => {
-      if (members !== null) {
-        const photoObservables: Observable<string | null>[] = [];
-        members.forEach((member: Member) => {
-          const photoPath = member.photo;
+			this.members = members.sort(
+				(a: Member, b: Member) =>
+					(a.level ?? 0) - (b.level ?? 0)
+			);
 
-          if (typeof photoPath === 'string') {
-            photoObservables.push(
-              this.memberService.getMemberPhoto(photoPath).pipe(
-                map(photo => (typeof photo === 'string' ? photo : null))
-              )
-            );
-          }
-        });
+	    const photoObservables = members.map(member =>
+		    this.memberService.getMemberPhoto(member.photo as string)
+	    );
 
-        // Wait for all photo observables to complete using forkJoin
-        if (photoObservables.length > 0) {
-          this.memberPhotos = forkJoin(photoObservables).pipe(
-            map(photos =>
-              photos.filter(photo => photo !== null) as string[]
-            ) // Filter out null values
-          );
-        } else {
-          this.memberPhotos = of(null);
-        }
-      } else {
-        this.memberPhotos = of(null);
-      }
-    });
+	    forkJoin(photoObservables).subscribe(photos => {
+		    photos.forEach((photo, index) => {
+			    this.mapMemberPhotos.set(
+				    members[index].email as string,
+				    photo
+			    );
+		    });
+
+				this.isDataLoaded = true;
+	    });
+
+		});
   }
 
   ngOnInit(): void {

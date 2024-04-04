@@ -94,7 +94,6 @@ export class ArticlesCreateComponent {
       if (members.at(0)) {
         this.writerEmail = members.at(0)!.email as string;
       }
-
     })
   }
 

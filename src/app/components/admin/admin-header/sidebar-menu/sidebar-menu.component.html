@@ -149,10 +149,14 @@
             class="fa fa-arrow-left"></i>
         </div>
 
-        <p>View</p>
-        <p>Create</p>
-        <p>Modify</p>
-        <p>Delete</p>
+        <p
+          (click)="moveVerticalMenu();toggleDropdownMenu('members');"
+          routerLink="admin/members/view"
+        >View</p>
+        <p
+          (click)="moveVerticalMenu();toggleDropdownMenu('members');"
+          routerLink="admin/members/create"
+        >Create</p>
       </div>
     </div>
 

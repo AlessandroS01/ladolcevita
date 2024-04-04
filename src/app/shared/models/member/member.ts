@@ -6,4 +6,5 @@ export class Member {
   university?: string;
   faculty?: string;
   role?: string;
+	level?: number;
 }

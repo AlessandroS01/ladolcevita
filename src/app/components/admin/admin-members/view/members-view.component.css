@@ -1,0 +1,46 @@
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #c4c4c4;
+  margin: 30px 0;
+}
+
+.admin-page-card {
+  margin: 30px 0;
+}
+
+.modify-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+
+
+  cursor: pointer;
+}
+.modify-button-container i {
+  font-size: 25px;
+  color: white;
+}
+
+
+.modify-button-container {
+  background-color: darkblue;
+}
+
+.modify-button-container:hover {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+}

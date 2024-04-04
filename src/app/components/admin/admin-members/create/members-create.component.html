@@ -1,0 +1,231 @@
+<div
+  class="text-editor-container"
+>
+  <h1 class="main-title-text-editor">Create member</h1>
+
+  <form
+    id="form-editor"
+    [formGroup]="memberForm"
+  >
+    <div class="grid-container">
+      <div class="form-element-container">
+        <div class="element">
+          <label>
+            <i class="fa fa-envelope"></i>
+            Email
+          </label>
+          <input
+            type="text"
+            formControlName="email"
+            placeholder="Enter the email"
+          >
+        </div>
+        <div
+          *ngIf="memberForm.get('email')?.dirty || memberForm.get('email')?.touched || submitted"
+          class="invalid-input"
+        >
+          <div
+            *ngIf="memberForm.get('email')?.hasError('required')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Email is required
+          </div>
+          <div
+            *ngIf="memberForm.get('email')?.hasError('pattern') || memberForm.get('email')?.hasError('email')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Email is invalid
+          </div>
+        </div>
+      </div>
+
+      <div class="form-element-container">
+        <div class="element">
+          <label>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            Name
+          </label>
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Enter the name"
+          >
+        </div>
+        <div
+          *ngIf="memberForm.get('name')?.dirty || memberForm.get('name')?.touched || submitted"
+          class="invalid-input"
+        >
+          <div
+            *ngIf="memberForm.get('name')?.hasError('required')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-element-container">
+        <div class="element">
+          <label>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            Surname
+          </label>
+          <input
+            type="text"
+            formControlName="surname"
+            placeholder="Enter the surname"
+          >
+        </div>
+        <div
+          *ngIf="memberForm.get('surname')?.dirty || memberForm.get('surname')?.touched || submitted"
+          class="invalid-input"
+        >
+          <div
+            *ngIf="memberForm.get('surname')?.hasError('required')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Surname is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-element-container">
+        <div class="element">
+          <label>
+            <i class="fa fa-users" aria-hidden="true"></i>
+            Role
+          </label>
+          <input
+            type="text"
+            formControlName="role"
+            placeholder="Enter the role"
+          >
+        </div>
+        <div
+          *ngIf="memberForm.get('role')?.dirty || memberForm.get('role')?.touched || submitted"
+          class="invalid-input"
+        >
+          <div
+            *ngIf="memberForm.get('role')?.hasError('required')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Role is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-element-container">
+        <div class="element">
+          <label>
+            <i class="fa fa-book" aria-hidden="true"></i>
+            Faculty
+          </label>
+          <input
+            type="text"
+            formControlName="faculty"
+            placeholder="Enter the faculty"
+          >
+        </div>
+        <div
+          *ngIf="memberForm.get('faculty')?.dirty || memberForm.get('faculty')?.touched || submitted"
+          class="invalid-input"
+        >
+          <div
+            *ngIf="memberForm.get('faculty')?.hasError('required')"
+          >
+            <i class="fa fa-exclamation-circle"></i> Faculty is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-element-container">
+        <div class="element">
+          <label>
+            <i class="fa fa-university" aria-hidden="true"></i>
+            University
+          </label>
+          <input
+            type="text"
+            formControlName="university"
+            placeholder="Enter the university"
+          >
+        </div>
+        <div
+          *ngIf="memberForm.get('university')?.dirty || memberForm.get('university')?.touched || submitted"
+          class="invalid-input"
+        >
+          <div
+            *ngIf="memberForm.get('university')?.hasError('required')"
+          >
+            <i class="fa fa-exclamation-circle"></i> University is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-element-container">
+        <div class="element">
+          <label>
+            <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+            Level
+          </label>
+          <select
+            formControlName="level"
+          >
+            <option
+              *ngFor="let i of [1, 2, 3]"
+              value="{{i}}"
+            >
+              <p>{{ i }}</p>
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="form-element-container">
+      <div class="element">
+        <label>
+          <i class="fa fa-picture-o" aria-hidden="true"></i>
+          Cover photo
+        </label>
+        <input
+          id="cover-photo"
+          style="width: 100%"
+          type="file"
+          accept="image/*"
+          formControlName="photo"
+          (change)="onFileChange($event)"
+        >
+      </div>
+      <div
+        *ngIf="memberForm.get('photo')?.dirty || memberForm.get('photo')?.touched || submitted"
+        class="invalid-input"
+      >
+        <div
+          *ngIf="memberForm.get('photo')?.hasError('required') "
+        >
+          <i class="fa fa-exclamation-circle"></i> Member photo is required
+        </div>
+        <div
+          *ngIf="memberForm.get('photo')?.hasError('imageValidator')"
+        >
+          <i class="fa fa-exclamation-circle"></i> The format is not accepted
+        </div>
+      </div>
+    </div>
+
+
+    <div
+      id="im-cont" class="image-container hidden"
+      *ngIf="!memberForm.get('photo')?.hasError('imageValidator')"
+    >
+      <img id="uploaded-image" alt="eventImage">
+    </div>
+
+  </form>
+
+
+  <button class="form-submitter" (click)="submitForm();">
+    Create member
+  </button>
+
+</div>
+

@@ -1,29 +1,3 @@
-/* TITLE */
-.title-home-page-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-.title-home-page {
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 56px;
-  color: #2F4858;
-  /*
-  background: linear-gradient(
-    to right,
-    #91110E,
-    #FFBCDF,
-    #FF85A8,
-    #C34F74
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-   */
-}
-
 .home-container {
   margin-top: 40px;
   padding: 20px 5%;
@@ -57,10 +31,6 @@
   width: 100%;
 }
 
-@media screen and (max-width: 800px) {
-  .title-home-page {
-    font-size: 40px;
-  }
-}
+
 
 

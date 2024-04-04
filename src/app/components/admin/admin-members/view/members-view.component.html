@@ -1,0 +1,43 @@
+<div
+  class="members-container"
+  *ngIf="isDataLoaded"
+>
+  <div class="member-title-container">
+    <h2> Members </h2>
+  </div>
+
+  <div class="flex-container">
+    <div *ngFor="let member of members; let i = index;" class="flex-item">
+      <div class="member-card admin-page-card">
+        <div class="member-card-header">
+          <!-- Use safe navigation operator (?) to avoid errors when photos[i] is undefined -->
+          <img [src]="membersPhoto.get(member.email!)">
+        </div>
+
+        <!-- Other member details -->
+        <div class="card-member-body">
+          <h2 class="member-name">{{member.name}} {{member.surname}}</h2>
+          <h4 class="member-email">{{member.email}}</h4>
+          <div class="member-role">{{member.role}}</div>
+        </div>
+
+        <div class="card-member-footer">
+          <div class="member-college-info">
+            <span class="member-university">{{member.university}}</span>
+            <span class="member-faculty">{{member.faculty}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modify-button-container"
+        [routerLink]="['/admin/members/modify', member.email]"
+      >
+        <i class="fa fa-pencil-square-o" aria-hidden="true">
+        </i>
+      </div>
+
+    </div>
+  </div>
+
+</div>

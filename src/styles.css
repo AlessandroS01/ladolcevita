@@ -6,7 +6,8 @@ html {
 body {
   font-family: 'Playfair Display', "Times New Roman", serif;
 
-  background-color: rgba(211, 211, 211, 0.3);
+  /*background-color: rgba(211, 211, 211, 0.3;*/
+  background-color: white;
 
   display: flex;
   flex-direction: column;

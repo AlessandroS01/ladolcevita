@@ -551,7 +551,7 @@ export class ArticlesModifyComponent {
 
 				dialogRef.afterClosed().subscribe(message =>{
 					if (message == 'new-article') {
-						window.location.reload();
+						this.router.navigate(['admin/articles/create']);
 					}
 					if (message == 'main-page') {
 						this.router.navigate(['admin']);

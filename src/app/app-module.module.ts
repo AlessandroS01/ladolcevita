@@ -49,6 +49,7 @@ import { NewPhotoComponent } from './components/admin/admin-home/new-photo/new-p
 import {EventsModule} from "./components/events/events.module";
 import {PrivateSectionModule} from "./components/private-section/private-section.module";
 import {AdminAboutModule} from "./components/admin/admin-about/admin-about.module";
+import {AdminMembersModule} from "./components/admin/admin-members/admin-members.module";
 
 
 
@@ -85,6 +86,7 @@ import {AdminAboutModule} from "./components/admin/admin-about/admin-about.modul
     AdminArticleModule,
 	  AdminHomeModule,
 	  AdminAboutModule,
+	  AdminMembersModule,
 	  PrivateSectionModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
