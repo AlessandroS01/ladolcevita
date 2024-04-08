@@ -243,7 +243,7 @@ export class MembersModifyComponent {
 			window.alert("The faculty is invalid");
 			validity = false;
 		}
-		if (this.photoFormControl.invalid) {
+		if (this.photoFormControl.invalid && this.photoFormControl.touched) {
 			window.alert("The photo is invalid");
 			validity = false;
 		}
@@ -287,6 +287,7 @@ export class MembersModifyComponent {
 			}
 
 			this.memberService.update(
+				this.member as Member,
 				this.memberUid,
 				updatedMember
 			).subscribe(() => {

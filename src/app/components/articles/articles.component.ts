@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ArticleService} from "../../shared/services/model/article/article.service";
 import {Article} from "../../shared/models/article/article";
 import {MemberService} from "../../shared/services/model/member/member.service";
@@ -6,7 +6,7 @@ import {Member} from "../../shared/models/member/member";
 import {LanguageService} from "../../shared/services/language/language.service";
 import {Details} from "../../shared/models/common/details-subparagraphs";
 import {Router} from "@angular/router";
-import {forkJoin} from "rxjs";
+import {forkJoin, map, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-articles',
@@ -16,7 +16,7 @@ import {forkJoin} from "rxjs";
 	  './../../shared/global/css/articles-events.css'
   ]
 })
-export class ArticlesComponent {
+export class ArticlesComponent implements OnInit{
 
 	allArticles: Article[] = [];
 	allArticlesFiltered: Article[] = [];
@@ -35,53 +35,77 @@ export class ArticlesComponent {
 	page = 1;
 	pageSize = 8;
 
+
+
 	constructor(
 		private articleService: ArticleService,
 		private memberService: MemberService,
 		private languageService: LanguageService,
 	) {
-		this.articleService.getAll().subscribe(articles => {
-			this.allArticles = articles;
-			this.allArticlesFiltered = articles;
-			this.articleListDisplayed = articles;
+	}
 
-			this.memberService.getAll().subscribe(members => {
+	ngOnInit(): void {
+		this.memberService.getAll().pipe(
+			switchMap(members => {
 				this.allMembers = members;
 
-				this.languageService.language.subscribe(lang => {
-					this.articleListDisplayed.forEach(article => {
+				const photoObservables = members.map(member =>
+					this.memberService.getMemberPhoto(member.photo as string)
+				);
+
+				return forkJoin(photoObservables).pipe(
+					map(photos => {
+						photos.forEach((photo, index) => {
+							this.mapMemberPhotos.set(members[index].email as string, photo);
+						});
+						return members;
+					})
+				);
+			}),
+			switchMap(members => {
+				return this.articleService.getAll().pipe(
+					map(articles => {
+						this.allArticles = articles;
+						this.allArticlesFiltered = articles;
+						this.articleListDisplayed = articles;
+						return articles;
+					})
+				);
+			}),
+			switchMap(articles => {
+				return this.languageService.language.pipe(
+					map(lang => {
 						this.lang = lang;
-						this.populateLanguageMap(lang, article);
-						this.populateMaps(article);
-
-						this.articleService.getCoverPhotoArticle(article).subscribe(photo => {
-							this.mapArticlePhoto.set(
-								article.id!,
-								photo
-							)
-						});
-
-						const photoObservables = members.map(member=>
-							this.memberService.getMemberPhoto(member.photo as string)
-						);
-
-						forkJoin(photoObservables).subscribe(photos => {
-							photos.forEach((photo, index) => {
-								this.mapMemberPhotos.set(
-									members[index].email as string,
-									photo
-								);
+						this.articleListDisplayed.forEach(article => {
+							this.populateLanguageMap(lang, article);
+							this.populateMaps(article);
+							this.articleService.getCoverPhotoArticle(article).subscribe(photo => {
+								this.mapArticlePhoto.set(article.id!, photo);
 							});
-
-							this.isDataLoaded = true;
-							this.sortingArticleList();
 						});
-					});
-				});
-
+						return articles;
+					})
+				);
 			})
+		).subscribe(() => {
+			this.isDataLoaded = true;
+			this.sortingArticleList();
 		});
 	}
+
+	private populateMaps(article: Article) {
+		this.allMembers.forEach(member => {
+			this.mapMemberVisible.set(member.email!, true);
+
+			if (member.email == article.email) {
+				this.mapArticleMember.set(
+					article.id as string,
+					member.name + ' ' + member.surname
+				);
+			}
+		});
+	}
+
 
 	populateLanguageMap(lang: string, article: Article) {
 		switch (lang) {
@@ -163,28 +187,5 @@ export class ArticlesComponent {
 		this.articleListDisplayed = this.allArticlesFiltered;
 
 		this.sortingArticleList();
-	}
-
-	private populateMaps(article: Article) {
-		this.allMembers.forEach(member => {
-			this.mapMemberVisible.set(
-				member.email!,
-				true
-			);
-
-			this.memberService.getMemberPhoto(member.photo!).subscribe(photo => {
-				this.mapMemberPhotos.set(
-					member.email!,
-					photo
-				);
-
-				if (member.email == article.email) {
-					this.mapArticleMember.set(
-						article.id as string,
-						member.name + ' ' + member.surname
-					);
-				}
-			})
-		})
 	}
 }

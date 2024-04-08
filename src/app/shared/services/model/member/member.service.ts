@@ -4,6 +4,7 @@ import {User} from "../../../models/user/user.model";
 import {Member} from "../../../models/member/member";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {from, map, Observable, switchMap, take} from "rxjs";
+import {Article} from "../../../models/article/article";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class MemberService {
   private dbPath = '/members';
   private storagePath = '/about_page/members';
 
+	private dbPathArticles: string = '/articles';
+	articlesRef: AngularFirestoreCollection<Article>;
+
   membersRef: AngularFirestoreCollection<Member>;
 
   constructor(
@@ -20,6 +24,7 @@ export class MemberService {
     private storage: AngularFireStorage
   ) {
     this.membersRef = db.collection(this.dbPath);
+		this.articlesRef = db.collection(this.dbPathArticles);
   }
 
   getAll(): Observable<Member[]> {
@@ -64,9 +69,12 @@ export class MemberService {
   }
 
   update(
+		oldMember: Member,
 		memberUid: string,
 		updatedMember: Member
   ): Observable<void> {
+		this.changeEmailValueArticles(oldMember.email!, updatedMember.email!);
+
 	  const memberObject: any = this.transformMemberObject(updatedMember);
 
 	  return from(this.membersRef.doc(memberUid).set({ ...memberObject }));
@@ -102,5 +110,17 @@ export class MemberService {
 
 		const fileRef = this.storage.ref(filePath);
 		return fileRef.put(file).percentageChanges();
+	}
+
+	private changeEmailValueArticles(oldEmail: string, newEmail: string): Promise<void> {
+		const querySnapshotPromise = this.articlesRef.ref.where('email', '==', oldEmail).get();
+
+		return querySnapshotPromise.then(querySnapshot => {
+			const promises = querySnapshot.docs.map(doc =>
+				this.articlesRef.doc(doc.id).update({ email: newEmail })
+			);
+
+			return Promise.all(promises).then(() => {});
+		});
 	}
 }
